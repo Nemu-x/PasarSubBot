@@ -1312,9 +1312,18 @@ function update_bot() {
         echo -e "\e[91mError: Failed to download update package.\033[0m"
         exit 1
     }
+    echo -e "\e[36m--- Update package ---\033[0m"
+    echo -e "URL:    $ZIP_URL"
+    ls -lh "$TEMP_DIR/bot.zip" 2>/dev/null || true
+    if command -v md5sum >/dev/null 2>&1; then
+        echo -e "MD5:    $(md5sum "$TEMP_DIR/bot.zip" | awk '{print $1}')"
+    fi
     unzip -q "$TEMP_DIR/bot.zip" -d "$TEMP_DIR"
     # Find extracted directory (e.g. PasarSubBot-main)
     EXTRACTED_DIR=$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d)
+    echo -e "Extracted folder: $(basename "$EXTRACTED_DIR")"
+    echo -e "Top-level files:"
+    ls -la "$EXTRACTED_DIR" | head -n 25
     # Backup config file
     CONFIG_PATH="$BOT_DIR/config.php"
     TEMP_CONFIG="/root/mirzapro_config_backup.php"
@@ -1337,6 +1346,14 @@ function update_bot() {
         echo -e "\e[91mFile transfer failed!\033[0m"
         exit 1
     }
+    FILE_COUNT=$(find "$BOT_DIR" -type f 2>/dev/null | wc -l)
+    echo -e "\e[92mDeployed to $BOT_DIR — $FILE_COUNT files (recursive).\033[0m"
+    if [ -f "$BOT_DIR/version" ]; then
+        echo -e "\e[36mversion file:\033[0m $(tr -d '\r\n' < "$BOT_DIR/version")"
+    fi
+    if [ -f "$BOT_DIR/index.php" ]; then
+        echo -e "\e[36mindex.php mtime:\033[0m $(stat -c %y "$BOT_DIR/index.php" 2>/dev/null || stat -f %Sm "$BOT_DIR/index.php" 2>/dev/null)"
+    fi
     # Restore config file
     if [ -f "$TEMP_CONFIG" ]; then
         sudo mv "$TEMP_CONFIG" "$CONFIG_PATH" || {

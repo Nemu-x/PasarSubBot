@@ -13,6 +13,14 @@ if (PHP_SAPI !== 'cli') {
     exit('CLI only');
 }
 
+if (!extension_loaded('pdo_mysql')) {
+    fwrite(STDERR, "PHP CLI has no pdo_mysql driver (needed for PDO to MySQL).\n");
+    fwrite(STDERR, "Install: sudo apt install php-mysql\n");
+    fwrite(STDERR, "Or match your PHP version: php -v  then  sudo apt install php8.3-mysql\n");
+    fwrite(STDERR, "Verify: php -m | grep pdo_mysql\n");
+    exit(1);
+}
+
 $root = dirname(__DIR__);
 $configPath = $root . '/config.php';
 if (!is_readable($configPath)) {
@@ -48,6 +56,9 @@ try {
     $pdo = new PDO($dsn, $usernamedb, $passworddb, $options);
 } catch (PDOException $e) {
     fwrite(STDERR, 'PDO connection failed: ' . $e->getMessage() . "\n");
+    if (stripos($e->getMessage(), 'could not find driver') !== false) {
+        fwrite(STDERR, "Hint: enable pdo_mysql for CLI (see above).\n");
+    }
     exit(1);
 }
 
