@@ -8,7 +8,7 @@ require_once __DIR__ . '/i18n.php';
                 <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
             </div>
             <!--logo start-->
-            <a href="#" class="logo">ربات <span>میرزا</span></a>
+            <a href="#" class="logo"><?php echo htmlspecialchars(panelT('logo_prefix')); ?> <span><?php echo htmlspecialchars(panelT('logo_name')); ?></span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
             </div>
@@ -20,7 +20,7 @@ require_once __DIR__ . '/i18n.php';
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="img/avatar1_small.jpg">
-                            <span class="username">سلام <?php echo $_SESSION["user"]; ?></span>
+                            <span class="username"><?php echo htmlspecialchars(panelT('hello')); ?> <?php echo $_SESSION["user"]; ?></span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -28,8 +28,8 @@ require_once __DIR__ . '/i18n.php';
                             <li><a href="?lang=en"><i class="icon-flag"></i> EN</a></li>
                             <li><a href="?lang=ru"><i class="icon-flag"></i> RU</a></li>
                             <li><a href="?lang=fa"><i class="icon-flag"></i> FA</a></li>
-                            <li><a href="#"><i class="icon-cog"></i> تنظیمات</a></li>
-                            <li><a href="login.php"><i class="icon-key"></i> خروج</a></li>
+                            <li><a href="#"><i class="icon-cog"></i> <?php echo htmlspecialchars(panelT('settings')); ?></a></li>
+                            <li><a href="login.php"><i class="icon-key"></i> <?php echo htmlspecialchars(panelT('logout')); ?></a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->
@@ -46,49 +46,49 @@ require_once __DIR__ . '/i18n.php';
                   <li>
                       <a href="index.php">
                           <i class="icon-dashboard"></i>
-                          <span>صفحه اصلی</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_home')); ?></span>
                       </a>
                   </li>
                   <li>
                       <a href="users.php">
                           <i class="icon-user"></i>
-                          <span>کاربران</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_users')); ?></span>
                       </a>
                   </li>    
                   <li>
                       <a href="invoice.php">
                           <i class="icon-shopping-cart"></i>
-                          <span>سفارشات</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_orders')); ?></span>
                       </a>
                   </li>   
                   <li>
                       <a href="service.php">
                           <i class="icon-shopping-cart"></i>
-                          <span>سرویس ها</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_services')); ?></span>
                       </a>
                   </li>   
                   <li>
                       <a href="product.php">
                           <i class="icon-shopping-cart"></i>
-                          <span>محصولات</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_products')); ?></span>
                       </a>
                   </li>
                   <li>
                       <a href="payment.php">
                           <i class="icon-credit-card"></i>
-                          <span>تراکنش ها</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_transactions')); ?></span>
                       </a>
                   </li>   
                   <li>
                       <a href="cancelService.php">
                           <i class="icon-trash"></i>
-                          <span>حذف سرویس</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_cancel_service')); ?></span>
                       </a>
                   </li> 
                   <li>
                       <a href="keyboard.php">
                           <i class="icon-sort-by-alphabet-alt"></i>
-                          <span>چیدمان کیبورد</span>
+                          <span><?php echo htmlspecialchars(panelT('nav_keyboard')); ?></span>
                       </a>
                   </li>
               </ul>

@@ -73,6 +73,147 @@ function panelLoginUiStrings(): array
     return $all[$lang] ?? $all['en'];
 }
 
+/**
+ * Shared admin chrome + dashboard (explicit EN/RU/FA — not runtime_i18n substring replace).
+ */
+function panelShellStrings(): array
+{
+    static $all = null;
+    if ($all !== null) {
+        return $all;
+    }
+
+    $all = [
+        'logo_prefix' => [
+            'en' => 'Bot',
+            'ru' => 'Бот',
+            'fa' => 'ربات',
+        ],
+        'logo_name' => [
+            'en' => 'Mirza',
+            'ru' => 'Мирза',
+            'fa' => 'میرزا',
+        ],
+        'hello' => [
+            'en' => 'Hello',
+            'ru' => 'Привет',
+            'fa' => 'سلام',
+        ],
+        'settings' => [
+            'en' => 'Settings',
+            'ru' => 'Настройки',
+            'fa' => 'تنظیمات',
+        ],
+        'logout' => [
+            'en' => 'Log out',
+            'ru' => 'Выход',
+            'fa' => 'خروج',
+        ],
+        'nav_home' => [
+            'en' => 'Home',
+            'ru' => 'Главная',
+            'fa' => 'صفحه اصلی',
+        ],
+        'nav_users' => [
+            'en' => 'Users',
+            'ru' => 'Пользователи',
+            'fa' => 'کاربران',
+        ],
+        'nav_orders' => [
+            'en' => 'Orders',
+            'ru' => 'Заказы',
+            'fa' => 'سفارشات',
+        ],
+        'nav_services' => [
+            'en' => 'Services',
+            'ru' => 'Сервисы',
+            'fa' => 'سرویس ها',
+        ],
+        'nav_products' => [
+            'en' => 'Products',
+            'ru' => 'Товары',
+            'fa' => 'محصولات',
+        ],
+        'nav_transactions' => [
+            'en' => 'Transactions',
+            'ru' => 'Транзакции',
+            'fa' => 'تراکنش ها',
+        ],
+        'nav_cancel_service' => [
+            'en' => 'Delete service',
+            'ru' => 'Удаление сервиса',
+            'fa' => 'حذف سرویس',
+        ],
+        'nav_keyboard' => [
+            'en' => 'Keyboard layout',
+            'ru' => 'Раскладка клавиатуры',
+            'fa' => 'چیدمان کیبورد',
+        ],
+        'page_title_dashboard' => [
+            'en' => 'Mirza bot admin panel',
+            'ru' => 'Панель управления ботом Мирза',
+            'fa' => 'پنل مدیریت ربات میرزا',
+        ],
+        'stat_users' => [
+            'en' => 'Users',
+            'ru' => 'Пользователей',
+            'fa' => 'تعداد کاربران',
+        ],
+        'stat_total_sales' => [
+            'en' => 'Total sales (count)',
+            'ru' => 'Всего продаж (шт.)',
+            'fa' => 'تعداد فروش کل',
+        ],
+        'stat_sum_sales' => [
+            'en' => 'Total sales amount',
+            'ru' => 'Сумма продаж',
+            'fa' => 'جمع کل فروش',
+        ],
+        'stat_new_users_today' => [
+            'en' => 'New users today',
+            'ru' => 'Новых пользователей сегодня',
+            'fa' => 'کاربران جدید امروز',
+        ],
+        'chart_sales' => [
+            'en' => 'Sales chart',
+            'ru' => 'График продаж',
+            'fa' => 'چارت فروش',
+        ],
+        'currency_toman' => [
+            'en' => 'Toman',
+            'ru' => 'томан',
+            'fa' => 'تومان',
+        ],
+    ];
+
+    return $all;
+}
+
+function panelT(string $key): string
+{
+    $lang = panelCurrentLanguage();
+    $all = panelShellStrings();
+    if (!isset($all[$key])) {
+        return $key;
+    }
+    $row = $all[$key];
+
+    return $row[$lang] ?? $row['fa'] ?? $key;
+}
+
+function panelHtmlAttrs(): array
+{
+    $lang = panelCurrentLanguage();
+    if ($lang === 'fa') {
+        return ['lang' => 'fa', 'dir' => 'rtl'];
+    }
+    if ($lang === 'ru') {
+        return ['lang' => 'ru', 'dir' => 'ltr'];
+    }
+
+    return ['lang' => 'en', 'dir' => 'ltr'];
+}
+
 function panelRuntimeMap(): array
 {
     static $map = null;

@@ -45,9 +45,10 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
     }
     $max_amount = max(array_map(function($info) { return $info['total_amount']; }, $grouped_data)) ?: 1;
     }
+$__panelHtml = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +57,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title_dashboard')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -87,7 +88,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
                           </div>
                           <div class="value">
                               <h1><?php echo $resultcount; ?></h1>
-                              <p>تعداد کاربران</p>
+                              <p><?php echo htmlspecialchars(panelT('stat_users')); ?></p>
                           </div>
                       </section>
                   </div>
@@ -98,7 +99,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
                           </div>
                           <div class="value">
                               <h1><?php echo $resultcontsell; ?></h1>
-                              <p>تعداد فروش کل</p>
+                              <p><?php echo htmlspecialchars(panelT('stat_total_sales')); ?></p>
                           </div>
                       </section>
                   </div>
@@ -108,8 +109,8 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
                               <i class="icon-bar-chart"></i>
                           </div>
                           <div class="value">
-                              <h1 style = "font-size:19px"><?php echo $subinvoice['SUM(price_product)']; ?> تومان </h1>
-                              <p>جمغ کل فروش</p>
+                              <h1 style = "font-size:19px"><?php echo $subinvoice['SUM(price_product)']; ?> <?php echo htmlspecialchars(panelT('currency_toman')); ?> </h1>
+                              <p><?php echo htmlspecialchars(panelT('stat_sum_sales')); ?></p>
                           </div>
                       </section>
                   </div>
@@ -120,7 +121,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
                           </div>
                           <div class="value">
                               <h1><?php echo $resultcountday; ?></h1>
-                              <p>کاربران جدید امروز</p>
+                              <p><?php echo htmlspecialchars(panelT('stat_new_users_today')); ?></p>
                           </div>
                       </section>
                   </div>
@@ -128,7 +129,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
               </div>
               <?php if($resultcontsell != 0 ){?>
               <div class="titlechart">
-                  <h3 class = "title">چارت فروش</h3>
+                  <h3 class = "title"><?php echo htmlspecialchars(panelT('chart_sales')); ?></h3>
               </div>
               <div class="custom-bar-chart">
             <?php
@@ -143,7 +144,7 @@ $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
                 <div class="<?php echo $class; ?>">
                     <div class="title"><?php echo htmlspecialchars($jdate); ?></div>
                     <div class="value tooltips" 
-                         data-original-title="<?php echo number_format($amount); ?> تومان" 
+                         data-original-title="<?php echo htmlspecialchars(number_format($amount) . ' ' . panelT('currency_toman')); ?>" 
                          data-toggle="tooltip" 
                          style="height: <?php echo $height_percentage; ?>%;">
                         <?php echo number_format($amount); ?>
