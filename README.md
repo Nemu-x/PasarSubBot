@@ -96,38 +96,43 @@ Ensure you have the following before installation:
 - 🖥️ **Ubuntu Server 22**
 - 🌐 **A Domain Name**
 
-### 🔧 Installing the Bot (Stable Version)
+### 🔧 Installing the Bot (one-click, this fork)
 
-Run the following command in your server terminal:
+On **Ubuntu 22**, as **root**, with a **domain** pointing to the server:
 
 ```bash
-curl -o install.sh -L https://raw.githubusercontent.com/mahdiMGF2/mirzabot/main/install.sh && bash install.sh
+curl -fsSL -o install.sh https://raw.githubusercontent.com/Nemu-x/PasarSubBot/main/install.sh && bash install.sh
 ```
 
-When prompted, **select option 1** to complete the installation.
+When prompted, **select option 1** to install. The script downloads this repo from GitHub, sets up Apache, PHP, MySQL, SSL, then asks for bot token, admin chat id, domain, DB credentials, and **default language** (EN / RU / FA).
 
+To use another GitHub fork/repo:
+
+```bash
+export GITHUB_REPO=yourname/PasarSubBot
+export GITHUB_BRANCH=main
+curl -fsSL -o install.sh "https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/install.sh" && bash install.sh
+```
 
 ---
 
 ## 🔄 updating bot
 
-To update your bot to the latest version, use the following command:
+Use the **same** `install.sh` URL as above, then choose **option 2** (Update):
 
 ```bash
-curl -o install.sh -L https://raw.githubusercontent.com/mahdiMGF2/botmirzapanel/main/install.sh && bash install.sh
+curl -fsSL -o install.sh https://raw.githubusercontent.com/Nemu-x/PasarSubBot/main/install.sh && bash install.sh update
 ```
-When prompted, **select option update** to remove the bot.
+
 ---
 
 ## ❌ removing
 
-If you want to completely remove the bot from your server, run the following command:
-
 ```bash
-curl -o install.sh -L https://raw.githubusercontent.com/mahdiMGF2/botmirzapanel/main/install.sh && bash install.sh
+curl -fsSL -o install.sh https://raw.githubusercontent.com/Nemu-x/PasarSubBot/main/install.sh && bash install.sh remove
 ```
 
-When prompted, **select option 3** to remove the bot.
+Or run `bash install.sh` interactively and choose **option 3**.
 
 ---
 
