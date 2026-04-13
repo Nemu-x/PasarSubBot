@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/i18n.php';
 ini_set('session.cookie_httponly', true);
 session_start();
 session_regenerate_id(true);

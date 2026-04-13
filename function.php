@@ -1824,14 +1824,109 @@ function publickey()
 function languagechange($path_dir)
 {
     $setting = select("setting", "*");
-    return json_decode(file_get_contents($path_dir), true)['fa'];
-    if (intval($setting['languageen']) == 1) {
-        return json_decode(file_get_contents($path_dir), true)['en'];
-    } elseif (intval($setting['languageru']) == 1) {
-        return json_decode(file_get_contents($path_dir), true)['ru'];
-    } else {
-        return json_decode(file_get_contents($path_dir), true)['fa'];
+    $textData = json_decode(file_get_contents($path_dir), true);
+    if (!is_array($textData)) {
+        return [];
     }
+
+    $defaultLanguage = $textData['fa'] ?? [];
+    $selectedLanguage = 'en';
+
+    global $from_id;
+    if (!empty($from_id)) {
+        $userData = select("user", "language", "id", $from_id, "select");
+        $userLanguage = normalizeSupportedLanguage($userData['language'] ?? null);
+        if ($userLanguage !== 'fa') {
+            $selectedLanguage = $userLanguage;
+        }
+    }
+
+    if ($selectedLanguage === 'en') {
+        if (intval($setting['languageen'] ?? 0) === 1) {
+            $selectedLanguage = 'en';
+        } elseif (intval($setting['languageru'] ?? 0) === 1) {
+            $selectedLanguage = 'ru';
+        } elseif (intval($setting['languageen'] ?? 0) === 0 && intval($setting['languageru'] ?? 0) === 0) {
+            // Both flags off: Persian global UI (installer option 3; admin can turn EN/RU on).
+            $selectedLanguage = 'fa';
+        } else {
+            $selectedLanguage = 'fa';
+        }
+    }
+
+    $translatedLanguage = $textData[$selectedLanguage] ?? [];
+    if (!is_array($translatedLanguage)) {
+        $translatedLanguage = [];
+    }
+
+    // Keep backward compatibility: missing translated keys fallback to Persian text.
+    return mergeLanguageTexts($defaultLanguage, $translatedLanguage);
+}
+function normalizeSupportedLanguage($languageCode): string
+{
+    $languageCode = strtolower((string) $languageCode);
+    if (str_starts_with($languageCode, 'en')) {
+        return 'en';
+    }
+    if (str_starts_with($languageCode, 'ru')) {
+        return 'ru';
+    }
+    return 'fa';
+}
+function getRuntimeI18nMap(): array
+{
+    static $runtimeMap = null;
+    if ($runtimeMap !== null) {
+        return $runtimeMap;
+    }
+    $runtimePath = __DIR__ . '/runtime_i18n.json';
+    if (!file_exists($runtimePath)) {
+        $runtimeMap = [];
+        return $runtimeMap;
+    }
+    $decoded = json_decode(file_get_contents($runtimePath), true);
+    $runtimeMap = is_array($decoded) ? $decoded : [];
+    return $runtimeMap;
+}
+function translateHardcodedText(string $text, string $language): string
+{
+    $language = normalizeSupportedLanguage($language);
+    if ($language === 'fa') {
+        return $text;
+    }
+    $runtimeMap = getRuntimeI18nMap();
+    if (empty($runtimeMap)) {
+        return $text;
+    }
+    $hash = sha1($text);
+    if (!isset($runtimeMap[$hash]) || !is_array($runtimeMap[$hash])) {
+        return $text;
+    }
+    return $runtimeMap[$hash][$language] ?? $runtimeMap[$hash]['fa'] ?? $text;
+}
+function getUserLanguageById($userId): string
+{
+    if (empty($userId)) {
+        return 'en';
+    }
+    $userData = select("user", "language", "id", $userId, "select");
+    return normalizeSupportedLanguage($userData['language'] ?? 'en');
+}
+function localizeTextForUser(string $text, $userId): string
+{
+    return translateHardcodedText($text, getUserLanguageById($userId));
+}
+function mergeLanguageTexts(array $defaultTexts, array $translatedTexts): array
+{
+    $result = $defaultTexts;
+    foreach ($translatedTexts as $key => $value) {
+        if (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+            $result[$key] = mergeLanguageTexts($result[$key], $value);
+            continue;
+        }
+        $result[$key] = $value;
+    }
+    return $result;
 }
 function generateAuthStr($length = 10)
 {

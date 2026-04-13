@@ -227,6 +227,33 @@ EOF
     echo -e "\e[91mAll mirrors failed. Restored original sources.list\033[0m"
     return 1
 }
+
+# Apply global bot UI language in `setting` (admin panel uses languageen / languageru; both 0 = Persian).
+# Args: mysql_root_user mysql_root_password database_name choice(1=en 2=ru 3=fa)
+apply_setting_default_language() {
+    local root_user="$1"
+    local root_pass="$2"
+    local dbname="$3"
+    local choice="${4:-1}"
+    case "$choice" in
+        2)
+            mysql -u"$root_user" -p"$root_pass" -e "USE \`$dbname\`; UPDATE setting SET languageen='0', languageru='1' LIMIT 1;" 2>/dev/null || {
+                echo -e "\e[93mWarning: Could not set default language to Russian (MySQL).\033[0m"
+            }
+            ;;
+        3)
+            mysql -u"$root_user" -p"$root_pass" -e "USE \`$dbname\`; UPDATE setting SET languageen='0', languageru='0' LIMIT 1;" 2>/dev/null || {
+                echo -e "\e[93mWarning: Could not set default language to Persian (MySQL).\033[0m"
+            }
+            ;;
+        *)
+            mysql -u"$root_user" -p"$root_pass" -e "USE \`$dbname\`; UPDATE setting SET languageen='1', languageru='0' LIMIT 1;" 2>/dev/null || {
+                echo -e "\e[93mWarning: Could not set default language to English (MySQL).\033[0m"
+            }
+            ;;
+    esac
+}
+
 # Install Function for Mirza Pro
 function install_bot() {
     echo -e "\e[32mInstalling Mirza Pro script ... \033[0m\n"
@@ -747,6 +774,15 @@ EOF
             curl -k --max-time 10 $url > /dev/null 2>&1 || {
                 echo -e "\e[93mWarning: Could not reach URL immediately, but installation may still be successful.\033[0m"
             }
+            echo ""
+            echo -e "\e[36mDefault bot language — choose global UI (text.json + setting flags)\e[0m"
+            echo -e "\e[36mزبان پیش‌فرض ربات — / Язык интерфейса бота по умолчанию:\e[0m"
+            echo -e "  \e[33m1\e[0m) English (recommended)"
+            echo -e "  \e[33m2\e[0m) Russian / Русский"
+            echo -e "  \e[33m3\e[0m) Persian / فارسی"
+            read -r -p "Select [1-3] (default: 1): " INSTALL_DEFAULT_LANG
+            INSTALL_DEFAULT_LANG=${INSTALL_DEFAULT_LANG:-1}
+            apply_setting_default_language "$ROOT_USER" "$ROOT_PASSWORD" "$dbname" "$INSTALL_DEFAULT_LANG"
             clear
             echo " "
             echo -e "\e[102mDomain Bot: https://${YOUR_DOMAIN}\033[0m"

@@ -23,7 +23,7 @@ $text_bot_var = json_decode(file_get_contents('text.json'), true);
 if (!checktelegramip())
     die("Unauthorized access");
 
-$textbotlang = json_decode(file_get_contents($Pathfiles . 'text.json'), true)['fa'];
+$textbotlang = languagechange($Pathfiles . 'text.json');
 $dataBase = select("botsaz", "*", "bot_token", $ApiToken, "select");
 $admin_ids = json_decode($dataBase['admin_ids']);
 $setting = json_decode($dataBase['setting'], true);
@@ -76,6 +76,7 @@ if ($from_id != 0) {
     $randomString = bin2hex(random_bytes(6));
     $date = time();
     $valueverify = 1;
+    $userLanguage = normalizeSupportedLanguage($language_code ?? 'fa');
     if (!is_dir("data/$from_id")) {
         mkdir("data/$from_id");
         $data_user = json_encode(array(
@@ -83,7 +84,7 @@ if ($from_id != 0) {
         ));
         file_put_contents("data/$from_id/$from_id.json", $data_user);
     }
-    $stmt = $pdo->prepare("INSERT IGNORE INTO user (id , step,limit_usertest,User_Status,number,Balance,pagenumber,username,agent,message_count,last_message_time,affiliates,affiliatescount,cardpayment,number_username,namecustom,register,verify,codeInvitation,pricediscount,maxbuyagent,joinchannel,score,bottype,status_cron) VALUES (:from_id, 'none',:limit_usertest_all,'Active','none','0','1',:username,'f','0','0','0','0',:showcard,'100','none',:date,:verifycode,:codeInvitation,'0','0','0','0',:bottype,'1')");
+    $stmt = $pdo->prepare("INSERT IGNORE INTO user (id , step,limit_usertest,User_Status,number,Balance,pagenumber,username,agent,message_count,last_message_time,affiliates,affiliatescount,cardpayment,number_username,namecustom,register,verify,codeInvitation,pricediscount,maxbuyagent,joinchannel,score,bottype,status_cron,language) VALUES (:from_id, 'none',:limit_usertest_all,'Active','none','0','1',:username,'f','0','0','0','0',:showcard,'100','none',:date,:verifycode,:codeInvitation,'0','0','0','0',:bottype,'1',:language)");
     $stmt->bindParam(':bottype', $ApiToken);
     $stmt->bindParam(':from_id', $from_id);
     $stmt->bindParam(':limit_usertest_all', $settingmain['limit_usertest_all']);
@@ -92,6 +93,7 @@ if ($from_id != 0) {
     $stmt->bindParam(':date', $date);
     $stmt->bindParam(':verifycode', $valueverify);
     $stmt->bindParam(':codeInvitation', $randomString);
+    $stmt->bindParam(':language', $userLanguage);
     $stmt->execute();
 }
 $user = select("user", "*", "id", $from_id, "select");

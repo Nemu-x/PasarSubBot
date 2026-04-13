@@ -19,6 +19,9 @@ function telegram($method, $datas = [],$botToken = null)
     }
 }
 function sendmessage($chat_id,$text,$keyboard,$parse_mode){
+    if (function_exists('localizeTextForUser') && is_string($text)) {
+        $text = localizeTextForUser($text, $chat_id);
+    }
     return telegram('sendmessage',[
         'chat_id' => $chat_id,
         'text' => $text,
@@ -64,6 +67,9 @@ function senddocumentsid($chat_id,$documentid,$caption){
     ]);
 }
 function Editmessagetext($chat_id, $message_id, $text, $keyboard,$parse_mode = 'HTML'){
+    if (function_exists('localizeTextForUser') && is_string($text)) {
+        $text = localizeTextForUser($text, $chat_id);
+    }
     return telegram('editmessagetext', [
         'chat_id' => $chat_id,
         'message_id' => $message_id,
@@ -110,6 +116,7 @@ function pinmessage($from_id,$message_id){
 #-----------------------------#
 $update = json_decode(file_get_contents("php://input"), true);
 $from_id = $update['message']['from']['id'] ?? $update['callback_query']['from']['id'] ?? $update["inline_query"]['from']['id'] ?? 0;
+$language_code = strtolower($update['message']['from']['language_code'] ?? $update['callback_query']['from']['language_code'] ?? "fa");
 $Chat_type = $update["message"]["chat"]["type"] ?? $update['callback_query']['message']['chat']['type'] ?? '';
 $text = $update["message"]["text"]  ?? '';
 $text =convertPersianNumbersToEnglish($text);

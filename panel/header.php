@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/i18n.php';
+?>
 <!--header start-->
       <header class="header white-bg">
           <div>
@@ -22,6 +25,9 @@
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
+                            <li><a href="?lang=en"><i class="icon-flag"></i> EN</a></li>
+                            <li><a href="?lang=ru"><i class="icon-flag"></i> RU</a></li>
+                            <li><a href="?lang=fa"><i class="icon-flag"></i> FA</a></li>
                             <li><a href="#"><i class="icon-cog"></i> تنظیمات</a></li>
                             <li><a href="login.php"><i class="icon-key"></i> خروج</a></li>
                         </ul>

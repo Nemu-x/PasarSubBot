@@ -63,6 +63,9 @@ function telegram($method, $datas = [], $token = null)
 }
 function sendmessage($chat_id,$text,$keyboard,$parse_mode,$bot_token = null){
     if(intval($chat_id) == 0)return ['ok' => false];
+    if (function_exists('localizeTextForUser') && is_string($text)) {
+        $text = localizeTextForUser($text, $chat_id);
+    }
     return telegram('sendmessage',[
         'chat_id' => $chat_id,
         'text' => $text,
@@ -108,6 +111,9 @@ function senddocumentsid($chat_id,$documentid,$caption){
     ]);
 }
 function Editmessagetext($chat_id, $message_id, $text, $keyboard,$parse_mode = 'HTML'){
+    if (function_exists('localizeTextForUser') && is_string($text)) {
+        $text = localizeTextForUser($text, $chat_id);
+    }
     return telegram('editmessagetext', [
         'chat_id' => $chat_id,
         'message_id' => $message_id,
