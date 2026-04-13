@@ -31,10 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo 'Invalid request method';
 }
 $textbot = file_get_contents($Pathfile.'text.json');
+$__panelHtml = panelHtmlAttrs();
 ?>
 
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,7 @@ $textbot = file_get_contents($Pathfile.'text.json');
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -55,6 +56,7 @@ $textbot = file_get_contents($Pathfile.'text.json');
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -62,9 +64,14 @@ $textbot = file_get_contents($Pathfile.'text.json');
       <script src="js/respond.min.js"></script>
     <![endif]-->
     <style>
+        html[dir="rtl"] body {
+            direction: rtl;
+        }
+        html[dir="ltr"] body {
+            direction: ltr;
+        }
         body {
             font-family: 'Vazir', sans-serif;
-            direction: rtl;
             background-color: #f4f7f6;
             color: #333;
             padding: 20px;
@@ -137,7 +144,7 @@ $textbot = file_get_contents($Pathfile.'text.json');
     </style>
 </head>
 
-<body>
+<body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
 <section id="container" class="">
     <?php include("header.php"); ?>
@@ -149,9 +156,9 @@ $textbot = file_get_contents($Pathfile.'text.json');
                 <aside class="col-lg-12">
                     <section class="panel">
                         <div class="container">
-                            <h1>ویرایش متن</h1>
+                            <h1><?php echo htmlspecialchars(panelT('text_edit_title')); ?></h1>
                             <form id="jsonForm"></form>
-                            <button type="button" onclick="saveChanges()">ذخیره تغییرات</button>
+                            <button type="button" onclick="saveChanges()"><?php echo htmlspecialchars(panelT('btn_save_changes')); ?></button>
                         </div>
                     </section>
                 </aside>
@@ -172,6 +179,10 @@ $textbot = file_get_contents($Pathfile.'text.json');
 <script src="js/common-scripts.js"></script>
 
 <script>
+    window.__PANEL_TEXT_ALERTS = <?php echo json_encode([
+        'saved' => panelT('alert_saved'),
+        'error' => panelT('alert_save_error'),
+    ], JSON_UNESCAPED_UNICODE); ?>;
     // تابع برای ساخت فرم
     function createForm(data, parentKey = '') {
         const form = document.getElementById('jsonForm');
@@ -226,14 +237,14 @@ $textbot = file_get_contents($Pathfile.'text.json');
         })
         .then(response => {
             if (response.ok) {
-                alert('تغییرات با موفقیت ذخیره شد!');
+                alert(window.__PANEL_TEXT_ALERTS.saved);
             } else {
-                alert('خطا در ذخیره سازی داده‌ها');
+                alert(window.__PANEL_TEXT_ALERTS.error);
             }
         })
         .catch(error => {
             console.error('Error saving data:', error);
-            alert('خطا در ذخیره سازی داده‌ها');
+            alert(window.__PANEL_TEXT_ALERTS.error);
         });
 
         console.log(updatedJson);
@@ -241,7 +252,7 @@ $textbot = file_get_contents($Pathfile.'text.json');
 </script>
 
 <div class="footer">
-    <p>© 2024 ویرایش فایل JSON</p>
+    <p>© 2024 <?php echo htmlspecialchars(panelT('footer_json')); ?></p>
 </div>
 
 </body>

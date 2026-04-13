@@ -1,0 +1,31 @@
+/* LTR layout when panel language is English or Russian (overrides FlatLab global RTL). */
+html[dir="ltr"] body {
+    direction: ltr !important;
+}
+
+html[dir="ltr"] #sidebar {
+    right: auto;
+    left: 0;
+}
+
+html[dir="ltr"] #main-content {
+    margin-right: 0;
+    margin-left: 180px;
+}
+
+html[dir="ltr"] a.logo {
+    float: left;
+}
+
+html[dir="ltr"] .sidebar-toggle-box {
+    float: right;
+}
+
+html[dir="ltr"] .sidebar-closed #sidebar {
+    margin-right: 0;
+    margin-left: -180px;
+}
+
+html[dir="ltr"] .sidebar-closed #main-content {
+    margin-left: 0;
+}

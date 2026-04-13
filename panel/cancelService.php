@@ -20,9 +20,10 @@ if($_GET['removeid'] && $_GET['removeid']){
     $stmt->execute();
     header("Location: cancelService.php");
 }
+$__panelHtml = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +32,7 @@ if($_GET['removeid'] && $_GET['removeid']){
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -43,6 +44,7 @@ if($_GET['removeid'] && $_GET['removeid']){
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -52,7 +54,7 @@ if($_GET['removeid'] && $_GET['removeid']){
   </head>
 
 
-<body>
+<body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
     <section id="container" class="">
 <?php include("header.php");
@@ -64,7 +66,7 @@ if($_GET['removeid'] && $_GET['removeid']){
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
-                            <header class="panel-heading">لیست درخواست های حذف</header>
+                            <header class="panel-heading"><?php echo htmlspecialchars(panelT('del_req_list')); ?></header>
                                 <section class="panel">
                         </section>
                             <table class="table table-striped border-top" id="sample_1">
@@ -72,19 +74,20 @@ if($_GET['removeid'] && $_GET['removeid']){
                                     <tr>
                                         <th style="width: 8px;">
                                             <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th class="hidden-phone">شناسه</th>
-                                        <th class="hidden-phone">آیدی عددی کاربر</th>
-                                        <th class="hidden-phone">نام کاربری سرویس</th>
-                                        <th>توضیحات</th>
-                                        <th class="hidden-phone">وضعیت</th>
-                                        <th class="hidden-phone">عملیات</th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_id')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_user_numeric_id')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_config_username')); ?></th>
+                                        <th><?php echo htmlspecialchars(panelT('col_description')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_status_short')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_operation')); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody> <?php
                                 foreach($listcencel as $list){
                                     if($list['category'] == null){
-                                        $list['category'] = "ندارد";
+                                        $list['category'] = panelT('none');
                                     }
+                                    $bdel = htmlspecialchars(panelT('btn_delete_request'), ENT_QUOTES, 'UTF-8');
                                    echo "<tr class=\"odd gradeX\">
                                         <td>
                                         <input type=\"checkbox\" class=\"checkboxes\" value=\"1\" /></td>
@@ -93,7 +96,7 @@ if($_GET['removeid'] && $_GET['removeid']){
                                         <td class=\"hidden-phone\">{$list['username']}</td>
                                         <td class=\"hidden-phone\">{$list['description']}</td>
                                         <td class=\"hidden-phone\">{$list['status']}</td>
-                                        <td  class=\"hidden-phone\"><a class = \"btn btn-danger\" href= \"cancelService.php?removeid={$list['id']}\">حذف درخواست</a></td>
+                                        <td  class=\"hidden-phone\"><a class = \"btn btn-danger\" href= \"cancelService.php?removeid={$list['id']}\">$bdel</a></td>
                                     </tr>";
                                 }
                                     ?>
@@ -122,6 +125,7 @@ if($_GET['removeid'] && $_GET['removeid']){
     <script src="js/common-scripts.js"></script>
 
     <!--script for this page only-->
+    <script>window.__PANEL_DT_LANG = <?php echo panelDataTablesLanguageJson(); ?>;</script>
     <script src="js/dynamic-table.js"></script>
 
 

@@ -68,10 +68,11 @@ $__panelHtml = panelHtmlAttrs();
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
   </head>
 
-  <body>
+  <body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
   <section id="container" class="">
   <?php include("header.php");

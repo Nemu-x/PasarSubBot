@@ -40,19 +40,21 @@ if($method == "POST" && is_array($keyboard)){
         exit;
     }
 }
+$__panelHtml = panelHtmlAttrs();
 ?>
 
 <!doctype html>
-<html lang="FA">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
     <script>
       window.__MIRZA_API_ORIGIN = window.location.origin + <?php echo json_encode($applicationBasePath); ?>;
     </script>
     <script type="module" crossorigin src="js/sort_keyboard.js"></script>
     <link rel="stylesheet" crossorigin href="css/sort_keyboard.css">
+    <link rel="stylesheet" href="css/panel-i18n.css">
     <style>
     @font-face {
     font-family: 'yekan';
@@ -94,9 +96,9 @@ button{
         }
     </style>
   </head>
-  <body>
-    <a class="btnback" href = "index.php">بازگشت به پنل کاربری</a>
-    <a class="btndefult" href = "keyboard.php?action=reaset" >بازگشت به حالت پیشفرض</a>
+  <body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
+    <a class="btnback" href = "index.php"><?php echo htmlspecialchars(panelT('keyboard_back_panel')); ?></a>
+    <a class="btndefult" href = "keyboard.php?action=reaset" ><?php echo htmlspecialchars(panelT('keyboard_back_default')); ?></a>
     <div id="root"></div>
   </body>
 </html>

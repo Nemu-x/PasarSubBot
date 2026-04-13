@@ -189,16 +189,144 @@ function panelShellStrings(): array
     return $all;
 }
 
+require_once __DIR__ . '/locale/pages.php';
+
+function panelAllStrings(): array
+{
+    static $merged = null;
+    if ($merged !== null) {
+        return $merged;
+    }
+    $merged = array_merge(panelShellStrings(), panelPageStringDefinitions());
+
+    return $merged;
+}
+
 function panelT(string $key): string
 {
     $lang = panelCurrentLanguage();
-    $all = panelShellStrings();
+    $all = panelAllStrings();
     if (!isset($all[$key])) {
         return $key;
     }
     $row = $all[$key];
 
     return $row[$lang] ?? $row['fa'] ?? $key;
+}
+
+function panelDataTablesLanguageJson(): string
+{
+    $lang = panelCurrentLanguage();
+    $maps = [
+        'en' => [
+            'sLengthMenu' => '_MENU_ records per page',
+            'sZeroRecords' => 'No matching records found',
+            'sEmptyTable' => 'No data available in table',
+            'sInfo' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+            'sInfoEmpty' => 'Showing 0 to 0 of 0 entries',
+            'sInfoFiltered' => '(filtered from _MAX_ total entries)',
+            'sSearch' => 'Search:',
+            'oPaginate' => ['sPrevious' => 'Prev', 'sNext' => 'Next'],
+        ],
+        'ru' => [
+            'sLengthMenu' => '_MENU_ записей на страницу',
+            'sZeroRecords' => 'Нет данных',
+            'sEmptyTable' => 'Нет данных в таблице',
+            'sInfo' => 'Записи с _START_ по _END_ из _TOTAL_',
+            'sInfoEmpty' => '0 из 0',
+            'sInfoFiltered' => '(отфильтровано из _MAX_)',
+            'sSearch' => 'Поиск:',
+            'oPaginate' => ['sPrevious' => 'Назад', 'sNext' => 'Вперёд'],
+        ],
+        'fa' => [
+            'sLengthMenu' => 'نمایش _MENU_ رکورد در صفحه',
+            'sZeroRecords' => 'موردی یافت نشد',
+            'sEmptyTable' => 'داده‌ای در جدول نیست',
+            'sInfo' => 'نمایش _START_ تا _END_ از _TOTAL_ رکورد',
+            'sInfoEmpty' => '۰ تا ۰ از ۰',
+            'sInfoFiltered' => '(فیلتر از _MAX_ رکورد)',
+            'sSearch' => 'جستجو:',
+            'oPaginate' => ['sPrevious' => 'قبلی', 'sNext' => 'بعدی'],
+        ],
+    ];
+    $data = $maps[$lang] ?? $maps['en'];
+
+    return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT);
+}
+
+function panelInvoiceStatusLabel(string $status): string
+{
+    $map = [
+        'unpaid' => 'inv_unpaid',
+        'active' => 'inv_active',
+        'disabledn' => 'inv_disabledn',
+        'end_of_time' => 'inv_end_time',
+        'end_of_volume' => 'inv_end_volume',
+        'sendedwarn' => 'inv_warned',
+        'send_on_hold' => 'inv_hold',
+        'removebyuser' => 'inv_removed',
+    ];
+
+    return isset($map[$status]) ? panelT($map[$status]) : $status;
+}
+
+function panelPaymentMethodLabel(string $method): string
+{
+    $map = [
+        'cart to cart' => 'pay_cart',
+        'low balance by admin' => 'pay_low_admin',
+        'add balance by admin' => 'pay_add_admin',
+        'Currency Rial 1' => 'pay_rial1',
+        'Currency Rial tow' => 'pay_rial2',
+        'Currency Rial 3' => 'pay_rial3',
+        'aqayepardakht' => 'pay_aqaye',
+        'zarinpal' => 'pay_zarinpal',
+        'plisio' => 'pay_plisio',
+        'arze digital offline' => 'pay_arz_offline',
+        'Star Telegram' => 'pay_star',
+        'nowpayment' => 'pay_nowpayment',
+    ];
+
+    return isset($map[$method]) ? panelT($map[$method]) : $method;
+}
+
+function panelPaymentStatusLabel(string $status): string
+{
+    $map = [
+        'paid' => 'pay_paid',
+        'Unpaid' => 'pay_unpaid',
+        'expire' => 'pay_expired',
+        'reject' => 'pay_reject',
+        'waiting' => 'pay_waiting',
+    ];
+
+    return isset($map[$status]) ? panelT($map[$status]) : $status;
+}
+
+function panelServiceTypeLabel(string $type): string
+{
+    $map = [
+        'extend_user' => 'svc_extend',
+        'extend_user_by_admin' => 'svc_extend_admin',
+        'extra_user' => 'svc_extra_vol',
+        'extra_time_user' => 'svc_extra_time',
+        'transfertouser' => 'svc_transfer',
+        'extends_not_user' => 'svc_extend_missing',
+        'change_location' => 'svc_change_loc',
+    ];
+
+    return isset($map[$type]) ? panelT($map[$type]) : $type;
+}
+
+function panelUserStatusLabel(string $status): string
+{
+    $map = [
+        'Active' => 'user_status_active',
+        'active' => 'user_status_active',
+        'block' => 'user_status_block',
+    ];
+
+    return isset($map[$status]) ? panelT($map[$status]) : $status;
 }
 
 function panelHtmlAttrs(): array

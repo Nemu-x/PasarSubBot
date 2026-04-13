@@ -16,9 +16,10 @@ if( !isset($_SESSION["user"]) || !$result ){
     header('Location: login.php');
     return;
 }
+$__panelHtml = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -39,6 +40,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -48,7 +50,7 @@ if( !isset($_SESSION["user"]) || !$result ){
   </head>
 
 
-<body>
+<body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
     <section id="container" class="">
 <?php include("header.php");
@@ -60,15 +62,15 @@ if( !isset($_SESSION["user"]) || !$result ){
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
-                            <header class="panel-heading">لیست اینباند های مرزبان</header>
+                            <header class="panel-heading"><?php echo htmlspecialchars(panelT('inbound_list')); ?></header>
                             <table class="table table-striped border-top" id="sample_1">
                                 <thead>
                                     <tr>
                                         <th style="width: 8px;">
                                             <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th class="hidden-phone">نام پنل</th>
-                                        <th class="hidden-phone">نام پروتکل</th>
-                                        <th class="hidden-phone">نام اینباند</th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_panel_name')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_protocol')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_inbound_name')); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody> <?php
@@ -106,6 +108,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <script src="js/common-scripts.js"></script>
 
     <!--script for this page only-->
+    <script>window.__PANEL_DT_LANG = <?php echo panelDataTablesLanguageJson(); ?>;</script>
     <script src="js/dynamic-table.js"></script>
 
 

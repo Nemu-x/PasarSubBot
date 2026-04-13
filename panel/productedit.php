@@ -17,14 +17,14 @@ $id_product = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
 $product = select("product","*","id",$id_product,"select");
 if($product == false){
     $statusmessage = true;
-    $infomesssage ="محصول پیدا نشد";
+    $infomesssage = panelT('err_product_not_found');
 }else{
 if($_GET['action'] == "save"){
     $name_product = htmlspecialchars($_POST['name_product'], ENT_QUOTES, 'UTF-8');
     $prodcutcheck = select("product","*","name_product",$name_product,"count");
     if($prodcutcheck != 0){
         $statusmessage = true;
-        $infomesssage ="نام محصول وجود دارد.";
+        $infomesssage = panelT('err_product_name_taken');
     }else{
         if($product['name_product'] != $name_product){
             update("product","name_product",$name_product,"id",$id_product);
@@ -33,7 +33,7 @@ if($_GET['action'] == "save"){
     $price_product = htmlspecialchars($_POST['price_product'], ENT_QUOTES, 'UTF-8');
     if(!is_numeric($price_product)){
         $statusmessage = true;
-        $infomesssage ="مبلغ محصول باید عدد باشد";
+        $infomesssage = panelT('err_price_numeric');
     }else{
         if($product['price_product'] != $name_product){
             update("product","price_product",$price_product,"id",$id_product);
@@ -42,7 +42,7 @@ if($_GET['action'] == "save"){
     $Volume_constraint = htmlspecialchars($_POST['Volume_constraint'], ENT_QUOTES, 'UTF-8');
     if(!is_numeric($Volume_constraint)){
         $statusmessage = true;
-        $infomesssage ="حجم محصول باید عدد باشد";
+        $infomesssage = panelT('err_volume_numeric');
     }else{
         if($product['Volume_constraint'] != $Volume_constraint){
             update("product","Volume_constraint",$Volume_constraint,"id",$id_product);
@@ -51,7 +51,7 @@ if($_GET['action'] == "save"){
     $Service_time = htmlspecialchars($_POST['Service_time'], ENT_QUOTES, 'UTF-8');
     if(!is_numeric($Service_time)){
         $statusmessage = true;
-        $infomesssage ="زمان محصول باید عدد باشد";
+        $infomesssage = panelT('err_time_numeric');
     }else{
         if($product['Service_time'] != $Service_time){
             update("product","Service_time",$Service_time,"id",$id_product);
@@ -60,7 +60,7 @@ if($_GET['action'] == "save"){
     $agent = htmlspecialchars($_POST['agent'], ENT_QUOTES, 'UTF-8');
     if(!in_array($agent,['f','n','n2'])){
         $statusmessage = true;
-        $infomesssage ="گروه کاربری نامعتبر است";
+        $infomesssage = panelT('err_agent_invalid');
     }else{
         if($product['agent'] != $agent){
             update("product","agent",$agent,"id",$id_product);
@@ -80,9 +80,10 @@ if($_GET['action'] == "save"){
     }
 }
 }
+$__panelHtml = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,7 +92,7 @@ if($_GET['action'] == "save"){
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -103,6 +104,7 @@ if($_GET['action'] == "save"){
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -111,7 +113,7 @@ if($_GET['action'] == "save"){
     <![endif]-->
   </head>
 
-  <body>
+  <body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
   <section id="container" class="">
   <?php include("header.php");
@@ -121,52 +123,52 @@ if($_GET['action'] == "save"){
             <section class="wrapper">
                 <!-- page start-->
                 <?php if($statusmessage){
-                    echo "<h2>$infomesssage</h2>";
+                    echo '<h2>' . htmlspecialchars($infomesssage) . '</h2>';
                 } ?>
                 <div class="row">
                     <aside class="col-lg-12">
                             <section class="panel">
                             <div class="panel-body bio-graph-info">
-                                <h1>ویرایش محصول</h1>
+                                <h1><?php echo htmlspecialchars(panelT('product_edit_title')); ?></h1>
                                 <form class="form-horizontal" role="form" method = "post" action = "productedit.php?action=save&id=<?php echo $id_product ?>">
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">نام محصول</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_product_name')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['name_product'];?>" type="text" name = "name_product" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">قیمت محصول</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_price')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['price_product'];?>" type="number" name = "price_product" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">حجم محصول</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_volume')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['Volume_constraint'];?>" type="number" name = "Volume_constraint" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">زمان محصول</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_duration')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['Service_time'];?>" type="number" name = "Service_time" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">گروه کاربری</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_agent_type')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['agent'];?>" type="text" name = "agent" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">دسته بندی</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_category')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['category'];?>" type="text" name = "category" class="form-control input-sm m-bot15">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">یادداشت</label>
+                                        <label class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_note_short')); ?></label>
                                         <div class="col-lg-7">
                                             <input value = "<?php echo $product['note'];?>" type="text" name = "note" class="form-control input-sm m-bot15">
                                         </div>
@@ -175,7 +177,7 @@ if($_GET['action'] == "save"){
                                     </div>
 
                                     <div class="form-group">
-                                            <button type="submit" class="btn btn-success">تغییر تنظیمات</button>
+                                            <button type="submit" class="btn btn-success"><?php echo htmlspecialchars(panelT('btn_save_settings')); ?></button>
                                     </div>
                                 </form>
                             </div>

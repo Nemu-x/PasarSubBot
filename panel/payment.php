@@ -13,9 +13,10 @@ if( !isset($_SESSION["user"]) || !$result ){
     header('Location: login.php');
     return;
 }
+$__panelHtml = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +37,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -45,7 +47,7 @@ if( !isset($_SESSION["user"]) || !$result ){
   </head>
 
 
-<body>
+<body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
     <section id="container" class="">
 <?php include("header.php");
@@ -57,51 +59,33 @@ if( !isset($_SESSION["user"]) || !$result ){
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
-                            <header class="panel-heading">لیست تراکنش ها</header>
+                            <header class="panel-heading"><?php echo htmlspecialchars(panelT('tx_list')); ?></header>
                             <table class="table table-striped border-top" id="sample_1">
                                 <thead>
                                     <tr>
                                         <th style="width: 8px;">
                                             <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th class="hidden-phone">آیدی عددی</th>
-                                        <th>شماره تراکنش</th>
-                                        <th class="hidden-phone">مبلغ تراکنش</th>
-                                        <th class="hidden-phone">زمان تراکنش</th>
-                                        <th class="hidden-phone">روش پرداخت</th>
-                                        <th class="hidden-phone">وضعیت تراکنش</th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_numeric_id')); ?></th>
+                                        <th><?php echo htmlspecialchars(panelT('col_tx_id')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_tx_amount')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_tx_time')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_tx_method')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_tx_status')); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody> <?php
                                 foreach($listpayment as $list){
                                     $list['price'] = number_format($list['price']);
-                                    $list['Payment_Method'] = [
-                                        'cart to cart' => "کارت به کارت",
-                                        'low balance by admin' => "کسر موجودی توسط ادمین",
-                                        "add balance by admin" => "افزایش موجودی توسط ادمین",
-                                        "Currency Rial 1" => "درگاه ارزی ریالی اول",
-                                        "Currency Rial tow" => "درگاه ارزی ریالی دوم",
-                                        "Currency Rial 3"	 => "درگاه ارزی ریالی سوم",
-                                        "aqayepardakht" => "درگاه اقای پرداخت",
-                                        "zarinpal" => "زرین پال",
-                                        "plisio" => "درکاه ارزی plisio",
-                                        'arze digital offline' => "درگاه ارزی آفلاین",
-                                        'Star Telegram' => "استار تلگرام",
-                                        'nowpayment' => 'NowPayment'
-                                    ][$list['Payment_Method']];
+                                    $list['Payment_Method'] = panelPaymentMethodLabel($list['Payment_Method']);
+                                    $ps = $list['payment_Status'];
                                     $color = [
                                         'paid' => "statuscoloregreen",
                                         'Unpaid' => "statuscolorered",
                                         'expire' => "statuscoloregry",
                                         "reject" => "statuscolorereject",
                                         "waiting" => "statuscolorewait"
-                                    ][$list['payment_Status']];
-                                    $list['payment_Status'] = [
-                                        'paid' => "پرداخت شده",
-                                        'Unpaid' => "پرداخت نشده",
-                                        'expire' => "منقضی شده",
-                                        "reject" => "رد شده توسط ادمین",
-                                        "waiting" => "در انتظار تایید توسط ادمین"
-                                    ][$list['payment_Status']];
+                                    ][$ps];
+                                    $list['payment_Status'] = panelPaymentStatusLabel($ps);
                                    echo "<tr class=\"odd gradeX\">
                                         <td>
                                         <input type=\"checkbox\" class=\"checkboxes\" value=\"1\" /></td>
@@ -138,6 +122,7 @@ if( !isset($_SESSION["user"]) || !$result ){
     <script src="js/common-scripts.js"></script>
 
     <!--script for this page only-->
+    <script>window.__PANEL_DT_LANG = <?php echo panelDataTablesLanguageJson(); ?>;</script>
     <script src="js/dynamic-table.js"></script>
 
 

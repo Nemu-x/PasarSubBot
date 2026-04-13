@@ -41,9 +41,10 @@ if (isset($_POST['login'])) {
     }
 }
 $lang = panelCurrentLanguage();
+$__ha = panelHtmlAttrs();
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>">
+<html lang="<?php echo htmlspecialchars($__ha['lang'], ENT_QUOTES, 'UTF-8'); ?>" dir="<?php echo htmlspecialchars($__ha['dir'], ENT_QUOTES, 'UTF-8'); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,6 +63,7 @@ $lang = panelCurrentLanguage();
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>

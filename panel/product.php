@@ -17,13 +17,14 @@ if( !isset($_SESSION["user"]) || !$result ){
     header('Location: login.php');
     return;
 }
+$__panelHtml = panelHtmlAttrs();
 $nameProduct = $_POST['nameproduct'] ?? null;
 if(!empty($nameProduct)){
     $randomString = bin2hex(random_bytes(2));
     $userdata['data_limit_reset'] = "no_reset";
     $product = select("product","*","name_product",$nameProduct,"count");
     if($product != 0){
-        echo "alert(\"محصول از قبل وجود دارد\")";
+        echo '<script>alert(' . json_encode(panelT('product_exists_alert'), JSON_UNESCAPED_UNICODE) . ');</script>';
         return;
     }
     $hidepanel = "{}";
@@ -57,7 +58,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($__panelHtml['lang']); ?>" dir="<?php echo htmlspecialchars($__panelHtml['dir']); ?>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +67,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>پنل مدیریت ربات میرزا</title>
+    <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,6 +79,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/panel-i18n.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -87,7 +89,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
   </head>
 
 
-<body>
+<body class="panel-lang-<?php echo htmlspecialchars(panelCurrentLanguage()); ?>">
 
     <section id="container" class="">
 <?php include("header.php");
@@ -99,34 +101,36 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
-                            <header class="panel-heading">لیست محصولات</header>
+                            <header class="panel-heading"><?php echo htmlspecialchars(panelT('products_list')); ?></header>
                                 <section class="panel">
-                                <a href="#addproduct" data-toggle="modal"  class="btn btn-info  btn-sm">اضافه کردن محصول</a>
-                                <a href="#moveradif" data-toggle="modal"  class="btn btn-success  btn-sm">جابه جایی ردیف محصول</a>
+                                <a href="#addproduct" data-toggle="modal"  class="btn btn-info  btn-sm"><?php echo htmlspecialchars(panelT('btn_add_product')); ?></a>
+                                <a href="#moveradif" data-toggle="modal"  class="btn btn-success  btn-sm"><?php echo htmlspecialchars(panelT('btn_reorder_products')); ?></a>
                         </section>
                             <table class="table table-striped border-top" id="sample_1">
                                 <thead>
                                     <tr>
                                         <th style="width: 8px;">
                                             <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
-                                        <th class="hidden-phone">شناسه</th>
-                                        <th class="hidden-phone">کد سرویس</th>
-                                        <th class="hidden-phone">نام سرویس</th>
-                                        <th>قیمت سرویس</th>
-                                        <th class="hidden-phone">حجم سرویس</th>
-                                        <th class="hidden-phone">زمان سرویس</th>
-                                        <th class="hidden-phone">لوکیشن سرویس</th>
-                                        <th class="hidden-phone">گروه کاربری سرویس</th>
-                                        <th class="hidden-phone">ریست دوره ای سرویس</th>
-                                        <th class="hidden-phone">دسته بندی محصول</th>
-                                        <th class="hidden-phone">عملیات</th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_id')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_service_code')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_service_name')); ?></th>
+                                        <th><?php echo htmlspecialchars(panelT('col_service_price')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_service_volume')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_service_time')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_service_loc')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_agent_group')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_reset_cycle')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_category')); ?></th>
+                                        <th class="hidden-phone"><?php echo htmlspecialchars(panelT('col_operation')); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody> <?php
                                 foreach($listinvoice as $list){
                                     if($list['category'] == null){
-                                        $list['category'] = "ندارد";
+                                        $list['category'] = panelT('none');
                                     }
+                                   $bd = htmlspecialchars(panelT('btn_delete_product'), ENT_QUOTES, 'UTF-8');
+                                   $be = htmlspecialchars(panelT('btn_edit_product'), ENT_QUOTES, 'UTF-8');
                                    echo "<tr class=\"odd gradeX\">
                                         <td>
                                         <input type=\"checkbox\" class=\"checkboxes\" value=\"1\" /></td>
@@ -140,7 +144,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
                                         <td class=\"hidden-phone\">{$list['agent']}</td>
                                         <td class=\"hidden-phone\">{$list['data_limit_reset']}</td>
                                         <td class=\"hidden-phone\">{$list['category']}</td>
-                                        <td  class=\"hidden-phone\"><a class = \"btn btn-danger\" href= \"product.php?removeid={$list['id']}\">حذف محصول</a><a class = \"btn btn-info\" href= \"productedit.php?id={$list['id']}\">ویرایش محصول</a></td>
+                                        <td  class=\"hidden-phone\"><a class = \"btn btn-danger\" href= \"product.php?removeid={$list['id']}\">$bd</a><a class = \"btn btn-info\" href= \"productedit.php?id={$list['id']}\">$be</a></td>
                                     </tr>";
                                 }
                                     ?>
@@ -157,23 +161,23 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                <h4 class="modal-title">تغییر مکان دو محصول</h4>
+                                                <h4 class="modal-title"><?php echo htmlspecialchars(panelT('modal_swap_title')); ?></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <form action = "product.php" method = "GET" class="form-horizontal" role="form">
                                                     <div class="form-group">
-                                                        <label for="oneproduct" class="col-lg-2 control-label">شناسه اول</label>
+                                                        <label for="oneproduct" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_first_id')); ?></label>
                                                         <div class="col-lg-10">
                                                             <input type="number" name = "oneproduct" class="form-control" id="oneproduct">
                                                         </div>
-                                                        <label for="toweproduct" class="col-lg-2 control-label" style = "margin:20px 0;">شناسه دوم</label>
+                                                        <label for="toweproduct" class="col-lg-2 control-label" style = "margin:20px 0;"><?php echo htmlspecialchars(panelT('label_second_id')); ?></label>
                                                         <div class="col-lg-10" style = "margin:20px 0;">
                                                             <input type="number" name = "toweproduct" class="form-control" id="toweproduct">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-lg-offset-2 col-lg-10">
-                                                            <button type="submit" class="btn btn-default">تغییر مکان دو محصول</button>
+                                                            <button type="submit" class="btn btn-default"><?php echo htmlspecialchars(panelT('btn_swap_submit')); ?></button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -188,19 +192,19 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                                                <h4 class="modal-title">اضافه کردن محصول</h4>
+                                                <h4 class="modal-title"><?php echo htmlspecialchars(panelT('modal_add_product')); ?></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <form action = "product.php" method = "POST" class="form-horizontal" role="form">
                                                     <div class="form-group">
-                                                        <label for="nameproduct" class="col-lg-2 control-label">نام محصول</label>
+                                                        <label for="nameproduct" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_product_name')); ?></label>
                                                         <div class="col-lg-10"><input required type="text" name = "nameproduct" class="form-control" id="nameproduct"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="nameproduct" class="col-lg-2 control-label">موقعیت محصول</label>
+                                                        <label for="nameproduct" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_product_location')); ?></label>
                                                         <div class="col-lg-10">
                                                         <select required  name = "namepanel" class="form-control">
-                                                  <option value="/all">تمامی پنل ها</option>
+                                                  <option value="/all"><?php echo htmlspecialchars(panelT('opt_all_panels')); ?></option>
                                                 <?php
                                                 if(count($listpanel)>=0){
                                                 foreach($listpanel as $panel){
@@ -212,39 +216,39 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
                                                     </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="price_product" class="col-lg-2 control-label">قیمت محصول</label>
+                                                        <label for="price_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_price')); ?></label>
                                                         <div class="col-lg-10"><input  required type="number" name = "price_product" class="form-control" id="price_product"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="volume_product" class="col-lg-2 control-label">حجم محصول</label>
+                                                        <label for="volume_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_volume')); ?></label>
                                                         <div class="col-lg-10"><input required type="number" name = "volume_product" class="form-control" id="volume_product"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="time_product" class="col-lg-2 control-label">زمان محصول</label>
+                                                        <label for="time_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_duration')); ?></label>
                                                         <div class="col-lg-10"><input required type="number" name = "time_product" class="form-control" id="volume_product"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="agent_product" class="col-lg-2 control-label">نوع کاربری محصول</label>
+                                                        <label for="agent_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_user_type_product')); ?></label>
                                                         <div class="col-lg-10">
                                                         <select required  name = "agent_product" class="form-control">
-                                                 <option value="f">عادی</option>
-                                                <option value = "n">نماینده</option>
-                                                <option value = "n2">نماینده پیشرفته</option>
+                                                 <option value="f"><?php echo htmlspecialchars(panelT('opt_user_normal')); ?></option>
+                                                <option value = "n"><?php echo htmlspecialchars(panelT('opt_agent')); ?></option>
+                                                <option value = "n2"><?php echo htmlspecialchars(panelT('opt_agent_plus')); ?></option>
                                             </select>
                                                     </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="note_product" class="col-lg-2 control-label">توضیحات محصول</label>
+                                                        <label for="note_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_note')); ?></label>
                                                         <div class="col-lg-10"><input required type="text" name = "note_product" class="form-control" id="note_product"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="cetegory_product" class="col-lg-2 control-label">دسته بندی محصول</label>
+                                                        <label for="cetegory_product" class="col-lg-2 control-label"><?php echo htmlspecialchars(panelT('label_category')); ?></label>
                                                         <div class="col-lg-10"><input required type="text" name = "cetegory_product" class="form-control" id="cetegory_product"></div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <div class="col-lg-offset-2 col-lg-10">
-                                                            <button type="submit" class="btn btn-danger">اضافه کردن محصول</button>
+                                                            <button type="submit" class="btn btn-danger"><?php echo htmlspecialchars(panelT('btn_add_submit')); ?></button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -271,6 +275,7 @@ if(isset($_GET['removeid']) && $_GET['removeid'] !== ''){
     <script src="js/common-scripts.js"></script>
 
     <!--script for this page only-->
+    <script>window.__PANEL_DT_LANG = <?php echo panelDataTablesLanguageJson(); ?>;</script>
     <script src="js/dynamic-table.js"></script>
 
 

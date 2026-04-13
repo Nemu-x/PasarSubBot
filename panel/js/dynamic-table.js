@@ -1,16 +1,20 @@
 var Script = function () {
 
+        var dtLang = (typeof window.__PANEL_DT_LANG === 'object' && window.__PANEL_DT_LANG !== null)
+            ? window.__PANEL_DT_LANG
+            : {};
+
         // begin first table
         $('#sample_1').dataTable({
             "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
             "sPaginationType": "bootstrap",
-            "oLanguage": {
+            "oLanguage": $.extend({
                 "sLengthMenu": "_MENU_ records per page",
                 "oPaginate": {
                     "sPrevious": "Prev",
                     "sNext": "Next"
                 }
-            },
+            }, dtLang),
             "aoColumnDefs": [{
                 'bSortable': false,
                 'aTargets': [0]
@@ -37,13 +41,13 @@ var Script = function () {
         $('#sample_2').dataTable({
             "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
             "sPaginationType": "bootstrap",
-            "oLanguage": {
+            "oLanguage": $.extend({
                 "sLengthMenu": "_MENU_ per page",
                 "oPaginate": {
                     "sPrevious": "Prev",
                     "sNext": "Next"
                 }
-            },
+            }, dtLang),
             "aoColumnDefs": [{
                 'bSortable': false,
                 'aTargets': [0]
@@ -70,13 +74,13 @@ var Script = function () {
         $('#sample_3').dataTable({
             "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
             "sPaginationType": "bootstrap",
-            "oLanguage": {
+            "oLanguage": $.extend({
                 "sLengthMenu": "_MENU_ per page",
                 "oPaginate": {
                     "sPrevious": "Prev",
                     "sNext": "Next"
                 }
-            },
+            }, dtLang),
             "aoColumnDefs": [{
                 'bSortable': false,
                 'aTargets': [0]
