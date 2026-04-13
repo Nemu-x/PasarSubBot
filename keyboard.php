@@ -180,35 +180,38 @@ $keyboardPanel = json_encode([
     'resize_keyboard' => true
 ]);
 if($adminrulecheck['rule'] == "administrator"){
+$kl = $textbotlang['Admin']['keyboard_labels'];
 $keyboardadmin = json_encode([
     'keyboard' => [
         [['text' => $textbotlang['Admin']['Status']['btn']]],
         [['text' => $textbotlang['Admin']['btnkeyboardadmin']['managementpanel']],['text' => $textbotlang['Admin']['btnkeyboardadmin']['addpanel']]],
-        [['text' => "⏳ تنظیم سریع قیمت زمان"],['text' => "🔋 تنظیم سریع قیمت حجم"]],
-        [['text' => $textbotlang['Admin']['btnkeyboardadmin']['managruser']],['text' => "🏬 تنظیمات فروشگاه"]],
-        [['text' => "💎 مالی"]],
-        [['text' => "🤙 بخش پشتیبانی"],['text' => "📚 بخش آموزش"]],
-        [['text' => "📬 گزارش ربات"],['text' => "🛠 قابلیت های پنل"]],
-        [['text' => "⚙️ تنظیمات عمومی"],['text' => "💵 رسید های تایید نشده"]],
+        [['text' => $kl['quick_price_time']],['text' => $kl['quick_price_volume']]],
+        [['text' => $textbotlang['Admin']['btnkeyboardadmin']['managruser']],['text' => $kl['shop_settings']]],
+        [['text' => $kl['finance']]],
+        [['text' => $kl['support_section']],['text' => $kl['tutorial_section']]],
+        [['text' => $kl['report_bug']],['text' => $kl['panel_features']]],
+        [['text' => $kl['general_settings']],['text' => $kl['unverified_payments']]],
         [['text' => $textbotlang['users']['backbtn']]]
     ],
     'resize_keyboard' => true
 ]);
 }
 if($adminrulecheck['rule'] == "Seller"){
+$kl = $textbotlang['Admin']['keyboard_labels'];
 $keyboardadmin = json_encode([
     'keyboard' => [
         [['text' => $textbotlang['Admin']['Status']['btn']]],
-        [['text' => "👤 مدیریت کاربر"]],
+        [['text' => $kl['manage_user']]],
         [['text' => $textbotlang['users']['backbtn']]]
     ],
     'resize_keyboard' => true
 ]);
 }
 if($adminrulecheck['rule'] == "support"){
+$kl = $textbotlang['Admin']['keyboard_labels'];
 $keyboardadmin = json_encode([
     'keyboard' => [
-        [['text' => "👤 مدیریت کاربر"],['text' =>"👁‍🗨 جستجو کاربر"]],
+        [['text' => $kl['manage_user']],['text' => $kl['search_user']]],
         [['text' => $textbotlang['users']['backbtn']]]
     ],
     'resize_keyboard' => true
@@ -275,16 +278,17 @@ $NowPaymentsManage = json_encode([
     ],
     'resize_keyboard' => true
 ]);
+$klsp = $textbotlang['Admin']['keyboard_labels'];
 $setting_panel =  json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها"]],
-        [['text' => "📣 گزارشات ربات"], ['text' => "📯 تنظیمات کانال"]],
-        [['text' => "✅ فعالسازی پنل تحت وب"]],
-        [['text' => "🗑 بهینه سازی ربات "]],
-        [['text' => "📝 تنظیم متن ربات"],['text' => "👨‍🔧 بخش ادمین"]],
-        [['text' => "➕ محدودیت ساخت اکانت تست برای همه"]],
-        [['text' => "💰 مبلغ عضویت نمایندگی"],['text' => "🖼 پس زمینه کیوآرکد"]],
-        [['text' => "🔗 وبهوک مجدد ربات های نماینده"]],
+        [['text' => $klsp['feature_toggles']]],
+        [['text' => $klsp['bot_reports']], ['text' => $klsp['channel_settings']]],
+        [['text' => $klsp['enable_web_panel']]],
+        [['text' => $klsp['optimize_bot']]],
+        [['text' => $klsp['bot_text_settings']],['text' => $klsp['admin_users_section']]],
+        [['text' => $textbotlang['Admin']['getlimitusertest']['setlimitbtn']]],
+        [['text' => $klsp['agent_join_fee']],['text' => $klsp['qrcode_background']]],
+        [['text' => $klsp['agent_bots_webhook']]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true

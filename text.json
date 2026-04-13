@@ -652,6 +652,30 @@
                 "addpanel": "🖥 اضافه کردن پنل",
                 "managruser": "👤 مدیریت کاربر"
             },
+            "keyboard_labels": {
+                "quick_price_time": "⏳ تنظیم سریع قیمت زمان",
+                "quick_price_volume": "🔋 تنظیم سریع قیمت حجم",
+                "shop_settings": "🏬 تنظیمات فروشگاه",
+                "finance": "💎 مالی",
+                "support_section": "🤙 بخش پشتیبانی",
+                "tutorial_section": "📚 بخش آموزش",
+                "bot_reports": "📣 گزارشات ربات",
+                "report_bug": "📬 گزارش ربات",
+                "panel_features": "🛠 قابلیت های پنل",
+                "general_settings": "⚙️ تنظیمات عمومی",
+                "unverified_payments": "💵 رسید های تایید نشده",
+                "feature_toggles": "⚙️ وضعیت قابلیت ها",
+                "channel_settings": "📯 تنظیمات کانال",
+                "enable_web_panel": "✅ فعالسازی پنل تحت وب",
+                "optimize_bot": "🗑 بهینه سازی ربات",
+                "bot_text_settings": "📝 تنظیم متن ربات",
+                "admin_users_section": "👨‍🔧 بخش ادمین",
+                "agent_join_fee": "💰 مبلغ عضویت نمایندگی",
+                "qrcode_background": "🖼 پس زمینه کیوآرکد",
+                "agent_bots_webhook": "🔗 وبهوک مجدد ربات های نماینده",
+                "manage_user": "👤 مدیریت کاربر",
+                "search_user": "👁‍🗨 جستجو کاربر"
+            },
             "report": {
                 "reportnight": "🌙 گزارش شبانه",
                 "reportcron": "📝 گزارش اطلاع رسانی ها"
@@ -672,8 +696,8 @@
         "users": {
             "Rules": "? Rules accepted. You can now use the bot services.",
             "back": "You are back on the main page.",
-            "backbtn": "?? Back to Main Menu",
-            "backmenu": "?? Back to Previous Menu",
+            "backbtn": "🏠 Back to main menu",
+            "backmenu": "◀️ Back to previous menu",
             "time-Service": "⏳ Subscription time",
             "listusers": "📌 Submit one of the following methods to display users.",
             "Volume-Service": "🌐 Service volume",
@@ -933,10 +957,10 @@
             }
         },
         "Admin": {
-            "backadmin": "?? Back to Admin Menu",
-            "backmenu": "?? Back to Previous Menu",
-            "textpaneladmin": "????? Admin Panel",
-            "activebottext": "To use the features of the admin panel:\n\nGo to the page with the keyboard at the bottom.\nOn the keyboard, find and click the button called Bot Reports.\nAfter clicking on the bot reports button, a page will open.\nOn this page, you can select and configure the group you want.\nThis is mandatory",
+            "backadmin": "🏠 Back to admin menu",
+            "backmenu": "◀️ Back to previous menu",
+            "textpaneladmin": "👨‍💼 Admin panel",
+            "activebottext": "To use the admin panel:\n\nLook at the bottom keyboard. Tap the button: <b>📣 گزارشات ربات</b> (that is &quot;Bot Reports&quot; — the label stays in Persian).\nThen choose your report group on the next screen.\n\nThis step is required.",
             "TextPanelAdminLogin": "",
             "affiliates": {
                 "titletopic": "🎁 Report of commissions"
@@ -1321,6 +1345,30 @@
                 "addpanel": "🖥 Add panel",
                 "managruser": "👤 User management"
             },
+            "keyboard_labels": {
+                "quick_price_time": "⏳ Quick: time price",
+                "quick_price_volume": "🔋 Quick: volume price",
+                "shop_settings": "🏬 Shop settings",
+                "finance": "💎 Finance",
+                "support_section": "🤙 Support",
+                "tutorial_section": "📚 Tutorials",
+                "bot_reports": "📣 Bot reports (set group ID)",
+                "report_bug": "📬 Bug report / Mirza info",
+                "panel_features": "🛠 Panel / node tools",
+                "general_settings": "⚙️ General settings",
+                "unverified_payments": "💵 Unverified payments",
+                "feature_toggles": "⚙️ Feature on/off",
+                "channel_settings": "📯 Channel (forced join)",
+                "enable_web_panel": "✅ Web panel + login IP",
+                "optimize_bot": "🗑 Optimize database",
+                "bot_text_settings": "📝 Bot button texts",
+                "admin_users_section": "👨‍🔧 Bot admins",
+                "agent_join_fee": "💰 Agent signup fee",
+                "qrcode_background": "🖼 QR code background",
+                "agent_bots_webhook": "🔗 Resend agent webhooks",
+                "manage_user": "👤 User management",
+                "search_user": "🔍 Search user"
+            },
             "report": {
                 "reportnight": "🌙 Nightly report",
                 "reportcron": "📝 Notification report"
@@ -1605,7 +1653,7 @@
             "backadmin": "🏠 Вернитесь в меню управления",
             "backmenu": "▶️ Вернуться в предыдущее меню",
             "textpaneladmin": "👨‍💼 Панель управления",
-            "activebottext": "Чтобы использовать возможности админ-панели:\n\nПерейдите на страницу с клавиатурой внизу.\nНа клавиатуре найдите и нажмите кнопку «Отчеты о боте».\nПосле нажатия на кнопку «Отчеты о боте» откроется страница.\nНа этой странице вы можете выбрать и настроить нужную вам группу.\nЭто обязательно",
+            "activebottext": "Чтобы пользоваться админкой:\n\nСмотри клавиатуру внизу. Нажми кнопку: <b>📣 گزارشات ربات</b> (надпись по-персидски — это нормально, это «Отчёты бота»).\nДальше выбери группу для отчётов.\n\nШаг обязательный.",
             "TextPanelAdminLogin": "",
             "affiliates": {
                 "titletopic": "🎁Отчет комиссий"
@@ -1989,6 +2037,30 @@
                 "managementpanel": "✏️ управление панелью",
                 "addpanel": "🖥 Добавить панель",
                 "managruser": "👤 Управление пользователями"
+            },
+            "keyboard_labels": {
+                "quick_price_time": "⏳ Быстрая цена: время",
+                "quick_price_volume": "🔋 Быстрая цена: объём",
+                "shop_settings": "🏬 Настройки магазина",
+                "finance": "💎 Финансы",
+                "support_section": "🤙 Поддержка",
+                "tutorial_section": "📚 Обучение",
+                "bot_reports": "📣 Отчёты в группу (ID)",
+                "report_bug": "📬 Баг / инфо Mirza",
+                "panel_features": "🛠 Панель / ноды",
+                "general_settings": "⚙️ Общие настройки",
+                "unverified_payments": "💵 Неподтверждённые платежи",
+                "feature_toggles": "⚙️ Вкл/выкл функций",
+                "channel_settings": "📯 Канал (обяз. подписка)",
+                "enable_web_panel": "✅ Веб-панель + IP входа",
+                "optimize_bot": "🗑 Очистка БД бота",
+                "bot_text_settings": "📝 Тексты кнопок бота",
+                "admin_users_section": "👨‍🔧 Админы бота",
+                "agent_join_fee": "💰 Взнос агента",
+                "qrcode_background": "🖼 Фон QR",
+                "agent_bots_webhook": "🔗 Вебхуки агентов",
+                "manage_user": "👤 Пользователи",
+                "search_user": "🔍 Поиск пользователя"
             },
             "report": {
                 "reportnight": "🌙 Вечерний отчет",

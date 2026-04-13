@@ -1,16 +1,19 @@
 <?php
 require_once __DIR__ . '/i18n.php';
 ini_set('session.cookie_httponly', true);
-session_start();
-session_regenerate_id(true);
+if (session_status() === PHP_SESSION_ACTIVE) {
+    session_regenerate_id(true);
+}
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../function.php';
 require_once __DIR__ . '/../botapi.php';
-$allowed_ips = select("setting","*",null,null,"select");
 
-$user_ip = $_SERVER['REMOTE_ADDR'];
+$ui = panelLoginUiStrings();
+$allowed_ips = select("setting", "*", null, null, "select");
+
+$user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
 $admin_ids = select("admin", "id_admin", null, null, "FETCH_COLUMN");
-$check_ip = $allowed_ips['iplogin'] == $user_ip ? true : false;
+$check_ip = isset($allowed_ips['iplogin']) && (string) $allowed_ips['iplogin'] === (string) $user_ip;
 $texterrr = "";
 $_SESSION["user"] = null;
 if (isset($_POST['login'])) {
@@ -21,11 +24,10 @@ if (isset($_POST['login'])) {
     $query->execute();
     $result = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ( !$result ) {
-        $texterrr = 'نام کاربری یا رمزعبور وارد شده اشتباه است!';
+    if (!$result) {
+        $texterrr = $ui['err_user'];
     } else {
-                       
-        if ( $password == $result["password"]) {
+        if ($password == $result["password"]) {
             foreach ($admin_ids as $admin) {
                 $texts = "کاربر با نام کاربری $username وارد پنل تحت وب شد";
                 sendmessage($admin, $texts, null, 'html');
@@ -34,13 +36,14 @@ if (isset($_POST['login'])) {
             header('Location: index.php');
             exit;
         } else {
-            $texterrr =  'رمز صحیح نمی باشد';
+            $texterrr = $ui['err_pass'];
         }
     }
 }
+$lang = panelCurrentLanguage();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,7 +52,7 @@ if (isset($_POST['login'])) {
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.html">
 
-    <title>ورود به پنل مدیریت</title>
+    <title><?php echo htmlspecialchars($ui['html_title'], ENT_QUOTES, 'UTF-8'); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +63,6 @@ if (isset($_POST['login'])) {
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -69,7 +71,15 @@ if (isset($_POST['login'])) {
 
   <body class="login-body">
     <div class="container">
-        <?php if(!$check_ip){?>
+        <p class="text-center" style="margin:12px 0;">
+            <span style="color:#fff;text-shadow:0 0 4px #000;"><?php echo htmlspecialchars($ui['lang_switch'], ENT_QUOTES, 'UTF-8'); ?>:</span>
+            <a href="login.php?lang=en" style="color:#cde;">EN</a>
+            &nbsp;|&nbsp;
+            <a href="login.php?lang=ru" style="color:#cde;">RU</a>
+            &nbsp;|&nbsp;
+            <a href="login.php?lang=fa" style="color:#cde;">FA</a>
+        </p>
+        <?php if (!$check_ip) { ?>
         <div class="error-card">
             
             <div class="error-icon">
@@ -78,20 +88,21 @@ if (isset($_POST['login'])) {
                 </svg>
             </div>
             
-            <h1>دسترسی محدود شده</h1>
-            <p>جهت استفاده از پنل تحت وب باید از داخل ربات زیر پیام اطلاعات ورود دکمه تنظیم آیپی ورود را زده و آیپی زیر را در آنجا ارسال کنید تا بتوانید استفاده نمایید.</p>
+            <h1><?php echo htmlspecialchars($ui['access_title'], ENT_QUOTES, 'UTF-8'); ?></h1>
+            <p><?php echo htmlspecialchars($ui['access_body'], ENT_QUOTES, 'UTF-8'); ?></p>
             
-            <div class="ip-address" id="user-ip"><?php echo $user_ip; ?></div>
+            <p><strong><?php echo htmlspecialchars($ui['your_ip_label'], ENT_QUOTES, 'UTF-8'); ?></strong></p>
+            <div class="ip-address" id="user-ip"><?php echo htmlspecialchars($user_ip, ENT_QUOTES, 'UTF-8'); ?></div>
         </div>
         <?php } ?>
-        <?php if($check_ip){?>
-      <form method="post" class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <h2 class="form-signin-heading">پنل مدیریت ربات میرزا</h2>
+        <?php if ($check_ip) { ?>
+      <form method="post" class="form-signin" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] ?? 'login.php', ENT_QUOTES, 'UTF-8'); ?>">
+        <h2 class="form-signin-heading"><?php echo htmlspecialchars($ui['form_title'], ENT_QUOTES, 'UTF-8'); ?></h2>
         <div class="login-wrap">
-            <p><?php echo $texterrr; ?></p>
-            <input type="text" name="username" class="form-control" placeholder="نام کاربری" autofocus>
-            <input type="password" name="password" class="form-control" placeholder="کلمه عبور">
-            <button class="btn btn-lg btn-login btn-block" name="login" type="submit">ورود</button>
+            <p><?php echo htmlspecialchars($texterrr, ENT_QUOTES, 'UTF-8'); ?></p>
+            <input type="text" name="username" class="form-control" placeholder="<?php echo htmlspecialchars($ui['username_ph'], ENT_QUOTES, 'UTF-8'); ?>" autofocus>
+            <input type="password" name="password" class="form-control" placeholder="<?php echo htmlspecialchars($ui['password_ph'], ENT_QUOTES, 'UTF-8'); ?>">
+            <button class="btn btn-lg btn-login btn-block" name="login" type="submit"><?php echo htmlspecialchars($ui['submit'], ENT_QUOTES, 'UTF-8'); ?></button>
         </div>
 
       </form>

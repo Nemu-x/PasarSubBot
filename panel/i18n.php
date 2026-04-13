@@ -23,6 +23,56 @@ function panelCurrentLanguage(): string
     return $lang;
 }
 
+/**
+ * Login page copy (explicit EN/RU/FA — does not rely on runtime_i18n substring replace).
+ */
+function panelLoginUiStrings(): array
+{
+    $lang = panelCurrentLanguage();
+    $all = [
+        'en' => [
+            'html_title' => 'Admin panel login',
+            'lang_switch' => 'Language',
+            'access_title' => 'Login blocked: IP not whitelisted',
+            'access_body' => 'This is not a bug. For security, the web panel only opens from one IP at a time. In Telegram, open your bot as admin, find the menu item for setting the panel login IP (sometimes “IP login” / “iplogin”), send the IP address below there, then refresh this page.',
+            'your_ip_label' => 'Your current IP (copy this into the bot)',
+            'form_title' => 'Bot admin panel',
+            'username_ph' => 'Username',
+            'password_ph' => 'Password',
+            'submit' => 'Sign in',
+            'err_user' => 'Invalid username or password.',
+            'err_pass' => 'Wrong password.',
+        ],
+        'ru' => [
+            'html_title' => 'Вход в панель',
+            'lang_switch' => 'Язык',
+            'access_title' => 'Вход закрыт: IP не в белом списке',
+            'access_body' => 'Это не ошибка программы. Панель открывается только с разрешённого IP. В Telegram откройте бота как администратор, найдите настройку IP для входа в веб-панель (iplogin), отправьте боту IP ниже, затем обновите страницу.',
+            'your_ip_label' => 'Ваш текущий IP (отправьте это боту)',
+            'form_title' => 'Панель управления ботом',
+            'username_ph' => 'Логин',
+            'password_ph' => 'Пароль',
+            'submit' => 'Войти',
+            'err_user' => 'Неверный логин или пароль.',
+            'err_pass' => 'Неверный пароль.',
+        ],
+        'fa' => [
+            'html_title' => 'ورود به پنل مدیریت',
+            'lang_switch' => 'زبان',
+            'access_title' => 'دسترسی محدود شده (IP)',
+            'access_body' => 'این یک خطای برنامه نیست؛ برای امنیت، پنل فقط از یک آی‌پی مشخص باز می‌شود. در تلگرام، ربات را به‌عنوان ادمین باز کنید، گزینهٔ تنظیم آی‌پی ورود به پنل (iplogin) را بزنید، آی‌پی زیر را همانجا بفرستید، سپس این صفحه را رفرش کنید.',
+            'your_ip_label' => 'آی‌پی فعلی شما',
+            'form_title' => 'پنل مدیریت ربات',
+            'username_ph' => 'نام کاربری',
+            'password_ph' => 'کلمه عبور',
+            'submit' => 'ورود',
+            'err_user' => 'نام کاربری یا رمزعبور وارد شده اشتباه است!',
+            'err_pass' => 'رمز صحیح نمی باشد',
+        ],
+    ];
+    return $all[$lang] ?? $all['en'];
+}
+
 function panelRuntimeMap(): array
 {
     static $map = null;

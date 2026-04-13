@@ -209,7 +209,7 @@ if (in_array($text, $textadmin) || $datain == "admin") {
     step('home', $from_id);
     update("user", "limit_usertest", $text);
     update("setting", "limit_usertest_all", $text);
-} elseif ($text == "📯 تنظیمات کانال" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['channel_settings'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['Admin']['channel']['description'], $channelkeyboard, 'HTML');
 } elseif ($text == $textbotlang['Admin']['Status']['btn'] || $datain == "stat_all_bot") {
     $Balanceall = select("user", "SUM(Balance)", null, null, "select")['SUM(Balance)'];
@@ -1489,7 +1489,7 @@ $textday
     sendmessage($from_id, "📌 ارسال پیام لغو گردید.", null, 'HTML');
 }
 //_____________________[ text ]____________________________//
-elseif ($text == "📝 تنظیم متن ربات" && $adminrulecheck['rule'] == "administrator") {
+elseif ($text == $textbotlang['Admin']['keyboard_labels']['bot_text_settings'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $textbot, 'HTML');
 } elseif ($text == "تنظیم متن شروع" && $adminrulecheck['rule'] == "administrator") {
     $textstart = $textbotlang['Admin']['ManageUser']['ChangeTextGet'] . "<code>{$datatextbot['text_start']}</code>";
@@ -1982,7 +1982,7 @@ volume : حجم سرویس
     forwardMessage($from_id, $userdata['messageid'], $text);
     sendmessage($from_id, $textbotlang['Admin']['ManageUser']['MessageSent'], $keyboardadmin, 'HTML');
     step('home', $from_id);
-} elseif ($text == "📚 بخش آموزش" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['tutorial_section'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $keyboardhelpadmin, 'HTML');
 } elseif ($text == "📚 اضافه کردن آموزش" && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['Admin']['Help']['GetAddNameHelp'], $backadmin, 'HTML');
@@ -2083,7 +2083,7 @@ $caption";
         ]);
     }
     step('home', $from_id);
-} elseif ($text == "⚙️ وضعیت قابلیت ها" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['feature_toggles'] && $adminrulecheck['rule'] == "administrator") {
     if ($setting['Bot_Status'] == "✅  ربات روشن است") {
         update("setting", "Bot_Status", "botstatuson");
     } elseif ($setting['Bot_Status'] == "❌ ربات خاموش است") {
@@ -3043,7 +3043,7 @@ $caption";
     sendmessage($from_id, $textbotlang['Admin']['ManageUser']['SaveText'], $textbot, 'HTML');
     update("textbot", "text", $text, "id_text", "text_roll");
     step('home', $from_id);
-} elseif ($text == "📣 گزارشات ربات" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['bot_reports'] && $adminrulecheck['rule'] == "administrator") {
     $textreports = "📣در این بخش میتوانید آیدی عددی گروه را برای ارسال اعلان ارسال نمایید
 آموزش تنظیم گروه :
 1 - ابتدا یک گروه  بسازید 
@@ -3197,7 +3197,7 @@ $caption";
     sendmessage($from_id, $textbotlang['Admin']['Channel']['SetChannelReport'], $setting_panel, 'HTML');
     update("setting", "Channel_Report", $text);
     step('home', $from_id);
-} elseif ($text == "🏬 تنظیمات فروشگاه" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['shop_settings'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $shopkeyboard, 'HTML');
 } elseif ($text == "🛍 اضافه کردن محصول" && $adminrulecheck['rule'] == "administrator") {
     $locationproduct = select("marzban_panel", "*", null, null, "count");
@@ -3325,7 +3325,7 @@ $caption";
     $stmt->execute();
     sendmessage($from_id, $textbotlang['Admin']['Product']['SaveProduct'], $shopkeyboard, 'HTML');
     step('home', $from_id);
-} elseif ($text == "👨‍🔧 بخش ادمین" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['admin_users_section'] && $adminrulecheck['rule'] == "administrator") {
     $list_admin = select("admin", "*", null, null, "fetchAll");
     $keyboardadmin = ['inline_keyboard' => []];
     foreach ($list_admin as $admin) {
@@ -3343,9 +3343,9 @@ $caption";
     ];
     $keyboardadmin = json_encode($keyboardadmin);
     sendmessage($from_id, "📌 در بخش زیر می توانید لیست ادمین ها را مشاهده کنید همچنین با زدن دکمه ضربدر می توانید یک ادمین را حذف کنید", $keyboardadmin, 'HTML');
-} elseif ($text == "⚙️ تنظیمات عمومی" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['general_settings'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $setting_panel, 'HTML');
-} elseif ($text == "🤙 بخش پشتیبانی" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['support_section'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $supportcenter, 'HTML');
 } elseif (preg_match('/Confirm_pay_(\w+)/', $datain, $dataget) && ($adminrulecheck['rule'] == "administrator" || $adminrulecheck['rule'] == "Seller")) {
     $order_id = $dataget[1];
@@ -6951,7 +6951,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     sendDocument($from_id, 'api/documents.txt', "📌 داکیومنت api ربات 
 نکات : 
 ۱ - در صورتی که به endpoint خاصی نیاز داشتید به اکانت پشتیبانی پیام دهید تا بررسی شود.");
-} elseif ($text == "✅ فعالسازی پنل تحت وب" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['enable_web_panel'] && $adminrulecheck['rule'] == "administrator") {
     $admin_select = select("admin", "*", "id_admin", $from_id, "select");
     $randomString = bin2hex(random_bytes(6));
     update("admin", "username", $from_id, "id_admin", $from_id);
@@ -7423,7 +7423,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $textpro = "{$user['Processing_value_one']}*$text";
     update("marzban_panel", "inbound_deactive", $textpro, "name_panel", $user['Processing_value']);
     step("home", $from_id);
-} elseif ($text == "🗑 بهینه سازی ربات" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['optimize_bot'] && $adminrulecheck['rule'] == "administrator") {
     $textoptimize = "❌❌❌❌❌❌❌ متن زیر را با دقت بخوانید
 
 📌 با تایید گزینه زیر عملیات زیر انجام خواهد شد. و قابل بازگشت نیستند
@@ -7618,11 +7618,11 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     }
     update("user", "Processing_value", $userdata['idpanel'], "id", $from_id);
     step("home", $from_id);
-} elseif ($text == "📬 گزارش ربات" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['report_bug'] && $adminrulecheck['rule'] == "administrator") {
     $textupdate = "💬 | گزارش ربات\n\n🔹 | اگر در عملکرد ربات با <b>باگ یا مشکلی</b> روبه‌رو شدید، لطفاً مورد را برای بررسی به ما اطلاع دهید.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | در صورتی که با <b>باگ جدی</b> یا رفتار غیرعادی مواجه شدید، سریع‌تر گزارش دهید تا رفع شود.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | اگر پیشنهادی برای <b>افزودن قابلیت جدید</b> دارید یا ایده‌ای برای بهبود عملکرد ربات در نظر دارید، خوشحال می‌شویم بشنویم.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | همچنین اگر نیاز به <b>راهنمایی</b> یا کمک دارید، می‌توانید از طریق دایرکت با تیم پشتیبانی در ارتباط باشید.\n\n📩 | برای ارسال گزارش، پیشنهاد یا درخواست راهنمایی، در <b>گروه میرزا</b> پیام بگذارید:\n<a href=\"https://t.me/+TDJJIwuYUsozMzI0\" rel=\"nofollow\" target=\"_blank\">Mirza Group</a>";
     sendmessage($from_id, $textupdate, null, 'HTML');
     step('home', $from_id);
-} elseif ($text == "🛠 قابلیت های پنل") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['panel_features']) {
     sendmessage($from_id, "🪚 برای استفاده از این قابلیت یکی از پنل های زیر را انتخاب نمایید", $json_list_marzban_panel, 'HTML');
     step('getlocoption', $from_id);
 } elseif ($user['step'] == "getlocoption") {
@@ -7838,7 +7838,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     ]);
     $textnode = "✅ نود با موفقیت حذف گردید";
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
-} elseif ($text == "💎 مالی" && $adminrulecheck['rule'] == "administrator") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['finance'] && $adminrulecheck['rule'] == "administrator") {
     $cartotcart = getPaySettingValue('Cartstatus', 'offcard');
     $plisio = getPaySettingValue('nowpaymentstatus', 'offnowpayment');
     $arzireyali1 = getPaySettingValue('statusSwapWallet', 'offSwapinoBot');
@@ -9374,7 +9374,7 @@ f,n.n2", $backadmin, 'HTML');
     }
     step('home', $from_id);
     sendmessage($from_id, "✅ آموزش با موفقیت ذخیره گردید.", $CartManage, 'HTML');
-} elseif ($text == "💰 مبلغ عضویت نمایندگی") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['agent_join_fee']) {
     sendmessage($from_id, "📌 قیمت درخواست  عضویت  برای نمایندگی را ارسال کنید.", $backadmin, 'HTML');
     step("getpricereqagent", $from_id);
 } elseif ($user['step'] == "getpricereqagent") {
@@ -9448,7 +9448,7 @@ f,n.n2", $backadmin, 'HTML');
     update("service_other", "id_user", $text, "id_user", $user['Processing_value']);
     update("Giftcodeconsumed", "id_user", $text, "id_user", $user['Processing_value']);
     step("home", $from_id);
-} elseif ($text == "🖼 پس زمینه کیوآرکد") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['qrcode_background']) {
     sendmessage($from_id, "تصویر خود را برای پس زمینه ارسال کنید", $backadmin, 'HTML');
     step("getimagebackgroundqr", $from_id);
 } elseif ($user['step'] == "getimagebackgroundqr") {
@@ -9749,7 +9749,7 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
     sendmessage($from_id, "✅ مبلغ جایزه با موفقیت تنظیم شد", $wheelkeyboard, 'HTML');
     step("home", $from_id);
     update("setting", "wheelـluck_price", $text, null, null);
-} elseif ($text == "💵 رسید های تایید نشده") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['unverified_payments']) {
     $sql = "SELECT * FROM Payment_report WHERE Payment_Method = 'cart to cart' AND payment_Status = 'waiting'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -11057,7 +11057,7 @@ if ($datain == "settimecornday" && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, "✅ مبلغ با موفقیت ذخیره گردید.", $Startelegram, 'HTML');
     step("home", $from_id);
     update("PaySetting", "ValuePay", $text, "NamePay", "chashbackstar");
-} elseif ($text == "🔋 تنظیم سریع قیمت حجم") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['quick_price_volume']) {
     sendmessage($from_id, "📌 قبل ارسال اطلاعات متن زیر را مطالعه فرمایید . 
 ۱ - این قابلیت برای سرویس دلخواه می باشد.
 ۲ - در صورتی که تمامی پنل های شما یک قیمت هستند و بجای تنظیم تک تک قیمت ها می توانید با استفاده از این قابلیت بصورت یکجا قیمت ها را تنظیم نمایید.
@@ -11096,7 +11096,7 @@ if ($datain == "settimecornday" && $adminrulecheck['rule'] == "administrator") {
     update("marzban_panel", "pricecustomvolume", $pricelist, null, null);
     sendmessage($from_id, "✅ قیمت با موفقیت تنظیم شد", $keyboardadmin, 'HTML');
     step("home", $from_id);
-} elseif ($text == "⏳ تنظیم سریع قیمت زمان") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['quick_price_time']) {
     sendmessage($from_id, "📌 قبل ارسال اطلاعات متن زیر را مطالعه فرمایید . 
 ۱ - این قابلیت برای سرویس دلخواه می باشد.
 ۲ - در صورتی که تمامی پنل های شما یک قیمت هستند و بجای تنظیم تک تک قیمت ها می توانید با استفاده از این قابلیت بصورت یکجا قیمت ها را تنظیم نمایید.
@@ -11555,7 +11555,7 @@ if ($datain == "settimecornday" && $adminrulecheck['rule'] == "administrator") {
 } elseif ($text == "حذف کلی پنل های مخفی" && $adminrulecheck['rule'] == "administrator") {
     update("product", "hide_panel", "{}", "name_product", $user['Processing_value']);
     sendmessage($from_id, "✅ تمامی پنل های مخفی حذف شدند", null, 'HTML');
-} elseif ($text == "🔗 وبهوک مجدد ربات های نماینده") {
+} elseif ($text == $textbotlang['Admin']['keyboard_labels']['agent_bots_webhook']) {
     $bots_agent = select("botsaz", "*", null, null, "fetchAll");
     if (count($bots_agent) == 0) {
         sendmessage($from_id, "❌ رباتی وجود ندارد", null, 'HTML');
