@@ -5,8 +5,8 @@
  * Использование:
  *   php scripts/apply-default-language.php en|ru|fa
  *
- * Примечание: при обоих флагах 0 в languagechange() используется глобальный персидский (FA).
- * EN/RU у отдельных пользователей — через Telegram language_code / поле user.language.
+ * Не подключает config.php целиком — на части серверов в CLI нет ext-mysqli, а там вызывается mysqli_connect().
+ * Парсятся $dbhost, $dbname, $usernamedb, $passworddb из config.php и используется только PDO.
  */
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
@@ -14,7 +14,42 @@ if (PHP_SAPI !== 'cli') {
 }
 
 $root = dirname(__DIR__);
-require_once $root . '/config.php';
+$configPath = $root . '/config.php';
+if (!is_readable($configPath)) {
+    fwrite(STDERR, "Cannot read: $configPath\n");
+    exit(1);
+}
+$configRaw = file_get_contents($configPath);
+
+$readVar = static function (string $name, string $raw): ?string {
+    if (preg_match('/\$' . preg_quote($name, '/') . "\s*=\s*'((?:\\\\.|[^'\\\\])*)'\s*;/", $raw, $m)) {
+        return stripcslashes($m[1]);
+    }
+    return null;
+};
+
+$dbhost = $readVar('dbhost', $configRaw);
+$dbname = $readVar('dbname', $configRaw);
+$usernamedb = $readVar('usernamedb', $configRaw);
+$passworddb = $readVar('passworddb', $configRaw);
+
+if ($dbhost === null || $dbname === null || $usernamedb === null || $passworddb === null) {
+    fwrite(STDERR, "Could not parse db credentials from config.php (expected \$dbhost, \$dbname, \$usernamedb, \$passworddb with single-quoted values).\n");
+    exit(1);
+}
+
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+];
+$dsn = "mysql:host={$dbhost};dbname={$dbname};charset=utf8mb4";
+try {
+    $pdo = new PDO($dsn, $usernamedb, $passworddb, $options);
+} catch (PDOException $e) {
+    fwrite(STDERR, 'PDO connection failed: ' . $e->getMessage() . "\n");
+    exit(1);
+}
 
 $lang = strtolower($argv[1] ?? '');
 if (!in_array($lang, ['en', 'ru', 'fa'], true)) {
