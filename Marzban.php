@@ -3,6 +3,16 @@ include('config.php');
 require_once 'request.php';
 date_default_timezone_set('Asia/Tehran');
 #-----------------------------#
+function marzbanApiUrl($panelUrl, $endpoint)
+{
+    $base = rtrim((string)$panelUrl, '/');
+    $endpoint = '/' . ltrim((string)$endpoint, '/');
+    if (preg_match('#/api$#i', $base) && stripos($endpoint, '/api/') === 0) {
+        $endpoint = substr($endpoint, 4);
+    }
+    return $base . $endpoint;
+}
+
 function token_panel($code_panel,$verify = true){
     $panel = select("marzban_panel","*","code_panel",$code_panel,"select");
     
@@ -11,7 +21,20 @@ function token_panel($code_panel,$verify = true){
         return null;
     }
     
-    $url_get_token = $panel['url_panel'].'/api/admin/token';
+    if (($panel['type'] ?? '') === 'pasarguard') {
+        // Pasarguard deployments can use static API key auth.
+        $apiKey = trim((string)($panel['password_panel'] ?? ''));
+        if ($apiKey === '') {
+            return ['error' => 'Pasarguard API key is empty'];
+        }
+        return ['access_token' => $apiKey];
+    }
+
+    $tokenEndpoints = [
+        '/api/admin/token',   // Marzban default
+        '/api/adm/token',     // Some forks/gateways
+        '/api/admins/token',  // Pasarguard-like variants
+    ];
     $username_panel = $panel['username_panel'];
     $password_panel = $panel['password_panel'];
     if($panel['datelogin'] != null && $verify){
@@ -32,13 +55,26 @@ function token_panel($code_panel,$verify = true){
             'Content-Type: application/x-www-form-urlencoded',
             'accept: application/json'
     );
-    $req = new CurlRequest($url_get_token);
-    $req->setHeaders($headers);
-    $response = $req->post($data_token);
-    if(!empty($response['error'])){
-        return array("error" => $response['error']);
+    $lastError = null;
+    $body = null;
+    foreach ($tokenEndpoints as $tokenEndpoint) {
+        $url_get_token = marzbanApiUrl($panel['url_panel'], $tokenEndpoint);
+        $req = new CurlRequest($url_get_token);
+        $req->setHeaders($headers);
+        $response = $req->post($data_token);
+        if (!empty($response['error'])) {
+            $lastError = $response['error'];
+            continue;
+        }
+        $body = json_decode($response['body'], true);
+        if (isset($body['access_token'])) {
+            break;
+        }
+        $lastError = $response['body'] ?? 'Token endpoint response invalid';
     }
-    $body = json_decode($response['body'], true);
+    if (!isset($body['access_token'])) {
+        return ['error' => $lastError ?: 'Unable to get panel access token'];
+    }
     if(isset($body['access_token'])){
         $time = date('Y/m/d H:i:s');
         $data = json_encode(array(
@@ -58,7 +94,7 @@ function getuser($username_account,$location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/user/' . $username_account;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/' . $username_account);
     $headers = array(
             'accept: application/json'
     );
@@ -77,7 +113,7 @@ function Get_Nodes($location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/nodes';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/nodes');
     $headers = array(
             'accept: application/json'
     );
@@ -94,7 +130,7 @@ function Get_usage_Nodes($location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/nodes/usage';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/nodes/usage');
     $headers = array(
             'accept: application/json'
     );
@@ -111,7 +147,7 @@ function Get_Node($location,$Nodeid)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/node/'.$Nodeid;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/node/'.$Nodeid);
     $headers = array(
             'accept: application/json'
     );
@@ -129,7 +165,7 @@ function getusers($location,$status)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/users?status='.$status;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/users?status='.$status);
     if(!isset($Check_token['access_token']))return;
     $header_value = 'Bearer ';
 
@@ -152,7 +188,7 @@ function getinbounds($location)
 {
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $location,"select");
     $Check_token = token_panel($marzban_list_get['code_panel']);
-    $url =  $marzban_list_get['url_panel'].'/api/inbounds';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/inbounds');
     $header_value = 'Bearer ';
 
     $ch = curl_init();
@@ -177,7 +213,7 @@ function ResetUserDataUsage($username_account,$location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/user/' . $username_account.'/reset';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/' . $username_account.'/reset');
 
     $headers = array(
             'accept: application/json'
@@ -195,7 +231,7 @@ function revoke_sub($username_account,$location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/user/' . $username_account.'/revoke_sub';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/' . $username_account.'/revoke_sub');
     $headers = array(
             'accept: application/json'
     );
@@ -213,7 +249,7 @@ function adduser($location,$data_limit,$username_ac,$timestamp,$note ='',$data_l
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url = $marzban_list_get['url_panel']."/api/user";
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], "/api/user");
     if($marzban_list_get['inbounds'] != null and $marzban_list_get['inbounds'] != "null"){
             if($name_product != false and $name_product != "usertest"){
              $product = select("product","*","name_product",$name_product,"select"); 
@@ -330,7 +366,7 @@ function adduser($location,$data_limit,$username_ac,$timestamp,$note ='',$data_l
 function Get_System_Stats($location){
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $location,"select");
     $Check_token = token_panel($marzban_list_get['code_panel']);
-    $url =  $marzban_list_get['url_panel'].'/api/system';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/system');
     $header_value = 'Bearer ';
 
     $ch = curl_init();
@@ -355,7 +391,7 @@ function removeuser($location,$username)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/user/'.$username;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/'.$username);
     $headers = array(
             'accept: application/json'
     );
@@ -371,7 +407,7 @@ function removenode($location,$nodeid){
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/node/'.$nodeid;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/node/'.$nodeid);
     $headers = array(
             'accept: application/json'
     );
@@ -389,7 +425,7 @@ function Modifyuser($location,$username,array $data)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/user/'.$username;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/'.$username);
     $headers = array(
             'accept: application/json',
             'Content-Type: application/json'
@@ -407,7 +443,7 @@ function Modifyuser_node($location,$id_node,array $data)
 {
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $location,"select");
     $Check_token = token_panel($marzban_list_get['code_panel']);
-    $url =  $marzban_list_get['url_panel'].'/api/node/'.$id_node;
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/node/'.$id_node);
     $payload = json_encode($data);
     $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
@@ -429,7 +465,7 @@ function hosts($location)
 {
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $location,"select");
     $Check_token = token_panel($marzban_list_get['code_panel']);
-    $url =  $marzban_list_get['url_panel'].'/api/hosts';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/hosts');
     $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -453,7 +489,7 @@ function reconnect_node($location,$id_node)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel'].'/api/node/'.$id_node.'/reconnect';
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/node/'.$id_node.'/reconnect');
     $headers = array(
             'accept: application/json'
     );
@@ -471,7 +507,7 @@ function get_list_update($location,$username)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url =  $marzban_list_get['url_panel']."/api/user/$username/sub_update?offset=0&limit=1";
+    $url = marzbanApiUrl($marzban_list_get['url_panel'], "/api/user/$username/sub_update?offset=0&limit=1");
     $headers = array(
             'accept: application/json'
     );

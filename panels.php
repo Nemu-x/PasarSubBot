@@ -14,6 +14,14 @@ require_once __DIR__ . '/mikrotik.php';
 class ManagePanel
 {
     public $pdo, $domainhosts, $name_panel;
+    private function normalizePanelType(array $panel): array
+    {
+        if (($panel['type'] ?? '') === 'pasarguard') {
+            $panel['type'] = 'marzban';
+        }
+        return $panel;
+    }
+
     function createUser($name_panel, $code_product, $usernameC, array $Data_Config)
     {
         $Output = [];
@@ -40,6 +48,7 @@ class ManagePanel
         } else {
             $inoice = false;
         }
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if (!in_array($code_product, ["usertest", "🛍 حجم دلخواه", "customvolume"])) {
 
             $stmt = $pdo->prepare("SELECT * FROM product WHERE (Location = :name_panel OR Location = '/all')  AND code_product = :code_product");
@@ -384,6 +393,7 @@ class ManagePanel
                 'msg' => 'Panel Not Found'
             );
         }
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if (isset($Get_Data_Panel['subvip']) && $Get_Data_Panel['subvip'] == "onsubvip") {
             $inoice = select("invoice", "*", "username", $username, "select");
         } else {
@@ -896,6 +906,7 @@ class ManagePanel
         $Output = array();
         $ManagePanel = new ManagePanel();
         $Get_Data_Panel = select("marzban_panel", "*", "name_panel", $name_panel, "select");
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if ($Get_Data_Panel['type'] == "marzban") {
             $revoke_sub = revoke_sub($username, $name_panel);
             if (isset($revoke_sub['detail']) && $revoke_sub['detail']) {
@@ -1096,6 +1107,7 @@ class ManagePanel
     {
         $Output = array();
         $Get_Data_Panel = select("marzban_panel", "*", "name_panel", $name_panel, "select");
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if ($Get_Data_Panel['type'] == "marzban") {
             $UsernameData = removeuser($Get_Data_Panel['name_panel'], $username);
             if (!empty($UsernameData['status']) && $UsernameData['status'] != 200) {
@@ -1250,6 +1262,7 @@ class ManagePanel
     {
         $Output = array();
         $Get_Data_Panel = select("marzban_panel", "*", "name_panel", $name_panel, "select");
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if ($Get_Data_Panel['type'] == "marzban") {
             if ($Get_Data_Panel['version_panel'] == "1") {
                 $result = getuser($username, $name_panel);
@@ -1505,6 +1518,7 @@ class ManagePanel
         $ManagePanel = new ManagePanel();
         $DataUserOut = $ManagePanel->DataUser($name_panel, $username);
         $Get_Data_Panel = select("marzban_panel", "*", "name_panel", $name_panel, "select");
+        $Get_Data_Panel = $this->normalizePanelType($Get_Data_Panel);
         if ($DataUserOut['status'] == "Unsuccessful") {
             $Output = array(
                 'status' => 'Unsuccessful',
@@ -1611,6 +1625,7 @@ class ManagePanel
                 'msg' => 'data not found'
             );
         }
+        $panel = $this->normalizePanelType($panel);
         if ($panel['type'] == "marzban") {
             $reset = ResetUserDataUsage($username, $panel['name_panel']);
             if (!empty($reset['status']) && $reset['status'] != 200) {
@@ -1815,6 +1830,7 @@ class ManagePanel
             $data_limit_last = $data_limit_last < 0 ? 0 : $data_limit_last;
             $data_limit_new = $data_limit_new + $data_limit_last;
         }
+        $panel = $this->normalizePanelType($panel);
         if ($panel['type'] == "marzban") {
             $data = array(
                 'data_limit' => $data_limit_new,
@@ -1967,6 +1983,7 @@ class ManagePanel
         }
         update("invoice", 'uuid', null, "username", $username_account);
         update("invoice", 'Status', "active", "username", $username_account);
+        $panel = $this->normalizePanelType($panel);
         if ($panel['type'] == "marzban") {
             $data = array(
                 'data_limit' => $new_limit,
@@ -2081,6 +2098,7 @@ class ManagePanel
         }
         update("invoice", 'uuid', null, "username", $username_account);
         update("invoice", 'Status', "active", "username", $username_account);
+        $panel = $this->normalizePanelType($panel);
         if ($panel['type'] == "marzban") {
             $data = array(
                 'expire' => $new_limit,

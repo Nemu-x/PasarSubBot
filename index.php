@@ -312,11 +312,16 @@ if (intval($user['verify']) == 0 && !in_array($from_id, $admin_ids) && $setting[
 ;
 
 #-----------roll------------#
-if ($setting['roll_Status'] == "rolleon" && $user['roll_Status'] == 0 && ($text != "✅ قوانین را می پذیرم" and $datain != "acceptrule") && !in_array($from_id, $admin_ids)) {
+$acceptRulesLabels = [
+    "✅ قوانین را می پذیرم",
+    "✅ I accept the rules",
+    "✅ Я принимаю правила",
+];
+if ($setting['roll_Status'] == "rolleon" && $user['roll_Status'] == 0 && (!in_array($text, $acceptRulesLabels, true) and $datain != "acceptrule") && !in_array($from_id, $admin_ids)) {
     sendmessage($from_id, $datatextbot['text_roll'], $confrimrolls, 'html');
     return;
 }
-if ($text == "✅ قوانین را می پذیرم" or $datain == "acceptrule") {
+if (in_array($text, $acceptRulesLabels, true) or $datain == "acceptrule") {
     deletemessage($from_id, $message_id);
     sendmessage($from_id, $textbotlang['users']['Rules'], $keyboard, 'html');
     $confrim = true;
@@ -4581,7 +4586,7 @@ $textonebuy
     $parametrsendvalue = $text . "_" . $info_product['price_product'];
     update("user", "Processing_value_four", $parametrsendvalue, "id", $from_id);
     sendmessage($from_id, $textin, $paymentDiscount, 'HTML');
-} elseif ($text == "🗂 خرید انبوه" || $datain == "kharidanbuh") {
+} elseif (in_array($text, ["🗂 خرید انبوه", "🗂 Bulk purchase", "🗂 Массовая покупка"], true) || $datain == "kharidanbuh") {
     if ($setting['bulkbuy'] == "offbulk") {
         sendmessage($from_id, "❌ این بخش در حال غیرفعال می باشد", null, 'HTML');
         return;

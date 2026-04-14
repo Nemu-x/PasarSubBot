@@ -220,61 +220,61 @@ $keyboardadmin = json_encode([
 }
 $CartManage = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه کارت به کارت"]],
-        [['text' => "💳 تنظیم شماره کارت"],['text' => "❌ حذف شماره کارت"]],
-        [['text' => "👤 آیدی پشتیبانی", ],['text' => "💳 درگاه آفلاین در پیوی"]],
-        [['text' => "💰  غیرفعالسازی  نمایش شماره کارت"],['text' => "💰 فعالسازی نمایش شماره کارت"]],
-        [['text' => "♻️ نمایش گروهی شماره کارت"]],
-        [['text' => "📄 خروجی افراد شماره کارت فعال"]],
-        [['text' => "♻️ تایید خودکار رسید"],['text' => "💰 کش بک کارت به کارت"]],
-        [['text' => "🔒 نمایش کارت به کارت پس از اولین پرداخت"]],
-        [['text' => "⬇️ حداقل مبلغ کارت به کارت"],['text' => "⬆️ حداکثر مبلغ کارت به کارت"]],
-        [['text' => "📚 تنظیم آموزش کارت به کارت"]],
-        [['text' => "🤖 تایید رسید  بدون بررسی"]],
-        [['text' => "💳 استثناء کردن کاربر از تایید خودکار"]],
-        [['text' => "⏳ زمان تایید خودکار بدون بررسی"]],
+        [['text' => "🗂 Card payment gateway name"]],
+        [['text' => "💳 Set card number"],['text' => "❌ Delete card number"]],
+        [['text' => "👤 Support ID", ],['text' => "💳 Offline gateway in PM"]],
+        [['text' => "💰 Disable card display"],['text' => "💰 Enable card display"]],
+        [['text' => "♻️ Group card display"]],
+        [['text' => "📄 Export users with active card"]],
+        [['text' => "♻️ Auto receipt approval"],['text' => "💰 Card-to-card cashback"]],
+        [['text' => "🔒 Show card after first payment"]],
+        [['text' => "⬇️ Min card payment amount"],['text' => "⬆️ Max card payment amount"]],
+        [['text' => "📚 Set card payment guide"]],
+        [['text' => "🤖 Approve receipt without review"]],
+        [['text' => "💳 Exclude user from auto approval"]],
+        [['text' => "⏳ Auto approval delay"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $trnado = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه ارزی ریالی دوم"]],
+        [['text' => "🗂 Rial/FX gateway name (2)"]],
         [['text' => "API T"]],
-        [['text' => "تنظیم آدرس api"]],
-        [['text' => "💰 کش بک ارزی ریالی دوم"]],
-        [['text' => "⬇️ حداقل مبلغ ارزی ریالی دوم"],['text' => "⬆️ حداکثر مبلغ ارزی ریالی دوم"]],
-        [['text' => "📚 تنظیم آموزش ارزی ریالی  دوم"]],
+        [['text' => "Set API address"]],
+        [['text' => "💰 Rial/FX cashback (2)"]],
+        [['text' => "⬇️ Min amount Rial/FX (2)"],['text' => "⬆️ Max amount Rial/FX (2)"]],
+        [['text' => "📚 Set Rial/FX guide (2)"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $keyboardzarinpal = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه زرین پال"],['text' => "مرچنت زرین پال"]],
-        [['text' => "💰 کش بک زرین پال"]],
-        [['text' => "⬇️ حداقل مبلغ زرین پال"],['text' => "⬆️ حداکثر مبلغ زرین پال"]],
-        [['text' => "📚 تنظیم آموزش زرین پال"]],
+        [['text' => "🗂 ZarinPal gateway name"],['text' => "ZarinPal merchant"]],
+        [['text' => "💰 ZarinPal cashback"]],
+        [['text' => "⬇️ Min amount ZarinPal"],['text' => "⬆️ Max amount ZarinPal"]],
+        [['text' => "📚 Set ZarinPal guide"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $aqayepardakht = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه آقای پرداخت"]],
-        [['text' => "تنظیم مرچنت آقای پرداخت"],['text' => "💰 کش بک آقای پرداخت"]],
-        [['text' => "⬇️ حداقل مبلغ آقای پرداخت"],['text' => "⬆️ حداکثر مبلغ آقای پرداخت"]],
-        [['text' => "📚 تنظیم آموزش درگاه اقای پرداخت"]],
+        [['text' => "🗂 AghayePardakht gateway name"]],
+        [['text' => "Set AghayePardakht merchant"],['text' => "💰 AghayePardakht cashback"]],
+        [['text' => "⬇️ Min amount AghayePardakht"],['text' => "⬆️ Max amount AghayePardakht"]],
+        [['text' => "📚 Set AghayePardakht guide"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $NowPaymentsManage = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه   plisio"]],
-        [['text' => "🧩 api plisio"],['text'=> "💰 کش بک plisio"]],
-        [['text' => "⬇️ حداقل مبلغ plisio"],['text' =>"⬆️ حداکثر مبلغ plisio"]],
-        [['text' => "📚 تنظیم آموزش plisio"]],
+        [['text' => "🗂 Plisio gateway name"]],
+        [['text' => "🧩 Plisio API"],['text'=> "💰 Plisio cashback"]],
+        [['text' => "⬇️ Min amount Plisio"],['text' =>"⬆️ Max amount Plisio"]],
+        [['text' => "📚 Set Plisio guide"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -377,42 +377,42 @@ $step_payment = [
     ];   
     }
     $step_payment['inline_keyboard'][] = [
-            ['text' => "❌ بستن لیست" , 'callback_data' => "colselist" ]
+            ['text' => "❌ Close list" , 'callback_data' => "colselist" ]
     ];
     $step_payment = json_encode($step_payment);
 $keyboardhelpadmin = json_encode([
     'keyboard' => [
-        [['text' => "📚 اضافه کردن آموزش"], ['text' => "❌ حذف آموزش"]],
-        [['text' => "✏️ ویرایش آموزش"]],
+        [['text' => "📚 Add tutorial"], ['text' => "❌ Delete tutorial"]],
+        [['text' => "✏️ Edit tutorial"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $shopkeyboard = json_encode([
     'keyboard' => [
-        [['text' => "🛒 وضعیت قابلیت های فروشگاه"]],
-        [['text' => "🗂 مدیریت دسته بندی"],['text' => "🛍 مدیریت محصولات"]],
-        [['text' => "🎁 ساخت کد هدیه"],['text' => "❌ حذف کد هدیه"]],
-        [['text' => "🎁 ساخت کد تخفیف"],['text' => "❌ حذف کد تخفیف"]],
-        [['text' => "⬇️ حداقل موجودی خرید عمده"],['text' => "🎁 کش بک تمدید"]],
+        [['text' => "🛒 Shop feature status"]],
+        [['text' => "🗂 Category management"],['text' => "🛍 Product management"]],
+        [['text' => "🎁 Create gift code"],['text' => "❌ Delete gift code"]],
+        [['text' => "🎁 Create discount code"],['text' => "❌ Delete discount code"]],
+        [['text' => "⬇️ Min balance for bulk buy"],['text' => "🎁 Renewal cashback"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $keyboard_Category_manage = json_encode([
     'keyboard' => [
-        [['text' => "🛒 اضافه کردن دسته بندی"],['text' => "❌ حذف دسته بندی"]],
-        [['text' => "✏️ ویرایش دسته بندی"]],
-        [['text' => "⬅️ بازگشت به منوی فروشگاه"]]
+        [['text' => "🛒 Add category"],['text' => "❌ Delete category"]],
+        [['text' => "✏️ Edit category"]],
+        [['text' => "⬅️ Back to shop menu"]]
     ],
     'resize_keyboard' => true
     ]);
 $keyboard_shop_manage = json_encode([
     'keyboard' => [
-        [['text' => "🛍 اضافه کردن محصول"], ['text' => "❌ حذف محصول"]],
-        [['text' => "✏️ ویرایش محصول"]],
-        [['text' => "⬆️ افزایش گروهی قیمت"],['text' => "⬇️ کاهش  گروهی قیمت"]],
-        [['text' => "⬅️ بازگشت به منوی فروشگاه"]]
+        [['text' => "🛍 Add product"], ['text' => "❌ Delete product"]],
+        [['text' => "✏️ Edit product"]],
+        [['text' => "⬆️ Increase prices in bulk"],['text' => "⬇️ Decrease prices in bulk"]],
+        [['text' => "⬅️ Back to shop menu"]]
     ],
     'resize_keyboard' => true
 ]);
@@ -420,29 +420,29 @@ if($setting['inlinebtnmain'] == "oninline"){
     $confrimrolls = json_encode([
     'inline_keyboard' => [
         [
-            ['text' => "✅ قوانین را می پذیرم", 'callback_data' => "acceptrule"],
+            ['text' => "✅ I accept the rules", 'callback_data' => "acceptrule"],
             ],
     ]
     ]);
 }else{
 $confrimrolls = json_encode([
     'keyboard' => [
-        [['text' => "✅ قوانین را می پذیرم"]],
+        [['text' => "✅ I accept the rules"]],
     ],
     'resize_keyboard' => true
 ]);
 }
 $request_contact = json_encode([
     'keyboard' => [
-        [['text' => "☎️ ارسال شماره تلفن", 'request_contact' => true]],
+        [['text' => "☎️ Send phone number", 'request_contact' => true]],
         [['text' => $textbotlang['users']['backbtn']]]
     ],
     'resize_keyboard' => true
 ]);
 $Feature_status = json_encode([
     'keyboard' => [
-        [['text' => "قابلیت مشاهده اطلاعات اکانت"]],
-        [['text' => "قابلیت اکانت تست"], ['text' => "قابلیت آموزش"]],
+        [['text' => "Account info visibility"]],
+        [['text' => "Test account feature"], ['text' => "Education feature"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -509,8 +509,8 @@ if ($table_exists) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $list_marzban_panel_edit_product['inline_keyboard'][] = [['text' =>$row['name_panel'],'callback_data' => 'locationedit_'.$row['code_panel']]];
     }
-    $list_marzban_panel_edit_product['inline_keyboard'][] = [['text' =>"همه پنل ها",'callback_data' => 'locationedit_all']];
-    $list_marzban_panel_edit_product['inline_keyboard'][] = [['text' =>"▶️ بازگشت به منوی قبل",'callback_data' => 'backproductadmin']];
+    $list_marzban_panel_edit_product['inline_keyboard'][] = [['text' =>"All panels",'callback_data' => 'locationedit_all']];
+    $list_marzban_panel_edit_product['inline_keyboard'][] = [['text' =>"▶️ Back to previous menu",'callback_data' => 'backproductadmin']];
     $list_marzban_panel_edit_product = json_encode($list_marzban_panel_edit_product);
 }
 //------------------  [ list channel ]----------------//
@@ -609,7 +609,7 @@ if ($table_exists) {
         }
 if($setting['linkappstatus'] == "1"){
     $helpcwtgory['inline_keyboard'][] = [
-        ['text' => "🔗 لینک دانلود برنامه", 'callback_data' => "linkappdownlod"],
+        ['text' => "🔗 App download link", 'callback_data' => "linkappdownlod"],
     ];    
     }
 $helpcwtgory['inline_keyboard'][] = [
@@ -773,25 +773,25 @@ $list_marzban_usertest = json_encode($list_marzban_panel_usertest);
 
 $textbot = json_encode([
     'keyboard' => [
-        [['text' => "تنظیم متن شروع"], ['text' => "دکمه سرویس خریداری شده"]],
-        [['text' => "دکمه اکانت تست"], ['text' => "دکمه سوالات متداول"]],
-        [['text' => "متن دکمه 📚 آموزش"], ['text' => "متن دکمه ☎️ پشتیبانی"]],
-        [['text' => "دکمه افزایش موجودی"],['text' => "متن دکمه زیرمجموعه گیری"]],
-        [['text' => "متن دکمه خرید اشتراک"], ['text' => "متن دکمه لیست تعرفه"]],
-        [['text' => "متن توضیحات لیست تعرفه"]],
-        [['text' => "متن دکمه کیف پول"],['text' => "متن پیش فاکتور"]],
-        [['text' => "📝 تنظیم متن توضیحات عضویت اجباری"]],
-        [['text' => "📝 تنظیم متن توضیحات سوالات متداول"]],
-        [['text' => "⚖️ متن قانون"],['text' => "متن بعد خرید"]],
-        [['text' => "متن بعد خرید ibsng"],['text' => "دکمه تمدید"]],
-        [['text' => "متن بعد گرفتن اکانت تست"],['text' =>"متن کرون تست"]],
-        [['text' => "متن بعد گرفتن اکانت دستی"]],
-        [['text' => "متن بعد گرفتن اکانت WGDashboard"]],
-        [['text' => "متن انتخاب لوکیشن"],['text' => "متن دکمه کد هدیه"]],
-        [['text' => "متن درخواست نمایندگی"],['text' => "متن دکمه  نمایندگی"]],
-        [['text' => "متن دکمه گردونه شانس"],['text' => "متن کارت به کارت"]],
-        [['text' => "تنظیم متن کارت به کارت خودکار"]],
-        [['text' => "متن توضیحات درخواست نمایندگی"]],
+        [['text' => "Set start message"], ['text' => "Purchased service button"]],
+        [['text' => "Test account button"], ['text' => "FAQ button"]],
+        [['text' => "📚 Education button text"], ['text' => "☎️ Support button text"]],
+        [['text' => "Top-up button"],['text' => "Referral button text"]],
+        [['text' => "Buy subscription button text"], ['text' => "Tariff list button text"]],
+        [['text' => "Tariff list description text"]],
+        [['text' => "Wallet button text"],['text' => "Invoice text"]],
+        [['text' => "📝 Forced-join description text"]],
+        [['text' => "📝 FAQ description text"]],
+        [['text' => "⚖️ Rules text"],['text' => "After purchase text"]],
+        [['text' => "After purchase text (ibsng)"],['text' => "Extend button text"]],
+        [['text' => "After test account text"],['text' =>"Test cron text"]],
+        [['text' => "After manual account text"]],
+        [['text' => "After WGDashboard account text"]],
+        [['text' => "Location selection text"],['text' => "Gift code button text"]],
+        [['text' => "Agent request text"],['text' => "Agency panel button text"]],
+        [['text' => "Wheel of luck button text"],['text' => "Card-to-card text"]],
+        [['text' => "Set auto card-to-card text"]],
+        [['text' => "Agent request description text"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -923,25 +923,25 @@ if ($table_exists) {
 }
 $payment = json_encode([
     'inline_keyboard' => [
-        [['text' => "💰 پرداخت و دریافت سرویس", 'callback_data' => "confirmandgetservice"]],
-        [['text' => "🎁 ثبت کد تخفیف", 'callback_data' => "aptdc"]],
+        [['text' => "💰 Pay and receive service", 'callback_data' => "confirmandgetservice"]],
+        [['text' => "🎁 Enter discount code", 'callback_data' => "aptdc"]],
         [['text' => $textbotlang['users']['backbtn'] ,  'callback_data' => "backuser"]]
     ]
 ]);
 $paymentom = json_encode([
     'inline_keyboard' => [
-        [['text' => "💰 پرداخت و دریافت سرویس", 'callback_data' => "confirmandgetservice"]],
+        [['text' => "💰 Pay and receive service", 'callback_data' => "confirmandgetservice"]],
         [['text' => $textbotlang['users']['backbtn'] ,  'callback_data' => "backuser"]]
     ]
 ]);
 $change_product = json_encode([
     'keyboard' => [
-        [['text' => "قیمت"], ['text' => "حجم"], ['text' => "زمان"]],
-        [['text' => "نام محصول"],['text' => "نوع کاربری"]],
-        [['text' => "نوع ریست حجم"],['text' => "یادداشت"]],
-        [['text' => "موقعیت محصول"],['text' => "دسته بندی"]],
-        [['text' => "🎛 تنظیم اینباند"],['text' => "نمایش برای خرید اول"]],
-        [['text' => "مخفی کردن پنل"],['text' => "حذف کلی پنل های مخفی"]],
+        [['text' => "Price"], ['text' => "Volume"], ['text' => "Duration"]],
+        [['text' => "Product name"],['text' => "User type"]],
+        [['text' => "Volume reset type"],['text' => "Note"]],
+        [['text' => "Product location"],['text' => "Category"]],
+        [['text' => "🎛 Set inbound"],['text' => "Show on first purchase"]],
+        [['text' => "Hide panel"],['text' => "Clear all hidden panels"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -957,14 +957,14 @@ $keyboardprotocol = json_encode([
 ]);
 $MethodUsername = json_encode([
     'keyboard' => [
-        [['text' => "نام کاربری + عدد به ترتیب"]],
-        [['text' => "آیدی عددی + حروف و عدد رندوم"]],
-        [['text' => "نام کاربری دلخواه"]],
-        [['text' => "نام کاربری دلخواه + عدد رندوم"]],
-        [['text' => "متن دلخواه + عدد رندوم"]],
-        [['text' => "متن دلخواه + عدد ترتیبی"]],
-        [['text' => "آیدی عددی+عدد ترتیبی"]],
-        [['text' => "متن دلخواه نماینده + عدد ترتیبی"]],
+        [['text' => "Username + sequential number"]],
+        [['text' => "Numeric ID + random chars/numbers"]],
+        [['text' => "Custom username"]],
+        [['text' => "Custom username + random number"]],
+        [['text' => "Custom text + random number"]],
+        [['text' => "Custom text + sequential number"]],
+        [['text' => "Numeric ID + sequential number"]],
+        [['text' => "Agent custom text + sequential number"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1195,9 +1195,9 @@ if($setting['statussupportpv'] == "onpvsupport"){
         'inline_keyboard' => [
             [
                 ['text' => $datatextbot['text_fq'], 'callback_data' => "fqQuestions"] ,
-                ['text' => "🎟 ارسال پیام به پشتیبانی", 'url' => "https://t.me/{$setting['id_support']}"    ],
+                ['text' => "🎟 Message support", 'url' => "https://t.me/{$setting['id_support']}"    ],
             ],[
-                ['text' => "🔙 بازگشت به منوی اصلی" ,'callback_data' => "backuser"]
+                ['text' => "🔙 Back to main menu" ,'callback_data' => "backuser"]
             ],
  
         ]
@@ -1207,9 +1207,9 @@ $supportoption = json_encode([
         'inline_keyboard' => [
             [
                 ['text' => $datatextbot['text_fq'], 'callback_data' => "fqQuestions"] ,
-                ['text' => "🎟 ارسال پیام به پشتیبانی", 'callback_data' => "support"],
+                ['text' => "🎟 Message support", 'callback_data' => "support"],
             ],[
-                ['text' => "🔙 بازگشت به منوی اصلی" ,'callback_data' => "backuser"]
+                ['text' => "🔙 Back to main menu" ,'callback_data' => "backuser"]
             ],
  
         ]
@@ -1224,38 +1224,38 @@ $adminrule = json_encode([
 ]);
 $affiliates =  json_encode([
     'keyboard' => [
-        [['text' => "🧮 تنظیم درصد زیرمجموعه"]],
-        [['text' => "🏞 تنظیم بنر زیرمجموعه گیری"]],
-        [['text' => "🎁 پورسانت بعد از خرید"],['text' => "🎁 هدیه استارت"]],
-        [['text' => "🎉 پورسانت فقط برای خرید اول"]],
-        [['text' => "🌟 مبلغ هدیه استارت"]],
+        [['text' => "🧮 Set referral percent"]],
+        [['text' => "🏞 Set referral banner"]],
+        [['text' => "🎁 Post-purchase commission"],['text' => "🎁 Start gift"]],
+        [['text' => "🎉 Commission only on first purchase"]],
+        [['text' => "🌟 Start gift amount"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $keyboardexportdata =  json_encode([
     'keyboard' => [
-        [['text' => "خروجی کاربران"],['text' => "خروجی سفارشات"]],
-        [['text' => "خروجی گرفتن پرداخت ها"]],
+        [['text' => "Export users"],['text' => "Export orders"]],
+        [['text' => "Export payments"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $helpedit =  json_encode([
     'keyboard' => [
-        [['text' =>"ویرایش نام"],['text' =>"ویرایش توضیحات"]],
-        [['text' => "ویرایش رسانه"],['text' => "ویرایش دسته بندی"]],
+        [['text' =>"Edit name"],['text' =>"Edit description"]],
+        [['text' => "Edit media"],['text' => "Edit category"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $Methodextend = json_encode([
     'keyboard' => [
-        [['text' => "ریست حجم و زمان"]],
-        [['text' => "اضافه شدن زمان و حجم به ماه بعد"]],
-        [['text'=> "ریست زمان و اضافه کردن حجم قبلی"]],
-        [['text' => "ریست شدن حجم و اضافه شدن زمان"]],
-        [['text' => "اضافه شدن زمان و تبدیل حجم کل به حجم باقی مانده"]],
+        [['text' => "Reset volume and time"]],
+        [['text' => "Carry time and volume to next month"]],
+        [['text'=> "Reset time and add previous volume"]],
+        [['text' => "Reset volume and add time"]],
+        [['text' => "Add time and convert total volume to remaining volume"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1272,6 +1272,9 @@ $keyboardtypepanel = json_encode([
     'inline_keyboard' => [
         [
             ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_marzban'] , 'callback_data' => "typepanel#marzban"],
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_pasarguard'] , 'callback_data' => "typepanel#pasarguard"]
+        ],
+        [
             ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_marzneshin'] , 'callback_data' => "typepanel#marzneshin"]
         ],
         [
@@ -1301,8 +1304,8 @@ if($setting['inlinebtnmain'] == "oninline"){
     $keyboardagent = [
     'inline_keyboard' => [
         [
-            ['text' => "🗂 خرید انبوه", 'callback_data' => "kharidanbuh"],
-            ['text' => "👤 انتخاب نام دلخواه", 'callback_data' => "selectname"]
+            ['text' => "🗂 Bulk purchase", 'callback_data' => "kharidanbuh"],
+            ['text' => "👤 Choose custom name", 'callback_data' => "selectname"]
         ],
         [
             ['text' => $textbotlang['users']['backbtn'], 'callback_data' => "backuser"]
@@ -1316,7 +1319,7 @@ if($panelechekc == 0){
 }else{
 $keyboardagent = [
     'keyboard' => [
-        [['text' => "🗂 خرید انبوه"],['text' => "👤 انتخاب نام دلخواه"]],
+        [['text' => "🗂 Bulk purchase"],['text' => "👤 Choose custom name"]],
         [['text' => $textbotlang['users']['backbtn']]]
     ],
     'resize_keyboard' => true
@@ -1328,10 +1331,10 @@ if($panelechekc == 0){
 $keyboardagent = json_encode($keyboardagent);
 $Swapinokey = json_encode([
     'keyboard' => [
-        [['text' => "تنظیم api"]],
-        [['text' => "🗂 نام درگاه ارزی ریالی"]],
-        [['text' => "💰 کش بک ارزی ریالی"],['text' => "📚 تنظیم آموزش ارزی ریالی اول"]],
-        [['text' => "⬇️ حداقل مبلغ ارزی ریالی"],['text' => "⬆️ حداکثر مبلغ ارزی ریالی"]],
+        [['text' => "Set API"]],
+        [['text' => "🗂 Rial/FX gateway name"]],
+        [['text' => "💰 Rial/FX cashback"],['text' => "📚 Set Rial/FX guide (1)"]],
+        [['text' => "⬇️ Min amount Rial/FX"],['text' => "⬆️ Max amount Rial/FX"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1339,9 +1342,9 @@ $Swapinokey = json_encode([
 
 $tronnowpayments = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه رمز ارز آفلاین"]],
-        [['text' => "⬇️ حداقل مبلغ رمزارز آفلاین"],['text' => "⬆️ حداکثر مبلغ رمزارز آفلاین"]],
-        [['text' => "📚 تنظیم آموزش  ارزی افلاین"]],
+        [['text' => "🗂 Offline crypto gateway name"]],
+        [['text' => "⬇️ Min amount offline crypto"],['text' => "⬆️ Max amount offline crypto"]],
+        [['text' => "📚 Set offline crypto guide"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1363,26 +1366,26 @@ $optionathx_ui = json_encode([
 ]);
 $configedit = json_encode([
     'keyboard' => [
-        [['text' => "مخشصات کانفیگ"]],
+        [['text' => "Config details"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $iranpaykeyboard = json_encode([
     'keyboard' => [
-        [['text' => "api  درگاه ارزی ریالی"]],
-        [['text' => "🗂 نام درگاه ارزی ریالی سوم"]],
-        [['text' => "⬇️ حداقل مبلغ ارزی ریالی سوم"],['text' => "⬆️ حداکثر مبلغ ارزی ریالی سوم"]],
-        [['text' => "💰 کش بک ارزی ریالی سوم"]],
-        [['text' => "📚 تنظیم آموزش ارزی ریالی سوم"]],
+        [['text' => "Rial/FX gateway API (3)"]],
+        [['text' => "🗂 Rial/FX gateway name (3)"]],
+        [['text' => "⬇️ Min amount Rial/FX (3)"],['text' => "⬆️ Max amount Rial/FX (3)"]],
+        [['text' => "💰 Rial/FX cashback (3)"]],
+        [['text' => "📚 Set Rial/FX guide (3)"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $supportcenter = json_encode([
     'keyboard' => [
-        [['text' => "👤 تنظیم آیدی پشتیبانی"]],
-        [['text' => "🔼 اضافه کردن دپارتمان"],['text' => "🔽 حذف کردن دپارتمان"]],
+        [['text' => "👤 Set support ID"]],
+        [['text' => "🔼 Add department"],['text' => "🔽 Remove department"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1434,23 +1437,23 @@ $active_panell =  json_encode([
 ]);
 $lottery =  json_encode([
     'keyboard' => [
-        [['text' => "1️⃣ تنظیم جایزه نفر اول"],['text' => "2️⃣ تنظیم جایزه نفر دوم"]],
-        [['text' => "3️⃣ تنظیم جایزه نفر سوم"]],
+        [['text' => "1️⃣ Set first place prize"],['text' => "2️⃣ Set second place prize"]],
+        [['text' => "3️⃣ Set third place prize"]],
         [['text' => $textbotlang['Admin']['backadmin']]]
     ],
     'resize_keyboard' => true
 ]);
 $wheelkeyboard =  json_encode([
     'keyboard' => [
-        [['text' => "🎲 مبلغ برنده شدن کاربر"]],
+        [['text' => "🎲 User win amount"]],
         [['text' => $textbotlang['Admin']['backadmin']]]
     ],
     'resize_keyboard' => true
 ]);
 $keyboardlinkapp = json_encode([
     'keyboard' => [
-        [['text' => "🔗 اضافه کردن برنامه"],['text' => "❌ حذف برنامه"]],
-        [['text' => "✏️ ویرایش برنامه"]],
+        [['text' => "🔗 Add app"],['text' => "❌ Delete app"]],
+        [['text' => "✏️ Edit app"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1506,7 +1509,7 @@ function KeyboardCategory($location,$agent,$backuser = "backuser"){
         $list_category['inline_keyboard'][] = [['text' =>$row['remark'],'callback_data' => "categorynames_".$row['id']]];
     }
     $list_category['inline_keyboard'][] = [
-        ['text' => "▶️ بازگشت به منوی قبل","callback_data" => $backuser],
+        ['text' => "▶️ Back to previous menu","callback_data" => $backuser],
     ];
     return json_encode($list_category);
 }
@@ -1587,7 +1590,7 @@ function keyboardTimeCategory($name_panel,$agent,$callback_data = "producttime_"
                     ['text' => $textbotlang['Admin']['month']['unlimited'], 'callback_data' => "{$callback_data}0"]
                 ];
             }
-    if($statusbtnextend)$monthkeyboard['inline_keyboard'][] = [['text' => "♻️ تمدید پلن فعلی", 'callback_data' => "exntedagei"]];
+    if($statusbtnextend)$monthkeyboard['inline_keyboard'][] = [['text' => "♻️ Extend current plan", 'callback_data' => "exntedagei"]];
     if ($statuscustomvolume == true)$monthkeyboard['inline_keyboard'][] = [['text' => $textbotlang['users']['customsellvolume']['title'], 'callback_data' => "customsellvolume"]];
     $monthkeyboard['inline_keyboard'][] = [
                 ['text' => $textbotlang['users']['stateus']['backinfo'], 'callback_data' => $callback_data_back]
@@ -1596,17 +1599,17 @@ function keyboardTimeCategory($name_panel,$agent,$callback_data = "producttime_"
 }
 $Startelegram = json_encode([
     'keyboard' => [
-        [['text' => "🗂 نام درگاه استار"]],
-        [['text' => "💰 کش بک استار"],['text' => "📚 تنظیم آموزش استار"]],
-        [['text' => "⬇️ حداقل مبلغ استار"],['text' => "⬆️ حداکثر مبلغ استار"]],
+        [['text' => "🗂 Star gateway name"]],
+        [['text' => "💰 Star cashback"],['text' => "📚 Set Star guide"]],
+        [['text' => "⬇️ Min amount Star"],['text' => "⬆️ Max amount Star"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $keyboardchangelimit = json_encode([
     'keyboard' => [
-        [['text' => "🆓 محدودیت رایگان"],['text' => "↙️ محدودیت کلی"]],
-        [['text' => "🔄 ریست محدودیت کل کاربران"]],
+        [['text' => "🆓 Free limit"],['text' => "↙️ Global limit"]],
+        [['text' => "🔄 Reset all user limits"]],
         [['text' => $textbotlang['Admin']['backadmin']]]
     ],
     'resize_keyboard' => true
@@ -1629,18 +1632,18 @@ function KeyboardCategoryadmin(){
 }
 $nowpayment_setting_keyboard = json_encode([
     'keyboard' => [
-        [['text' => "API NOWPAYMENT"],['text' => "🗂 نام درگاه nowpayment"]],
-        [['text' => "💰 کش بک nowpayment"],['text' => "📚 تنظیم آموزش nowpayment"]],
-        [['text' => "⬇️ حداقل مبلغ nowpayment"],['text' => "⬆️ حداکثر مبلغ nowpayment"]],
+        [['text' => "API NOWPAYMENT"],['text' => "🗂 NowPayment gateway name"]],
+        [['text' => "💰 NowPayment cashback"],['text' => "📚 Set NowPayment guide"]],
+        [['text' => "⬇️ Min amount NowPayment"],['text' => "⬆️ Max amount NowPayment"]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $Exception_auto_cart_keyboard = json_encode([
     'keyboard' => [
-        [['text' => "➕ استثناء کردن کاربر"],['text' => "❌ حذف کاربر از لیست"]],
-        [['text' => "👁 نمایش لیست افراد"]],
-        [['text' => "▶️ بازگشت به منوی تظنیمات کارت"]]
+        [['text' => "➕ Add user exception"],['text' => "❌ Remove user from list"]],
+        [['text' => "👁 Show user list"]],
+        [['text' => "▶️ Back to card settings menu"]]
     ],
     'resize_keyboard' => true
 ]);
@@ -1648,8 +1651,8 @@ function keyboard_config($config_split,$id_invoice,$back_active = true){
     global $textbotlang;
     $keyboard_config = ['inline_keyboard' => []];
     $keyboard_config['inline_keyboard'][] = [
-        ['text' => "⚙️ کانفیگ", 'callback_data' => "none"],
-        ['text' => "✏️نام کانفیگ", 'callback_data' => "none"],
+        ['text' => "⚙️ Config", 'callback_data' => "none"],
+        ['text' => "✏️ Config name", 'callback_data' => "none"],
         ];
     for($i = 0; $i<count($config_split);$i++){
         $config = $config_split[$i];
@@ -1668,12 +1671,12 @@ function keyboard_config($config_split,$id_invoice,$back_active = true){
         $split_config = explode("#",$split_config)[1];
         }
         $keyboard_config['inline_keyboard'][] = [
-        ['text' => "دریافت کانفیگ", 'callback_data' => "configget_{$id_invoice}_$i"],
+        ['text' => "Get config", 'callback_data' => "configget_{$id_invoice}_$i"],
         ['text' => urldecode($split_config), 'callback_data' => "none"],
         ];
         
     }
-    $keyboard_config['inline_keyboard'][] = [['text' => "⚙️ دریافت همه کانفیگ ها", 'callback_data' => "configget_$id_invoice"."_1520"]];
+    $keyboard_config['inline_keyboard'][] = [['text' => "⚙️ Get all configs", 'callback_data' => "configget_$id_invoice"."_1520"]];
     if($back_active){
     $keyboard_config['inline_keyboard'][] = [['text' => $textbotlang['users']['stateus']['backinfo'], 'callback_data' => "product_$id_invoice"]];
     }
@@ -1682,27 +1685,27 @@ function keyboard_config($config_split,$id_invoice,$back_active = true){
 $keyboard_buy = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🛍خرید اشتراک", 'callback_data' => 'buy'],
+                ['text' => "🛍 Buy subscription", 'callback_data' => 'buy'],
             ],
         ]
     ]);
 $keyboard_stat = json_encode([
             'inline_keyboard' => [
                 [
-                    ['text' => "⏱️ آمار کل", 'callback_data' => 'stat_all_bot'],
+                    ['text' => "⏱️ All stats", 'callback_data' => 'stat_all_bot'],
                 ],[
-                    ['text' => "⏱️ یک ساعت اخیر", 'callback_data' => 'hoursago_stat'],
+                    ['text' => "⏱️ Last hour", 'callback_data' => 'hoursago_stat'],
                 ],
                 [
-                    ['text' => "⛅️ امروز", 'callback_data' => 'today_stat'],
-                    ['text' => "☀️ دیروز", 'callback_data' => 'yesterday_stat'],
+                    ['text' => "⛅️ Today", 'callback_data' => 'today_stat'],
+                    ['text' => "☀️ Yesterday", 'callback_data' => 'yesterday_stat'],
                 ],
                 [
-                    ['text' => "☀️ ماه فعلی ", 'callback_data' => 'month_current_stat'],
-                    ['text' => "⛅️ ماه قبل", 'callback_data' => 'month_old_stat'],
+                    ['text' => "☀️ Current month", 'callback_data' => 'month_current_stat'],
+                    ['text' => "⛅️ Previous month", 'callback_data' => 'month_old_stat'],
                 ],
                 [
-                    ['text' => "🗓 مشاهده آمار در تاریخ مشخص", 'callback_data' => 'view_stat_time'],
+                    ['text' => "🗓 Stats by date range", 'callback_data' => 'view_stat_time'],
                 ]
             ]
         ]);

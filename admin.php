@@ -23,13 +23,13 @@ $adminReportBugLabels = [
 $text_panel_admin_login_template = "💎 | Version Bot: $version
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | این ربات کاملاً رایگان است و توسط تیم VaultX توسعه داده شده است</blockquote>
+<blockquote>🔹 | This bot is completely free and developed by the VaultX team.</blockquote>
 
-<blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
+<blockquote>🔹 | Selling this bot or charging money for it is a violation.</blockquote>
 
-<blockquote>🔹 | در صورت مشاهدهٔ فروش یا دریافت وجه، لطفاً وجه خود را پیگیری کرده و بازپس‌گیری نمایید.</blockquote>
+<blockquote>🔹 | If you paid someone for this bot, follow up and request a refund.</blockquote>
 
-<blockquote>🐞 | اگر در عملکرد ربات با باگ یا مشکلی مواجه شدید، از طریق دکمهٔ **📬 گزارش ربات** در پنل ادمین با ما در ارتباط باشید.</blockquote>";
+<blockquote>🐞 | If you find a bug, use the **📬 Bug report** button in the admin panel.</blockquote>";
 
 if (!in_array($from_id, $admin_ids))
     return;
@@ -69,6 +69,211 @@ $panelTextAliases = [
     "➕ Add config" => "➕ اضافه کردن کانفیگ",
     "❌ Delete config" => "❌ حذف کانفیگ ",
     "✏️ Edit config" => "✏️ ویرایش کانفیگ",
+    "🛒 Shop feature status" => "🛒 وضعیت قابلیت های فروشگاه",
+    "🗂 Category management" => "🗂 مدیریت دسته بندی",
+    "🛍 Product management" => "🛍 مدیریت محصولات",
+    "🛒 Add category" => "🛒 اضافه کردن دسته بندی",
+    "❌ Delete category" => "❌ حذف دسته بندی",
+    "✏️ Edit category" => "✏️ ویرایش دسته بندی",
+    "🛍 Add product" => "🛍 اضافه کردن محصول",
+    "❌ Delete product" => "❌ حذف محصول",
+    "✏️ Edit product" => "✏️ ویرایش محصول",
+    "⬆️ Increase prices in bulk" => "⬆️ افزایش گروهی قیمت",
+    "⬇️ Decrease prices in bulk" => "⬇️ کاهش  گروهی قیمت",
+    "⬅️ Back to shop menu" => "⬅️ بازگشت به منوی فروشگاه",
+    "🗂 Card payment gateway name" => "🗂 نام درگاه کارت به کارت",
+    "💳 Set card number" => "💳 تنظیم شماره کارت",
+    "❌ Delete card number" => "❌ حذف شماره کارت",
+    "👤 Support ID" => "👤 آیدی پشتیبانی",
+    "💳 Offline gateway in PM" => "💳 درگاه آفلاین در پیوی",
+    "💰 Disable card display" => "💰  غیرفعالسازی  نمایش شماره کارت",
+    "💰 Enable card display" => "💰 فعالسازی نمایش شماره کارت",
+    "♻️ Group card display" => "♻️ نمایش گروهی شماره کارت",
+    "📄 Export users with active card" => "📄 خروجی افراد شماره کارت فعال",
+    "♻️ Auto receipt approval" => "♻️ تایید خودکار رسید",
+    "💰 Card-to-card cashback" => "💰 کش بک کارت به کارت",
+    "🔒 Show card after first payment" => "🔒 نمایش کارت به کارت پس از اولین پرداخت",
+    "⬇️ Min card payment amount" => "⬇️ حداقل مبلغ کارت به کارت",
+    "⬆️ Max card payment amount" => "⬆️ حداکثر مبلغ کارت به کارت",
+    "📚 Set card payment guide" => "📚 تنظیم آموزش کارت به کارت",
+    "🤖 Approve receipt without review" => "🤖 تایید رسید  بدون بررسی",
+    "💳 Exclude user from auto approval" => "💳 استثناء کردن کاربر از تایید خودکار",
+    "⏳ Auto approval delay" => "⏳ زمان تایید خودکار بدون بررسی",
+    "🗂 Rial/FX gateway name (2)" => "🗂 نام درگاه ارزی ریالی دوم",
+    "Set API address" => "تنظیم آدرس api",
+    "💰 Rial/FX cashback (2)" => "💰 کش بک ارزی ریالی دوم",
+    "⬇️ Min amount Rial/FX (2)" => "⬇️ حداقل مبلغ ارزی ریالی دوم",
+    "⬆️ Max amount Rial/FX (2)" => "⬆️ حداکثر مبلغ ارزی ریالی دوم",
+    "📚 Set Rial/FX guide (2)" => "📚 تنظیم آموزش ارزی ریالی  دوم",
+    "🗂 ZarinPal gateway name" => "🗂 نام درگاه زرین پال",
+    "ZarinPal merchant" => "مرچنت زرین پال",
+    "💰 ZarinPal cashback" => "💰 کش بک زرین پال",
+    "⬇️ Min amount ZarinPal" => "⬇️ حداقل مبلغ زرین پال",
+    "⬆️ Max amount ZarinPal" => "⬆️ حداکثر مبلغ زرین پال",
+    "📚 Set ZarinPal guide" => "📚 تنظیم آموزش زرین پال",
+    "🗂 AghayePardakht gateway name" => "🗂 نام درگاه آقای پرداخت",
+    "Set AghayePardakht merchant" => "تنظیم مرچنت آقای پرداخت",
+    "💰 AghayePardakht cashback" => "💰 کش بک آقای پرداخت",
+    "⬇️ Min amount AghayePardakht" => "⬇️ حداقل مبلغ آقای پرداخت",
+    "⬆️ Max amount AghayePardakht" => "⬆️ حداکثر مبلغ آقای پرداخت",
+    "📚 Set AghayePardakht guide" => "📚 تنظیم آموزش درگاه اقای پرداخت",
+    "🗂 Plisio gateway name" => "🗂 نام درگاه   plisio",
+    "🧩 Plisio API" => "🧩 api plisio",
+    "💰 Plisio cashback" => "💰 کش بک plisio",
+    "⬇️ Min amount Plisio" => "⬇️ حداقل مبلغ plisio",
+    "⬆️ Max amount Plisio" => "⬆️ حداکثر مبلغ plisio",
+    "📚 Set Plisio guide" => "📚 تنظیم آموزش plisio",
+    "❌ Close list" => "❌ بستن لیست",
+    "📚 Add tutorial" => "📚 اضافه کردن آموزش",
+    "❌ Delete tutorial" => "❌ حذف آموزش",
+    "✏️ Edit tutorial" => "✏️ ویرایش آموزش",
+    "🎁 Create gift code" => "🎁 ساخت کد هدیه",
+    "❌ Delete gift code" => "❌ حذف کد هدیه",
+    "🎁 Create discount code" => "🎁 ساخت کد تخفیف",
+    "❌ Delete discount code" => "❌ حذف کد تخفیف",
+    "⬇️ Min balance for bulk buy" => "⬇️ حداقل موجودی خرید عمده",
+    "🎁 Renewal cashback" => "🎁 کش بک تمدید",
+    "✅ I accept the rules" => "✅ قوانین را می پذیرم",
+    "☎️ Send phone number" => "☎️ ارسال شماره تلفن",
+    "Account info visibility" => "قابلیت مشاهده اطلاعات اکانت",
+    "Test account feature" => "قابلیت اکانت تست",
+    "Education feature" => "قابلیت آموزش",
+    "Set start message" => "تنظیم متن شروع",
+    "Purchased service button" => "دکمه سرویس خریداری شده",
+    "Test account button" => "دکمه اکانت تست",
+    "FAQ button" => "دکمه سوالات متداول",
+    "📚 Education button text" => "متن دکمه 📚 آموزش",
+    "☎️ Support button text" => "متن دکمه ☎️ پشتیبانی",
+    "Top-up button" => "دکمه افزایش موجودی",
+    "Referral button text" => "متن دکمه زیرمجموعه گیری",
+    "Buy subscription button text" => "متن دکمه خرید اشتراک",
+    "Tariff list button text" => "متن دکمه لیست تعرفه",
+    "Tariff list description text" => "متن توضیحات لیست تعرفه",
+    "Wallet button text" => "متن دکمه کیف پول",
+    "Invoice text" => "متن پیش فاکتور",
+    "📝 Forced-join description text" => "📝 تنظیم متن توضیحات عضویت اجباری",
+    "📝 FAQ description text" => "📝 تنظیم متن توضیحات سوالات متداول",
+    "⚖️ Rules text" => "⚖️ متن قانون",
+    "After purchase text" => "متن بعد خرید",
+    "After purchase text (ibsng)" => "متن بعد خرید ibsng",
+    "Extend button text" => "دکمه تمدید",
+    "After test account text" => "متن بعد گرفتن اکانت تست",
+    "Test cron text" => "متن کرون تست",
+    "After manual account text" => "متن بعد گرفتن اکانت دستی",
+    "After WGDashboard account text" => "متن بعد گرفتن اکانت WGDashboard",
+    "Location selection text" => "متن انتخاب لوکیشن",
+    "Gift code button text" => "متن دکمه کد هدیه",
+    "Agent request text" => "متن درخواست نمایندگی",
+    "Agency panel button text" => "متن دکمه  نمایندگی",
+    "Wheel of luck button text" => "متن دکمه گردونه شانس",
+    "Card-to-card text" => "متن کارت به کارت",
+    "Set auto card-to-card text" => "تنظیم متن کارت به کارت خودکار",
+    "Agent request description text" => "متن توضیحات درخواست نمایندگی",
+    "💰 Pay and receive service" => "💰 پرداخت و دریافت سرویس",
+    "🎁 Enter discount code" => "🎁 ثبت کد تخفیف",
+    "Price" => "قیمت",
+    "Volume" => "حجم",
+    "Duration" => "زمان",
+    "Product name" => "نام محصول",
+    "User type" => "نوع کاربری",
+    "Volume reset type" => "نوع ریست حجم",
+    "Note" => "یادداشت",
+    "Product location" => "موقعیت محصول",
+    "Category" => "دسته بندی",
+    "🎛 Set inbound" => "🎛 تنظیم اینباند",
+    "Show on first purchase" => "نمایش برای خرید اول",
+    "Hide panel" => "مخفی کردن پنل",
+    "Clear all hidden panels" => "حذف کلی پنل های مخفی",
+    "Username + sequential number" => "نام کاربری + عدد به ترتیب",
+    "Numeric ID + random chars/numbers" => "آیدی عددی + حروف و عدد رندوم",
+    "Custom username" => "نام کاربری دلخواه",
+    "Custom username + random number" => "نام کاربری دلخواه + عدد رندوم",
+    "Custom text + random number" => "متن دلخواه + عدد رندوم",
+    "Custom text + sequential number" => "متن دلخواه + عدد ترتیبی",
+    "Numeric ID + sequential number" => "آیدی عددی+عدد ترتیبی",
+    "Agent custom text + sequential number" => "متن دلخواه نماینده + عدد ترتیبی",
+    "All panels" => "همه پنل ها",
+    "▶️ Back to previous menu" => "▶️ بازگشت به منوی قبل",
+    "🔗 App download link" => "🔗 لینک دانلود برنامه",
+    "🎟 Message support" => "🎟 ارسال پیام به پشتیبانی",
+    "🔙 Back to main menu" => "🔙 بازگشت به منوی اصلی",
+    "🧮 Set referral percent" => "🧮 تنظیم درصد زیرمجموعه",
+    "🏞 Set referral banner" => "🏞 تنظیم بنر زیرمجموعه گیری",
+    "🎁 Post-purchase commission" => "🎁 پورسانت بعد از خرید",
+    "🎁 Start gift" => "🎁 هدیه استارت",
+    "🎉 Commission only on first purchase" => "🎉 پورسانت فقط برای خرید اول",
+    "🌟 Start gift amount" => "🌟 مبلغ هدیه استارت",
+    "Export users" => "خروجی کاربران",
+    "Export orders" => "خروجی سفارشات",
+    "Export payments" => "خروجی گرفتن پرداخت ها",
+    "Edit name" => "ویرایش نام",
+    "Edit description" => "ویرایش توضیحات",
+    "Edit media" => "ویرایش رسانه",
+    "Edit category" => "ویرایش دسته بندی",
+    "Reset volume and time" => "ریست حجم و زمان",
+    "Carry time and volume to next month" => "اضافه شدن زمان و حجم به ماه بعد",
+    "Reset time and add previous volume" => "ریست زمان و اضافه کردن حجم قبلی",
+    "Reset volume and add time" => "ریست شدن حجم و اضافه شدن زمان",
+    "Add time and convert total volume to remaining volume" => "اضافه شدن زمان و تبدیل حجم کل به حجم باقی مانده",
+    "🗂 Bulk purchase" => "🗂 خرید انبوه",
+    "👤 Choose custom name" => "👤 انتخاب نام دلخواه",
+    "Set API" => "تنظیم api",
+    "🗂 Rial/FX gateway name" => "🗂 نام درگاه ارزی ریالی",
+    "💰 Rial/FX cashback" => "💰 کش بک ارزی ریالی",
+    "📚 Set Rial/FX guide (1)" => "📚 تنظیم آموزش ارزی ریالی اول",
+    "⬇️ Min amount Rial/FX" => "⬇️ حداقل مبلغ ارزی ریالی",
+    "⬆️ Max amount Rial/FX" => "⬆️ حداکثر مبلغ ارزی ریالی",
+    "🗂 Offline crypto gateway name" => "🗂 نام درگاه رمز ارز آفلاین",
+    "⬇️ Min amount offline crypto" => "⬇️ حداقل مبلغ رمزارز آفلاین",
+    "⬆️ Max amount offline crypto" => "⬆️ حداکثر مبلغ رمزارز آفلاین",
+    "📚 Set offline crypto guide" => "📚 تنظیم آموزش  ارزی افلاین",
+    "Config details" => "مخشصات کانفیگ",
+    "Rial/FX gateway API (3)" => "api  درگاه ارزی ریالی",
+    "🗂 Rial/FX gateway name (3)" => "🗂 نام درگاه ارزی ریالی سوم",
+    "⬇️ Min amount Rial/FX (3)" => "⬇️ حداقل مبلغ ارزی ریالی سوم",
+    "⬆️ Max amount Rial/FX (3)" => "⬆️ حداکثر مبلغ ارزی ریالی سوم",
+    "💰 Rial/FX cashback (3)" => "💰 کش بک ارزی ریالی سوم",
+    "📚 Set Rial/FX guide (3)" => "📚 تنظیم آموزش ارزی ریالی سوم",
+    "👤 Set support ID" => "👤 تنظیم آیدی پشتیبانی",
+    "🔼 Add department" => "🔼 اضافه کردن دپارتمان",
+    "🔽 Remove department" => "🔽 حذف کردن دپارتمان",
+    "1️⃣ Set first place prize" => "1️⃣ تنظیم جایزه نفر اول",
+    "2️⃣ Set second place prize" => "2️⃣ تنظیم جایزه نفر دوم",
+    "3️⃣ Set third place prize" => "3️⃣ تنظیم جایزه نفر سوم",
+    "🎲 User win amount" => "🎲 مبلغ برنده شدن کاربر",
+    "🔗 Add app" => "🔗 اضافه کردن برنامه",
+    "❌ Delete app" => "❌ حذف برنامه",
+    "✏️ Edit app" => "✏️ ویرایش برنامه",
+    "♻️ Extend current plan" => "♻️ تمدید پلن فعلی",
+    "🗂 Star gateway name" => "🗂 نام درگاه استار",
+    "💰 Star cashback" => "💰 کش بک استار",
+    "📚 Set Star guide" => "📚 تنظیم آموزش استار",
+    "⬇️ Min amount Star" => "⬇️ حداقل مبلغ استار",
+    "⬆️ Max amount Star" => "⬆️ حداکثر مبلغ استار",
+    "🆓 Free limit" => "🆓 محدودیت رایگان",
+    "↙️ Global limit" => "↙️ محدودیت کلی",
+    "🔄 Reset all user limits" => "🔄 ریست محدودیت کل کاربران",
+    "🗂 NowPayment gateway name" => "🗂 نام درگاه nowpayment",
+    "💰 NowPayment cashback" => "💰 کش بک nowpayment",
+    "📚 Set NowPayment guide" => "📚 تنظیم آموزش nowpayment",
+    "⬇️ Min amount NowPayment" => "⬇️ حداقل مبلغ nowpayment",
+    "⬆️ Max amount NowPayment" => "⬆️ حداکثر مبلغ nowpayment",
+    "➕ Add user exception" => "➕ استثناء کردن کاربر",
+    "❌ Remove user from list" => "❌ حذف کاربر از لیست",
+    "👁 Show user list" => "👁 نمایش لیست افراد",
+    "▶️ Back to card settings menu" => "▶️ بازگشت به منوی تظنیمات کارت",
+    "⚙️ Config" => "⚙️ کانفیگ",
+    "✏️ Config name" => "✏️نام کانفیگ",
+    "Get config" => "دریافت کانفیگ",
+    "⚙️ Get all configs" => "⚙️ دریافت همه کانفیگ ها",
+    "🛍 Buy subscription" => "🛍خرید اشتراک",
+    "⏱️ All stats" => "⏱️ آمار کل",
+    "⏱️ Last hour" => "⏱️ یک ساعت اخیر",
+    "⛅️ Today" => "⛅️ امروز",
+    "☀️ Yesterday" => "☀️ دیروز",
+    "☀️ Current month" => "☀️ ماه فعلی ",
+    "⛅️ Previous month" => "⛅️ ماه قبل",
+    "🗓 Stats by date range" => "🗓 مشاهده آمار در تاریخ مشخص",
 ];
 if (isset($panelTextAliases[$text])) {
     $text = $panelTextAliases[$text];
@@ -77,11 +282,11 @@ if (isset($panelTextAliases[$text])) {
 $domainhostsEscaped = htmlspecialchars($domainhosts, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $miniAppInstructionText = <<<HTML
-📌 آموزش فعالسازی مینی اپ در ربات BotFather
+📌 Mini App activation guide in BotFather
 
 /mybots > Select Bot > Bot Setting >  Configure Mini App > Enable Mini App  > Edit Mini App URL
 
-مراحل بالا را طی کنید سپس آدرس زیر را ارسال نمایید :
+Complete the steps above, then send this URL:
 
 <code>https://{$domainhostsEscaped}/app/</code>
 HTML;
@@ -102,7 +307,7 @@ if (in_array($text, $textadmin) || $datain == "admin") {
         $miniAppInstructionKeyboard = json_encode([
             'inline_keyboard' => [
                 [
-                    ['text' => 'دیگر نمایش نده ⛓️‍💥', 'callback_data' => 'hide_mini_app_instruction'],
+                    ['text' => 'Do not show again ⛓️‍💥', 'callback_data' => 'hide_mini_app_instruction'],
                 ],
             ],
         ]);
@@ -126,7 +331,7 @@ if (in_array($text, $textadmin) || $datain == "admin") {
         $user['hide_mini_app_instruction'] = '1';
     }
     $confirmationKeyboard = json_encode(['inline_keyboard' => []]);
-    $confirmationText = $miniAppInstructionText . "\n\n✅ این پیام دیگر برای شما نمایش داده نخواهد شد.";
+    $confirmationText = $miniAppInstructionText . "\n\n✅ This message will not be shown again.";
     Editmessagetext($from_id, $message_id, $confirmationText, $confirmationKeyboard, 'HTML');
     return;
 } elseif ($text == $textbotlang['Admin']['backmenu']) {
@@ -1028,7 +1233,7 @@ $paycount
         sendmessage($from_id, "❌ نکته :
 برای فعالسازی پنل باید به منوی مدیریت پنل  رفته و گزینه های 
 تنظیم شناسه اینباند و دامنه لینک ساب را حتما تنظیم نمایید در غیراینصورت کانفیگ ساخته نخواهد شد", null, 'HTML');
-    } elseif ($userdata['type'] == "marzban") {
+    } elseif ($userdata['type'] == "marzban" || $userdata['type'] == "pasarguard") {
         sendmessage($from_id, "❌ نکته :
 برای فعالسازی پنل باید به منوی مدیریت پنل  رفته و گزینه های 
 تنظیم پروتکل و اینباند را تنظیم نمایید تا ربات کانفیگ دهد در غیراینصورت کانفیگ به  کاربر داده نمی شود", null, 'HTML');
@@ -3341,7 +3546,7 @@ $caption";
     savedata("save", "price_product", $text);
     $userdata = json_decode($user['Processing_value'], true);
     $panel = select("marzban_panel", "*", "name_panel", $userdata['Location'], "select");
-    if ($panel['type'] == "marzban" || $panel['type'] == "marzneshin") {
+    if ($panel['type'] == "marzban" || $panel['type'] == "pasarguard" || $panel['type'] == "marzneshin") {
         sendmessage($from_id, $textbotlang['Admin']['Product']['gettimereset'], $keyboardtimereset, 'HTML');
         step('getnote', $from_id);
         return;
@@ -4298,7 +4503,7 @@ $text_expie_agent
 } elseif ($user['step'] == "GetLocationEdit") {
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $text, "select");
     $panelMessages = $textbotlang['Admin']['managepanel']['messages'];
-    if ($marzban_list_get['type'] == "marzban") {
+    if ($marzban_list_get['type'] == "marzban" || $marzban_list_get['type'] == "pasarguard") {
         $Check_token = token_panel($marzban_list_get['code_panel'], false);
         if (isset($Check_token['access_token'])) {
             $System_Stats = Get_System_Stats($text);
@@ -9491,17 +9696,17 @@ f,n.n2", $backadmin, 'HTML');
     }
 } elseif ($text == "⚙️ تنظیم پروتکل و اینباند" || $text == "🎛 تنظیم نام گروه" || $text == "⚙️ تنظیم نود") {
     if ($text == "🎛 تنظیم نام گروه") {
-        $textsetprotocol = "📌 نام گروهی که بصورت پیشفرض می خواهید از آن ساخته شود را ارسال نمایید.";
+        $textsetprotocol = "📌 Send the default group name that should be used for creation.";
     } elseif ($text == "⚙️ تنظیم نود") {
-        $textsetprotocol = "📌 برای تنظیم نود یک کاربر در پنل خود ساخته و  نودهایی که میخواهید فعال باشند. را داخل پنل فعال کرده و نام کاربری کاربر را ارسال نمایید";
+        $textsetprotocol = "📌 To set node routing, create a user in your panel, enable the desired nodes, then send that username.";
     } else {
-        $textsetprotocol = "📌 برای تنظیم اینباند  و پروتکل باید یک کانفیگ در پنل خود ساخته و  پروتکل و اینباند هایی که میخواهید فعال باشند. را داخل پنل فعال کرده و نام کاربری کانفیگ را ارسال نمایید";
+        $textsetprotocol = "📌 To configure inbound/protocol, create one config in your panel, enable required protocols/inbounds, then send that config username.";
     }
     sendmessage($from_id, $textsetprotocol, $backadmin, 'HTML');
     step("setinboundandprotocol", $from_id);
 } elseif ($user['step'] == "setinboundandprotocol") {
     $panel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
-    if ($panel['type'] == "marzban") {
+    if ($panel['type'] == "marzban" || $panel['type'] == "pasarguard") {
         if ($panel['version_panel'] == "1") {
             $DataUserOut = getuser($text, $user['Processing_value']);
             if (!empty($DataUserOut['error'])) {
@@ -9564,7 +9769,7 @@ f,n.n2", $backadmin, 'HTML');
     } elseif ($panel['type'] == "s_ui") {
         $data = GetClientsS_UI($text, $panel['name_panel']); {
             if (count($data) == 0) {
-                sendmessage($from_id, "❌ یوزر در پنل وجود ندارد.", $options_ui, 'HTML');
+                sendmessage($from_id, "❌ User does not exist in panel.", $options_ui, 'HTML');
                 return;
             }
             $servies = [];
@@ -9577,11 +9782,11 @@ f,n.n2", $backadmin, 'HTML');
         update("marzban_panel", "proxies", $text, "name_panel", $user['Processing_value']);
     }
     if ($panel['type'] == "ibsng") {
-        sendmessage($from_id, "✅ نام گروه با موفقیت تنظیم گردید.", $optionibsng, 'HTML');
+        sendmessage($from_id, "✅ Group name saved successfully.", $optionibsng, 'HTML');
     } elseif ($panel['type'] == "mikrotik") {
-        sendmessage($from_id, "✅ نام گروه با موفقیت تنظیم گردید.", $option_mikrotik, 'HTML');
+        sendmessage($from_id, "✅ Group name saved successfully.", $option_mikrotik, 'HTML');
     } else {
-        sendmessage($from_id, "✅ اینباند و پروتکل های شما با موفقیت تنظیم گردیدند.", $optionMarzban, 'HTML');
+        sendmessage($from_id, "✅ Inbounds and protocols saved successfully.", $optionMarzban, 'HTML');
     }
     step("home", $from_id);
 } elseif ($text == "🔋 وضعیت تمدید" && $adminrulecheck['rule'] == "administrator") {
@@ -9666,7 +9871,7 @@ f,n.n2", $backadmin, 'HTML');
 //     sendmessage($from_id, "✅  کانفیگ های کاربر در صف غیرفعال شدن قرار گرفتند توجه داشتید این کار ممکن است بیشتر از ۲ ساعت طول بکشد زمان بستگی به تعداد کانفیگ دارد.", null, 'HTML');
 // }
 elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌آیدی عددی کاربر را برای این پنل را ارسال نمایید.", $backadmin, 'HTML');
+    sendmessage($from_id, "📌 Send user numeric ID for this panel.", $backadmin, 'HTML');
     step('getuserhide', $from_id);
 } elseif ($user['step'] == "getuserhide") {
     if (!ctype_digit($text)) {
@@ -9674,7 +9879,7 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
         return;
     }
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
-    outtypepanel($typepanel['type'], "✅ پنل با موفقیت برای کاربر مخفی گردید");
+    outtypepanel($typepanel['type'], "✅ Panel hidden for user successfully.");
     if ($typepanel['hide_user'] == null) {
         $hideuserid = [];
     } else {
@@ -9685,7 +9890,7 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
     update("marzban_panel", "hide_user", $hideuserid, "name_panel", $user['Processing_value']);
     step('home', $from_id);
 } elseif ($text == "❌  حذف کاربر از لیست مخفی شدگان" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌آیدی عددی کاربر را برای این پنل را ارسال نمایید.", $backadmin, 'HTML');
+    sendmessage($from_id, "📌 Send user numeric ID for this panel.", $backadmin, 'HTML');
     step('getuserhideforremove', $from_id);
 } elseif ($user['step'] == "getuserhideforremove") {
     if (!ctype_digit($text)) {
@@ -9695,16 +9900,16 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
     step("home", $from_id);
     if ($typepanel['hide_user'] == null) {
-        outtypepanel($typepanel['type'], "❌ هیچ کاربری در لیست مخفی شدگان وجود ندارد");
+        outtypepanel($typepanel['type'], "❌ Hidden list is empty.");
         return;
     }
     $hideuserid = json_decode($typepanel['hide_user'], true);
     if (count($hideuserid) == 0) {
-        outtypepanel($typepanel['type'], "❌  کاربر در لیست وجود ندارد");
+        outtypepanel($typepanel['type'], "❌ User not found in hidden list.");
         return;
     }
     if (!in_array($text, $hideuserid)) {
-        outtypepanel($typepanel['type'], "❌ کاربر در لیست وجود ندارد.");
+        outtypepanel($typepanel['type'], "❌ User not found in hidden list.");
         return;
     }
     $key = array_search($text, $hideuserid);
@@ -9714,7 +9919,7 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
     }
     $hideuserid = json_encode($hideuserid);
     update("marzban_panel", "hide_user", $hideuserid, "name_panel", $user['Processing_value']);
-    outtypepanel($typepanel['type'], "✅  کاربر با موفقیت از لیست حذف گردید.");
+    outtypepanel($typepanel['type'], "✅ User removed from hidden list successfully.");
 } elseif ($datain == "scoresetting") {
     sendmessage($from_id, $textbotlang['users']['selectoption'], $lottery, 'HTML');
 } elseif ($text == "1️⃣ تنظیم جایزه نفر اول") {
@@ -9838,7 +10043,7 @@ elseif ($text == "🫣 مخفی کردن پنل برای یک کاربر" && $ad
 } elseif ($user['step'] == "getdatainboundproduct") {
     $marzban_list_get = select("marzban_panel", "*", "code_panel", $user['Processing_value_one']);
     $datainbound = "";
-    if ($marzban_list_get['type'] == "marzban") {
+    if ($marzban_list_get['type'] == "marzban" || $marzban_list_get['type'] == "pasarguard") {
         $DataUserOut = getuser($text, $marzban_list_get['name_panel']);
         if (!empty($DataUserOut['error'])) {
             sendmessage($from_id, $DataUserOut['error'], null, 'HTML');
@@ -10662,72 +10867,72 @@ if ($datain == "settimecornday" && $adminrulecheck['rule'] == "administrator") {
         'inline_keyboard' => [
             [
                 ['text' => $statusshowbuy, 'callback_data' => "editpanel-statusbuy-{$panel['status']}-{$panel['code_panel']}"],
-                ['text' => "🖥 نمایش پنل", 'callback_data' => "none"],
+                ['text' => "🖥 Show panel", 'callback_data' => "none"],
             ],
             [
                 ['text' => $statusshowtest, 'callback_data' => "editpanel-statustest-{$panel['TestAccount']}-{$panel['code_panel']}"],
-                ['text' => "🎁 نمایش تست", 'callback_data' => "none"],
+                ['text' => "🎁 Show test", 'callback_data' => "none"],
             ],
             [
                 ['text' => $status_extend, 'callback_data' => "editpanel-stautsextend-{$panel['status_extend']}-{$panel['code_panel']}"],
-                ['text' => "🔋 وضعیت تمدید", 'callback_data' => "none"],
+                ['text' => "🔋 Extend status", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusf, 'callback_data' => "editpanel-customstatusf-{$customvlume['f']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه f", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group f", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusn, 'callback_data' => "editpanel-customstatusn-{$customvlume['n']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه n", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group n", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusn2, 'callback_data' => "editpanel-customstatusn2-{$customvlume['n2']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه n2", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group n2", 'callback_data' => "none"],
             ]
         ]
     ];
-    if (in_array($panel['type'], ['marzban'])) {
+    if (in_array($panel['type'], ['marzban', 'pasarguard'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $version_panel_status, 'callback_data' => "editpanel-versionpanel-{$panel['version_panel']}-{$panel['code_panel']}"],
-            ['text' => "🎛 پنل پاسارگارد", 'callback_data' => "none"],
+            ['text' => "🎛 Pasargard panel", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ['Manualsale', "WGDashboard", 'hiddify'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statusconfig, 'callback_data' => "editpanel-stautsconfig-{$panel['config']}-{$panel['code_panel']}"],
-            ['text' => "⚙️ ارسال کانفیگ", 'callback_data' => "none"],
+            ['text' => "⚙️ Send config", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ['Manualsale', "WGDashboard", 'hiddify'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statussublink, 'callback_data' => "editpanel-sublink-{$panel['sublink']}-{$panel['code_panel']}"],
-            ['text' => "⚙️ ارسال لینک اشتراک", 'callback_data' => "none"],
+            ['text' => "⚙️ Send subscription link", 'callback_data' => "none"],
         ];
     }
-    if (in_array($panel['type'], ['marzban', "x-ui_single", "marzneshin"])) {
+    if (in_array($panel['type'], ['marzban', 'pasarguard', "x-ui_single", "marzneshin"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statusconnecton, 'callback_data' => "editpanel-connecton-{$panel['conecton']}-{$panel['code_panel']}"],
-            ['text' => "📊 اولین اتصال", 'callback_data' => "none"],
+            ['text' => "📊 First connection", 'callback_data' => "none"],
         ];
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $on_hold_test, 'callback_data' => "editpanel-on_hold_Test-{$panel['on_hold_test']}-{$panel['code_panel']}"],
-            ['text' => "📊 اولین اتصال اکانت تست", 'callback_data' => "none"],
+            ['text' => "📊 First test-account connection", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ["Manualsale", "WGDashboard"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $changeloc, 'callback_data' => "editpanel-changeloc-{$panel['changeloc']}-{$panel['code_panel']}"],
-            ['text' => "🌍 تغییر لوکیشن", 'callback_data' => "none"],
+            ['text' => "🌍 Change location", 'callback_data' => "none"],
         ];
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $subvip, 'callback_data' => "editpanel-subvip-{$panel['subvip']}-{$panel['code_panel']}"],
-            ['text' => "💎 لینک ساب اختصاصی", 'callback_data' => "none"],
+            ['text' => "💎 Dedicated sub-link", 'callback_data' => "none"],
         ];
     }
     if (in_array($panel['type'], ["marzban"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $inbocunddisable, 'callback_data' => "editpanel-inbocunddisable-{$panel['inboundstatus']}-{$panel['code_panel']}"],
-            ['text' => "📍 اکانت غیرفعال", 'callback_data' => "none"],
+            ['text' => "📍 Disabled account inbound", 'callback_data' => "none"],
         ];
     }
     if ($panel['type'] == "ibsng" || $panel['type'] == "mikrotik") {
@@ -10917,72 +11122,72 @@ if ($datain == "settimecornday" && $adminrulecheck['rule'] == "administrator") {
         'inline_keyboard' => [
             [
                 ['text' => $statusshowbuy, 'callback_data' => "editpanel-statusbuy-{$panel['status']}-{$panel['code_panel']}"],
-                ['text' => "🖥 نمایش پنل", 'callback_data' => "none"],
+                ['text' => "🖥 Show panel", 'callback_data' => "none"],
             ],
             [
                 ['text' => $statusshowtest, 'callback_data' => "editpanel-statustest-{$panel['TestAccount']}-{$panel['code_panel']}"],
-                ['text' => "🎁 نمایش تست", 'callback_data' => "none"],
+                ['text' => "🎁 Show test", 'callback_data' => "none"],
             ],
             [
                 ['text' => $status_extend, 'callback_data' => "editpanel-stautsextend-{$panel['status_extend']}-{$panel['code_panel']}"],
-                ['text' => "🔋 وضعیت تمدید", 'callback_data' => "none"],
+                ['text' => "🔋 Extend status", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusf, 'callback_data' => "editpanel-customstatusf-{$customvlume['f']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه f", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group f", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusn, 'callback_data' => "editpanel-customstatusn-{$customvlume['n']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه n", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group n", 'callback_data' => "none"],
             ],
             [
                 ['text' => $customstatusn2, 'callback_data' => "editpanel-customstatusn2-{$customvlume['n2']}-{$panel['code_panel']}"],
-                ['text' => "♻️ سرویس دلخواه گروه n2", 'callback_data' => "none"],
+                ['text' => "♻️ Custom service group n2", 'callback_data' => "none"],
             ]
         ]
     ];
-    if (in_array($panel['type'], ['marzban'])) {
+    if (in_array($panel['type'], ['marzban', 'pasarguard'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $version_panel_status, 'callback_data' => "editpanel-versionpanel-{$panel['version_panel']}-{$panel['code_panel']}"],
-            ['text' => "🎛 پنل پاسارگارد", 'callback_data' => "none"],
+            ['text' => "🎛 Pasargard panel", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ['Manualsale', "WGDashboard", 'hiddify'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statusconfig, 'callback_data' => "editpanel-stautsconfig-{$panel['config']}-{$panel['code_panel']}"],
-            ['text' => "⚙️ ارسال کانفیگ", 'callback_data' => "none"],
+            ['text' => "⚙️ Send config", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ['Manualsale', "WGDashboard", 'hiddify'])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statussublink, 'callback_data' => "editpanel-sublink-{$panel['sublink']}-{$panel['code_panel']}"],
-            ['text' => "⚙️ ارسال لینک اشتراک", 'callback_data' => "none"],
+            ['text' => "⚙️ Send subscription link", 'callback_data' => "none"],
         ];
     }
-    if (in_array($panel['type'], ['marzban', "x-ui_single", "marzneshin"])) {
+    if (in_array($panel['type'], ['marzban', 'pasarguard', "x-ui_single", "marzneshin"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $statusconnecton, 'callback_data' => "editpanel-connecton-{$panel['conecton']}-{$panel['code_panel']}"],
-            ['text' => "📊 اولین اتصال", 'callback_data' => "none"],
+            ['text' => "📊 First connection", 'callback_data' => "none"],
         ];
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $on_hold_test, 'callback_data' => "editpanel-on_hold_Test-{$panel['on_hold_test']}-{$panel['code_panel']}"],
-            ['text' => "📊 اولین اتصال اکانت تست", 'callback_data' => "none"],
+            ['text' => "📊 First test-account connection", 'callback_data' => "none"],
         ];
     }
     if (!in_array($panel['type'], ["Manualsale", "WGDashboard"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $changeloc, 'callback_data' => "editpanel-changeloc-{$panel['changeloc']}-{$panel['code_panel']}"],
-            ['text' => "🌍 تغییر لوکیشن", 'callback_data' => "none"],
+            ['text' => "🌍 Change location", 'callback_data' => "none"],
         ];
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $subvip, 'callback_data' => "editpanel-subvip-{$panel['subvip']}-{$panel['code_panel']}"],
-            ['text' => "💎 لینک ساب اختصاصی", 'callback_data' => "none"],
+            ['text' => "💎 Dedicated sub-link", 'callback_data' => "none"],
         ];
     }
     if (in_array($panel['type'], ["marzban"])) {
         $Bot_Status['inline_keyboard'][] = [
             ['text' => $inbocunddisable, 'callback_data' => "editpanel-inbocunddisable-{$panel['inboundstatus']}-{$panel['code_panel']}"],
-            ['text' => "📍 اکانت غیرفعال", 'callback_data' => "none"],
+            ['text' => "📍 Disabled account inbound", 'callback_data' => "none"],
         ];
     }
     $Bot_Status = json_encode($Bot_Status);

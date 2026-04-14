@@ -1470,7 +1470,7 @@ function addFieldToTable($tableName, $fieldName, $defaultValue = null, $datatype
 function outtypepanel($typepanel, $message)
 {
     global $from_id, $optionMarzban, $optionX_ui_single, $optionhiddfy, $optionalireza, $optionalireza_single, $optionmarzneshin, $option_mikrotik, $optionwg, $options_ui, $optioneylanpanel, $optionibsng;
-    if ($typepanel == "marzban") {
+    if ($typepanel == "marzban" || $typepanel == "pasarguard") {
         sendmessage($from_id, $message, $optionMarzban, 'HTML');
     } elseif ($typepanel == "x-ui_single") {
         sendmessage($from_id, $message, $optionX_ui_single, 'HTML');
