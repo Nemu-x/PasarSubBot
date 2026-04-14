@@ -1830,28 +1830,33 @@ function languagechange($path_dir)
     }
 
     $defaultLanguage = $textData['fa'] ?? [];
-    $selectedLanguage = 'en';
+    $enEnabled = intval($setting['languageen'] ?? 0) === 1;
+    $ruEnabled = intval($setting['languageru'] ?? 0) === 1;
 
-    global $from_id;
+    $selectedLanguage = 'fa';
+
+    global $from_id, $language_code;
     if (!empty($from_id)) {
         $userData = select("user", "language", "id", $from_id, "select");
-        $userLanguage = normalizeSupportedLanguage($userData['language'] ?? null);
-        if ($userLanguage !== 'fa') {
-            $selectedLanguage = $userLanguage;
-        }
-    }
+        $langFromDb = is_array($userData) ? ($userData['language'] ?? null) : null;
+        // First message: user row may not exist yet — use Telegram client language.
+        $userLanguage = normalizeSupportedLanguage($langFromDb ?? $language_code ?? null);
 
-    if ($selectedLanguage === 'en') {
-        if (intval($setting['languageen'] ?? 0) === 1) {
-            $selectedLanguage = 'en';
-        } elseif (intval($setting['languageru'] ?? 0) === 1) {
-            $selectedLanguage = 'ru';
-        } elseif (intval($setting['languageen'] ?? 0) === 0 && intval($setting['languageru'] ?? 0) === 0) {
-            // Both flags off: Persian global UI (installer option 3; admin can turn EN/RU on).
+        if ($userLanguage === 'fa') {
             $selectedLanguage = 'fa';
+        } elseif ($userLanguage === 'en' && $enEnabled) {
+            $selectedLanguage = 'en';
+        } elseif ($userLanguage === 'ru' && $ruEnabled) {
+            $selectedLanguage = 'ru';
         } else {
+            // Requested EN/RU but that language is turned off in settings → Persian UI.
             $selectedLanguage = 'fa';
         }
+    } elseif ($enEnabled) {
+        // Cron / no $from_id: prefer English bundle when enabled (optional default).
+        $selectedLanguage = 'en';
+    } elseif ($ruEnabled) {
+        $selectedLanguage = 'ru';
     }
 
     $translatedLanguage = $textData[$selectedLanguage] ?? [];

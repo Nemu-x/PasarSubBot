@@ -26,4 +26,7 @@ $adminnumber = '{admin_number}';
 $domainhosts = '{domain_name}';
 $usernamebot = '{username_bot}';
 
+/** Web panel login IP check: if the server is behind a trusted reverse proxy, set true so the client IP matches what you paste from the panel (uses X-Forwarded-For first hop). */
+$panel_trust_x_forwarded_for = false;
+
 ?>
