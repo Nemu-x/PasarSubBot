@@ -525,7 +525,18 @@
             },
             "Channel": {
                 "SetChannelReport": "🔰 کانال با موفقیت تنظیم گردید",
-                "TestChannel": "تست  اتصال گروه"
+                "TestChannel": "تست  اتصال گروه",
+                "reportsGuide": "📣 در این بخش می توانید آیدی عددی گروه برای ارسال اعلان ها را تنظیم کنید.\n\nآموزش تنظیم گروه:\n1) ابتدا یک گروه بسازید.\n2) ربات @myidbot را عضو گروه کنید و دستور /getgroupid@myidbot را داخل گروه ارسال کنید.\n3) حالت تاپیک/انجمن گروه را از تنظیمات گروه روشن کنید.\n4) ربات خودتان را ادمین گروه کنید.\n5) آیدی عددی ارسال شده را در ربات بفرستید.\n\nآیدی عددی فعلی شما: %s",
+                "groupConnectFailed": "❌ اتصال به گروه موفق نبود.\n\nخطای دریافتی: %s",
+                "forumRequired": "❌ گروه انتخاب شده در حالت انجمن/تاپیک نیست. ابتدا قابلیت تاپیک را روشن کنید و دوباره آیدی گروه را تنظیم نمایید.",
+                "botNotAdmin": "❌ ربات ادمین گروه نیست.",
+                "topic_buy": "🛍 گزارش های خرید",
+                "topic_service": "📌 گزارش خرید خدمات",
+                "topic_test": "🔑 گزارش اکانت تست",
+                "topic_other": "⚙️ سایر گزارشات",
+                "topic_error": "❌ گزارش خطا ها",
+                "topic_finance": "💰 گزارش مالی",
+                "topic_backup": "🤖 بکاپ ربات"
             },
             "Product": {
                 "Service_location": "📌 موقعیت محصول خود را انتخاب کنید\n\n ⭕️ برای تعریف محصول در همه موقعیت ها دستور /all را ارسال کنید",
@@ -1242,7 +1253,18 @@
             },
             "Channel": {
                 "SetChannelReport": "🔰 The channel has been updated successfully",
-                "TestChannel": "Group connection test"
+                "TestChannel": "Group connection test",
+                "reportsGuide": "📣 In this section, you can set the numeric group ID for bot reports.\n\nHow to configure the group:\n1) Create a group first.\n2) Add @myidbot to the group and send /getgroupid@myidbot in that group.\n3) Enable forum/topics mode in group settings.\n4) Make your bot an admin in that group.\n5) Send the numeric ID in this bot.\n\nYour current group numeric ID: %s",
+                "groupConnectFailed": "❌ Could not connect to the group.\n\nReceived error: %s",
+                "forumRequired": "❌ The selected group is not in forum/topics mode. Enable topics first, then set the group ID again.",
+                "botNotAdmin": "❌ The bot is not an admin in the group.",
+                "topic_buy": "🛍 Purchase reports",
+                "topic_service": "📌 Service purchase reports",
+                "topic_test": "🔑 Trial account reports",
+                "topic_other": "⚙️ Other reports",
+                "topic_error": "❌ Error reports",
+                "topic_finance": "💰 Financial reports",
+                "topic_backup": "🤖 Bot backup"
             },
             "Product": {
                 "Service_location": "📌 Choose your product position\n\n ⭕️ To define the product in all situations, send the /all command",
@@ -1959,7 +1981,18 @@
             },
             "Channel": {
                 "SetChannelReport": "🔰 Канал успешно настроен",
-                "TestChannel": "Тест группового соединения"
+                "TestChannel": "Тест группового соединения",
+                "reportsGuide": "📣 В этом разделе вы можете настроить числовой ID группы для отчётов бота.\n\nКак настроить группу:\n1) Сначала создайте группу.\n2) Добавьте в группу @myidbot и отправьте в группе команду /getgroupid@myidbot.\n3) Включите режим тем/форума в настройках группы.\n4) Назначьте вашего бота администратором группы.\n5) Отправьте сюда числовой ID группы.\n\nВаш текущий числовой ID группы: %s",
+                "groupConnectFailed": "❌ Не удалось подключиться к группе.\n\nПолученная ошибка: %s",
+                "forumRequired": "❌ Выбранная группа не в режиме форума/тем. Сначала включите темы, затем повторно задайте ID группы.",
+                "botNotAdmin": "❌ Бот не является администратором группы.",
+                "topic_buy": "🛍 Отчёты о покупках",
+                "topic_service": "📌 Отчёты о покупке услуг",
+                "topic_test": "🔑 Отчёты по тестовым аккаунтам",
+                "topic_other": "⚙️ Прочие отчёты",
+                "topic_error": "❌ Отчёты об ошибках",
+                "topic_finance": "💰 Финансовые отчёты",
+                "topic_backup": "🤖 Бэкап бота"
             },
             "Product": {
                 "Service_location": "📌 Выберите позицию вашего продукта\n\n ⭕️ Чтобы определить товар во всех ситуациях, отправьте команду /all",
