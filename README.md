@@ -1,5 +1,29 @@
 # 🤖 VaultX Bot Panel
 
+> # 🚫 DEPRECATED / ARCHIVED
+> This repository is **no longer actively maintained**.
+> New development is moved to a separate bot project.
+> Use at your own risk.
+
+> ## ⚠️ Project Status (Important)
+> This repository is now in **partial/frozen** state.
+>
+> ### What is already done
+> - Core multilingual migration started (FA/EN/RU) for bot + panel.
+> - Major admin/panel management button flows were reworked and partially localized.
+> - PasarGuard compatibility work was started (new panel type + API compatibility layer).
+>
+> ### What is not fully finished
+> - Full i18n cleanup is not complete yet (some hardcoded legacy texts still exist).
+> - PasarGuard integration may still require additional endpoint/protocol adjustments depending on deployment.
+> - Some legacy PHP flows are still complex and need refactor.
+>
+> ### Maintainer note
+> I am moving forward with a **separate bot project** and will not continue full development here.
+> If you want to continue this codebase, feel free to fork and finish remaining tasks.
+>
+> PRs and community fixes are welcome.
+
 
 A Powerful Bot for Selling VPN Services with Auto Configuration Build.
 
