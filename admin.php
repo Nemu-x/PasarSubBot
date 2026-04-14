@@ -34,6 +34,46 @@ $text_panel_admin_login_template = "💎 | Version Bot: $version
 if (!in_array($from_id, $admin_ids))
     return;
 
+// Normalize localized panel-management buttons to legacy handler labels.
+$panelTextAliases = [
+    "✍️ Panel name" => "✍️ نام پنل",
+    "❌ Delete panel" => "❌ حذف پنل",
+    "🔐 Edit password" => "🔐 ویرایش رمز عبور",
+    "👤 Edit username" => "👤 ویرایش نام کاربری",
+    "🔗 Edit panel URL" => "🔗 ویرایش آدرس پنل",
+    "⚙️ Protocol & inbound settings" => "⚙️ تنظیم پروتکل و اینباند",
+    "🚨 Account creation limit" => "🚨 محدودیت ساخت اکانت",
+    "📍 Change user group" => "📍 تغییر گروه کاربری",
+    "⏳ Test service time" => "⏳ زمان سرویس تست",
+    "💾 Test account volume" => "💾 حجم اکانت تست",
+    "💎 Set inbound ID" => "💎 تنظیم شناسه اینباند",
+    "🔗 Sub-link domain" => "🔗 دامنه لینک ساب",
+    "🔗 Admin UUID" => "🔗 uuid admin",
+    "⚙️ Panel feature status" => "⚙️ وضعیت قابلیت ها پنل",
+    "🔋 Service renew method" => "🔋 روش تمدید سرویس",
+    "💡 Username generation method" => "💡 روش ساخت نام کاربری",
+    "🎛 Group name settings" => "🎛 تنظیم نام گروه",
+    "⚙️ Service settings" => "⚙️ تنظیمات سرویس",
+    "⚙️ Custom service volume price" => "⚙️ قیمت حجم سرویس دلخواه",
+    "➕ Extra volume price" => "➕ قیمت حجم اضافه",
+    "⏳ Extra time price" => "⏳ قیمت زمان اضافه",
+    "⏳ Custom time price" => "⏳ قیمت زمان دلخواه",
+    "🌍 Location change price" => "🌍 قیمت تغییر لوکیشن",
+    "📍 Minimum custom volume" => "📍 حداقل حجم دلخواه",
+    "📍 Maximum custom volume" => "📍 حداکثر حجم دلخواه",
+    "📍 Minimum custom time" => "📍 حداقل زمان دلخواه",
+    "📍 Maximum custom time" => "📍 حداکثر زمان دلخواه",
+    "⚙️ Disabled account inbound" => "⚙️  اینباند اکانت غیرفعال",
+    "🫣 Hide panel for a user" => "🫣 مخفی کردن پنل برای یک کاربر",
+    "❌ Remove user from hidden list" => "❌  حذف کاربر از لیست مخفی شدگان",
+    "➕ Add config" => "➕ اضافه کردن کانفیگ",
+    "❌ Delete config" => "❌ حذف کانفیگ ",
+    "✏️ Edit config" => "✏️ ویرایش کانفیگ",
+];
+if (isset($panelTextAliases[$text])) {
+    $text = $panelTextAliases[$text];
+}
+
 $domainhostsEscaped = htmlspecialchars($domainhosts, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $miniAppInstructionText = <<<HTML
