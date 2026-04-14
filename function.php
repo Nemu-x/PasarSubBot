@@ -1822,20 +1822,10 @@ function publickey()
     ];
 }
 
-/** Whether a UI language is allowed for this bot (setting switches + Persian always on). */
+/** EN/RU are primary bot languages and always available (FA also supported). */
 function botLanguageEnabled(string $lang, array $setting): bool
 {
-    if ($lang === 'fa') {
-        return true;
-    }
-    if ($lang === 'en') {
-        return intval($setting['languageen'] ?? 0) === 1;
-    }
-    if ($lang === 'ru') {
-        return intval($setting['languageru'] ?? 0) === 1;
-    }
-
-    return false;
+    return in_array($lang, ['fa', 'en', 'ru'], true);
 }
 
 function botLanguagePickerKeyboardJson(): string
@@ -1895,9 +1885,6 @@ function languagechange($path_dir)
     }
 
     $defaultLanguage = $textData['fa'] ?? [];
-    $enEnabled = intval($setting['languageen'] ?? 0) === 1;
-    $ruEnabled = intval($setting['languageru'] ?? 0) === 1;
-
     $selectedLanguage = 'fa';
 
     global $from_id, $language_code;
@@ -1907,21 +1894,14 @@ function languagechange($path_dir)
         // First message: user row may not exist yet — use Telegram client language.
         $userLanguage = normalizeSupportedLanguage($langFromDb ?? $language_code ?? null);
 
-        if ($userLanguage === 'fa') {
-            $selectedLanguage = 'fa';
-        } elseif ($userLanguage === 'en' && $enEnabled) {
-            $selectedLanguage = 'en';
-        } elseif ($userLanguage === 'ru' && $ruEnabled) {
-            $selectedLanguage = 'ru';
+        if (in_array($userLanguage, ['fa', 'en', 'ru'], true)) {
+            $selectedLanguage = $userLanguage;
         } else {
-            // Requested EN/RU but that language is turned off in settings → Persian UI.
-            $selectedLanguage = 'fa';
+            $selectedLanguage = 'en';
         }
-    } elseif ($enEnabled) {
-        // Cron / no $from_id: prefer English bundle when enabled (optional default).
+    } else {
+        // Cron / no user context: default to English.
         $selectedLanguage = 'en';
-    } elseif ($ruEnabled) {
-        $selectedLanguage = 'ru';
     }
 
     $translatedLanguage = $textData[$selectedLanguage] ?? [];

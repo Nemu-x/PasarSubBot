@@ -1404,7 +1404,7 @@ $list_departman['inline_keyboard'][] = [
 $list_departman = json_encode($list_departman);
 $active_panell =  json_encode([
     'keyboard' => [
-        [['text' => "📣 گزارشات ربات"]],
+        [['text' => $textbotlang['Admin']['keyboard_labels']['bot_reports']]],
     ],
     'resize_keyboard' => true
 ]);

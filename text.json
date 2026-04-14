@@ -1008,7 +1008,7 @@
             "backadmin": "🏠 Back to admin menu",
             "backmenu": "◀️ Back to previous menu",
             "textpaneladmin": "👨‍💼 Admin panel",
-            "activebottext": "To use the admin panel:\n\nLook at the bottom keyboard. Tap the button: <b>📣 گزارشات ربات</b> (that is &quot;Bot Reports&quot; — the label stays in Persian).\nThen choose your report group on the next screen.\n\nThis step is required.",
+            "activebottext": "To use the admin panel:\n\nLook at the bottom keyboard and tap: <b>📣 Bot reports (set group ID)</b>.\nThen choose your report group on the next screen.\n\nThis step is required.",
             "TextPanelAdminLogin": "",
             "affiliates": {
                 "titletopic": "🎁 Report of commissions"
@@ -1725,7 +1725,7 @@
             "backadmin": "🏠 Вернитесь в меню управления",
             "backmenu": "▶️ Вернуться в предыдущее меню",
             "textpaneladmin": "👨‍💼 Панель управления",
-            "activebottext": "Чтобы пользоваться админкой:\n\nСмотри клавиатуру внизу. Нажми кнопку: <b>📣 گزارشات ربات</b> (надпись по-персидски — это нормально, это «Отчёты бота»).\nДальше выбери группу для отчётов.\n\nШаг обязательный.",
+            "activebottext": "Чтобы пользоваться админкой:\n\nСмотри клавиатуру внизу и нажми: <b>📣 Отчёты в группу (ID)</b>.\nДальше выбери группу для отчётов.\n\nШаг обязательный.",
             "TextPanelAdminLogin": "",
             "affiliates": {
                 "titletopic": "🎁Отчет комиссий"
