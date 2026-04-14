@@ -309,7 +309,15 @@
                 "setchannel": "🔰 گروه گزارش با موفقیت تنظیم گردید.",
                 "description": "📌 برای فعال کردن قابلیت جوین اجباری یک کانال اضافه کنید\nنکات این قابلیت : \n- ربات حتما باید ادمین کانال باشد\n- برای غیرفعال کردن این قابلیت باید تمام کانال ها را حذف کنید",
                 "removechannel": "📌  یکی از کانال های زیر را برای حذف ارسال کنید",
-                "removedchannel": "❌ کانال با موفقیت حذف گردید."
+                "removedchannel": "❌ کانال با موفقیت حذف گردید.",
+                "get_join_button_name": "📌 یک نام برای دکمه عضویت کانال ارسال کنید.",
+                "get_join_link": "📌 لینک عضویت را ارسال کنید.",
+                "invalid_join_link": "❌ آدرس عضویت معتبر نیست.",
+                "join_saved": "✅ کانال جوین اجباری با موفقیت ثبت شد."
+            },
+            "web_panel": {
+                "set_login_ip_btn": "🛡 تنظیم IP ورود",
+                "activated": "✅ پنل تحت وب شما با موفقیت فعال شد.\n\n🔗 آدرس ورود: https://%s/panel\n👤 نام کاربری: <code>%s</code>\n🔑 رمز عبور: <code>%s</code>"
             },
             "manageadmin": {
                 "getid": "🌟آیدی عددی ادمین جدید را ارسال نمایید",
@@ -374,7 +382,14 @@
                     "remove": "⭕️ اینباندی که می‌خواهید حذف کنید را  ارسال کنید در صورتی که میخواهید تمام اینباند های این پروتکل حذف شود دستور all را ارسال کنید",
                     "removeed": "❌ اینباند با موفقیت حذف شد",
                     "RepetitiousInbound": "این اینباند از قبل اضافه شده است",
-                    "gettypepanel": "📌  نوع پنل خود را انتخاب نمایید"
+                    "gettypepanel": "📌  نوع پنل خود را انتخاب نمایید",
+                    "type_marzban": "Marzban",
+                    "type_marzneshin": "Marzneshin",
+                    "type_xui_single": "X-UI single port",
+                    "type_alireza_single": "Alireza single port",
+                    "type_manualsale": "Manual sale",
+                    "type_hiddify": "Hiddify",
+                    "type_mikrotik": "MikroTik"
                 },
                 "setprotocol": "✅ پروتکل با موفقیت تنظیم شد"
             },
@@ -1037,7 +1052,15 @@
                 "setchannel": "🔰 The report group was set up successfully.",
                 "description": "📌 Add a channel to activate the forced join feature\nTips for this feature: \n- The bot must be a channel admin\n- To disable this feature, you must delete all channels",
                 "removechannel": "📌 Submit one of the following channels for deletion",
-                "removedchannel": "❌ The channel has been successfully deleted."
+                "removedchannel": "❌ The channel has been successfully deleted.",
+                "get_join_button_name": "📌 Send a label for the channel join button.",
+                "get_join_link": "📌 Send the channel join URL.",
+                "invalid_join_link": "❌ The join URL is not valid.",
+                "join_saved": "✅ Forced-join channel added successfully."
+            },
+            "web_panel": {
+                "set_login_ip_btn": "🛡 Set login IP",
+                "activated": "✅ Web panel has been enabled successfully.\n\n🔗 Login URL: https://%s/panel\n👤 Username: <code>%s</code>\n🔑 Password: <code>%s</code>"
             },
             "manageadmin": {
                 "getid": "🌟 Send the numerical ID of the new admin",
@@ -1102,7 +1125,14 @@
                     "remove": "⭕️ send the inband that you want to delete, if you want to delete all the inbands of this protocol, send the all command",
                     "removeed": "❌ This bond has been deleted successfully",
                     "RepetitiousInbound": "This link has already been added",
-                    "gettypepanel": "📌 Choose your panel type"
+                    "gettypepanel": "📌 Choose your panel type",
+                    "type_marzban": "Marzban",
+                    "type_marzneshin": "Marzneshin",
+                    "type_xui_single": "X-UI single port",
+                    "type_alireza_single": "Alireza single port",
+                    "type_manualsale": "Manual sale",
+                    "type_hiddify": "Hiddify",
+                    "type_mikrotik": "MikroTik"
                 },
                 "setprotocol": "The protocol has been updated successfully"
             },
@@ -1765,7 +1795,15 @@
                 "setchannel": "🔰 Группа отчетов успешно настроена.",
                 "description": "📌 Добавьте канал, чтобы активировать функцию принудительного присоединения.\nСоветы по использованию этой функции: \n- Бот должен быть администратором канала\n- Чтобы отключить эту функцию, необходимо удалить все каналы",
                 "removechannel": "📌 Отправьте один из следующих каналов на удаление",
-                "removedchannel": "❌ Канал успешно удален."
+                "removedchannel": "❌ Канал успешно удален.",
+                "get_join_button_name": "📌 Отправьте подпись для кнопки вступления в канал.",
+                "get_join_link": "📌 Отправьте ссылку для вступления в канал.",
+                "invalid_join_link": "❌ Ссылка для вступления недействительна.",
+                "join_saved": "✅ Канал для обязательной подписки успешно добавлен."
+            },
+            "web_panel": {
+                "set_login_ip_btn": "🛡 Настроить IP входа",
+                "activated": "✅ Веб-панель успешно включена.\n\n🔗 URL входа: https://%s/panel\n👤 Логин: <code>%s</code>\n🔑 Пароль: <code>%s</code>"
             },
             "manageadmin": {
                 "getid": "🌟 Отправьте числовой идентификатор нового администратора.",
@@ -1830,7 +1868,14 @@
                     "remove": "⭕️ отправьте внутренний диапазон, который вы хотите удалить. Если вы хотите удалить все внутренние каналы этого протокола, отправьте команду all.",
                     "removeed": "❌ Эта связь успешно удалена.",
                     "RepetitiousInbound": "Эта ссылка уже добавлена",
-                    "gettypepanel": "📌 Выберите тип панели"
+                    "gettypepanel": "📌 Выберите тип панели",
+                    "type_marzban": "Marzban",
+                    "type_marzneshin": "Marzneshin",
+                    "type_xui_single": "X-UI single port",
+                    "type_alireza_single": "Alireza single port",
+                    "type_manualsale": "Manual sale",
+                    "type_hiddify": "Hiddify",
+                    "type_mikrotik": "MikroTik"
                 },
                 "setprotocol": "Протокол успешно установлен"
             },

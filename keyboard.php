@@ -449,7 +449,7 @@ $Feature_status = json_encode([
 ]);
 $channelkeyboard = json_encode([
     'keyboard' => [
-        [['text' => "اضافه کردن کانال"],['text' => "حذف کانال"]],
+        [['text' => $textbotlang['Admin']['channel']['title']],['text' => $textbotlang['Admin']['channel']['removechannelbtn']]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
@@ -1248,16 +1248,16 @@ $keyboardtimereset = json_encode([
 $keyboardtypepanel = json_encode([
     'inline_keyboard' => [
         [
-            ['text' => "مرزبان" , 'callback_data' => "typepanel#marzban"],
-            ['text' => "مرزنشین" , 'callback_data' => "typepanel#marzneshin"]
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_marzban'] , 'callback_data' => "typepanel#marzban"],
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_marzneshin'] , 'callback_data' => "typepanel#marzneshin"]
         ],
         [
-            ['text' => 'ثنایی تک پورت', 'callback_data' => 'typepanel#x-ui_single'],
-            ['text' => 'علیرضا تک پورت' , 'callback_data' => 'typepanel#alireza_single']
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_xui_single'], 'callback_data' => 'typepanel#x-ui_single'],
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_alireza_single'] , 'callback_data' => 'typepanel#alireza_single']
         ],
         [
-            ['text' => "فروش دستی" , 'callback_data' => 'typepanel#Manualsale'],
-            ['text' => "هیدیفای" , 'callback_data' => 'typepanel#hiddify'],
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_manualsale'] , 'callback_data' => 'typepanel#Manualsale'],
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_hiddify'] , 'callback_data' => 'typepanel#hiddify'],
         ],
         [
             ['text' => "WGDashboard", 'callback_data' => 'typepanel#WGDashboard'],
@@ -1265,7 +1265,7 @@ $keyboardtypepanel = json_encode([
         ],
         [
             ['text' => "ibsng", 'callback_data' => 'typepanel#ibsng'],
-            ['text' => "میکروتیک", 'callback_data' => 'typepanel#mikrotik']
+            ['text' => $textbotlang['Admin']['managepanel']['Inbound']['type_mikrotik'], 'callback_data' => 'typepanel#mikrotik']
         ],
         [
             ['text' => $textbotlang['Admin']['backadmin'] , 'callback_data' => 'admin']

@@ -111,15 +111,15 @@ if (in_array($text, $textadmin) || $datain == "admin") {
     step('addchannel', $from_id);
 } elseif ($user['step'] == "addchannel") {
     savedata("clear", "link", $text);
-    sendmessage($from_id, "📌 یک نام برای دکمه عضویت چنل انتخاب نمایید.", $backadmin, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['channel']['get_join_button_name'], $backadmin, 'HTML');
     step('getremark', $from_id);
 } elseif ($user['step'] == "getremark") {
     savedata("save", "remark", $text);
-    sendmessage($from_id, "📌 لینک عضویت را ارسال کنید", $backadmin, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['channel']['get_join_link'], $backadmin, 'HTML');
     step('getlinkjoin', $from_id);
 } elseif ($user['step'] == "getlinkjoin") {
     if (!filter_var($text, FILTER_VALIDATE_URL)) {
-        sendmessage($from_id, "آدرس عضویت صحیح نمی باشد", $backadmin, 'HTML');
+        sendmessage($from_id, $textbotlang['Admin']['channel']['invalid_join_link'], $backadmin, 'HTML');
         return;
     }
     $userdata = json_decode($user['Processing_value'], true);
@@ -130,7 +130,7 @@ if (in_array($text, $textadmin) || $datain == "admin") {
     $remark = isset($userdata['remark']) ? (string) $userdata['remark'] : '';
     $link = isset($userdata['link']) ? (string) $userdata['link'] : '';
 
-    sendmessage($from_id, "✅ کانال جوین اجباری با موفقیت ثبت گردید.", $channelkeyboard, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['channel']['join_saved'], $channelkeyboard, 'HTML');
     step('home', $from_id);
 
     $insertChannel = function ($remarkValue) use ($pdo, $link, $text) {
@@ -6972,16 +6972,17 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $keyboardstatistics = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "تنظیم آیپی ورود", 'callback_data' => 'iploginset'],
+                ['text' => $textbotlang['Admin']['web_panel']['set_login_ip_btn'], 'callback_data' => 'iploginset'],
             ],
         ]
     ]);
-    sendmessage($from_id, "✅  پنل تحت وب شما با موفقیت فعال گردید.
-
-
-🔗آدرس ورود : https://$domainhosts/panel
-👤نام کاربری :  <code>$from_id</code>
-🔑رمز عبور :  <code>$randomString</code>", $keyboardstatistics, 'HTML');
+    $webPanelMsg = sprintf(
+        $textbotlang['Admin']['web_panel']['activated'],
+        $domainhosts,
+        $from_id,
+        $randomString
+    );
+    sendmessage($from_id, $webPanelMsg, $keyboardstatistics, 'HTML');
 } elseif (preg_match('/addordermanualـ(\w+)/', $datain, $dataget)) {
     $iduser = $dataget[1];
     update("user", "Processing_value", $iduser, "id", $from_id);
