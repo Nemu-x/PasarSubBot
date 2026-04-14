@@ -21,15 +21,6 @@ function token_panel($code_panel,$verify = true){
         return null;
     }
     
-    if (($panel['type'] ?? '') === 'pasarguard') {
-        // Pasarguard deployments can use static API key auth.
-        $apiKey = trim((string)($panel['password_panel'] ?? ''));
-        if ($apiKey === '') {
-            return ['error' => 'Pasarguard API key is empty'];
-        }
-        return ['access_token' => $apiKey];
-    }
-
     $tokenEndpoints = [
         '/api/admin/token',   // Marzban default
         '/api/adm/token',     // Some forks/gateways
@@ -72,6 +63,14 @@ function token_panel($code_panel,$verify = true){
         }
         $lastError = $response['body'] ?? 'Token endpoint response invalid';
     }
+    if (!isset($body['access_token']) && ($panel['type'] ?? '') === 'pasarguard') {
+        // Pasarguard node deployments may rely on static API_KEY bearer auth.
+        // We keep this as fallback only if token-based auth failed.
+        $apiKey = trim((string)($panel['password_panel'] ?? ''));
+        if ($apiKey !== '') {
+            return ['access_token' => $apiKey];
+        }
+    }
     if (!isset($body['access_token'])) {
         return ['error' => $lastError ?: 'Unable to get panel access token'];
     }
@@ -94,15 +93,33 @@ function getuser($username_account,$location)
     if(!empty($Check_token['error'])){
         return $Check_token;
     }
-    $url = marzbanApiUrl($marzban_list_get['url_panel'], '/api/user/' . $username_account);
     $headers = array(
             'accept: application/json'
     );
-    $req = new CurlRequest($url);
-    $req->setHeaders($headers);
-    $req->setBearerToken($Check_token['access_token']);
-    $response = $req->get();
-    return $response;
+    $userEndpoints = [
+        '/api/user/' . $username_account,
+        '/api/users/' . $username_account,
+    ];
+    $lastResponse = null;
+    foreach ($userEndpoints as $endpoint) {
+        $url = marzbanApiUrl($marzban_list_get['url_panel'], $endpoint);
+        $req = new CurlRequest($url);
+        $req->setHeaders($headers);
+        $req->setBearerToken($Check_token['access_token']);
+        $response = $req->get();
+        $lastResponse = $response;
+        if (!empty($response['error'])) {
+            continue;
+        }
+        if (empty($response['status']) || (int)$response['status'] === 200) {
+            return $response;
+        }
+        // For auth failures, don't keep trying with same token.
+        if ((int)$response['status'] === 401 || (int)$response['status'] === 403) {
+            return $response;
+        }
+    }
+    return $lastResponse ?? ['error' => 'Unable to fetch user from panel'];
 }
 #-----------------------------#
 

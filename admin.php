@@ -9707,65 +9707,54 @@ f,n.n2", $backadmin, 'HTML');
 } elseif ($user['step'] == "setinboundandprotocol") {
     $panel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
     if ($panel['type'] == "marzban" || $panel['type'] == "pasarguard") {
-        if ($panel['version_panel'] == "1") {
-            $DataUserOut = getuser($text, $user['Processing_value']);
-            if (!empty($DataUserOut['error'])) {
-                sendmessage($from_id, $DataUserOut['error'], null, 'HTML');
-                return;
-            }
-            if (!empty($DataUserOut['status']) && $DataUserOut['status'] != 200) {
-                sendmessage($from_id, "❌  خطایی رخ داده است کد خطا :  {$DataUserOut['status']}", null, 'HTML');
-                return;
-            }
-            $DataUserOut = json_decode($DataUserOut['body'], true);
-            if ((isset($DataUserOut['msg']) && $DataUserOut['msg'] == "User not found") or !isset($DataUserOut['proxy_settings'])) {
-                sendmessage($from_id, $textbotlang['users']['stateus']['UserNotFound'], null, 'html');
-                return;
-            }
-            foreach ($DataUserOut['proxy_settings'] as $key => &$value) {
-                if ($key == "shadowsocks") {
-                    unset($DataUserOut['proxy_settings'][$key]['password']);
-                } elseif ($key == "trojan") {
-                    unset($DataUserOut['proxy_settings'][$key]['password']);
-                } else {
-                    unset($DataUserOut['proxy_settings'][$key]['id']);
-                }
-                if (count($DataUserOut['proxy_settings'][$key]) == 0) {
-                    $DataUserOut['proxy_settings'][$key] = new stdClass();
-                }
-            }
-            update("marzban_panel", "inbounds", json_encode($DataUserOut['group_ids']), "name_panel", $user['Processing_value']);
-            update("marzban_panel", "proxies", json_encode($DataUserOut['proxy_settings'], true), "name_panel", $user['Processing_value']);
-        } else {
-            $DataUserOut = getuser($text, $user['Processing_value']);
-            if (!empty($DataUserOut['error'])) {
-                sendmessage($from_id, $DataUserOut['error'], null, 'HTML');
-                return;
-            }
-            if (!empty($DataUserOut['status']) && $DataUserOut['status'] != 200) {
-                sendmessage($from_id, "❌  خطایی رخ داده است کد خطا :  {$DataUserOut['status']}", null, 'HTML');
-                return;
-            }
-            $DataUserOut = json_decode($DataUserOut['body'], true);
-            if ((isset($DataUserOut['msg']) && $DataUserOut['msg'] == "User not found") or !isset($DataUserOut['proxies'])) {
-                sendmessage($from_id, $textbotlang['users']['stateus']['UserNotFound'], null, 'html');
-                return;
-            }
-            foreach ($DataUserOut['proxies'] as $key => &$value) {
-                if ($key == "shadowsocks") {
-                    unset($DataUserOut['proxies'][$key]['password']);
-                } elseif ($key == "trojan") {
-                    unset($DataUserOut['proxies'][$key]['password']);
-                } else {
-                    unset($DataUserOut['proxies'][$key]['id']);
-                }
-                if (count($DataUserOut['proxies'][$key]) == 0) {
-                    $DataUserOut['proxies'][$key] = new stdClass();
-                }
-            }
-            update("marzban_panel", "inbounds", json_encode($DataUserOut['inbounds']), "name_panel", $user['Processing_value']);
-            update("marzban_panel", "proxies", json_encode($DataUserOut['proxies'], true), "name_panel", $user['Processing_value']);
+        $DataUserOut = getuser($text, $user['Processing_value']);
+        if (!empty($DataUserOut['error'])) {
+            sendmessage($from_id, $DataUserOut['error'], null, 'HTML');
+            return;
         }
+        if (!empty($DataUserOut['status']) && $DataUserOut['status'] != 200) {
+            sendmessage($from_id, "❌ Error occurred. Code: {$DataUserOut['status']}", null, 'HTML');
+            return;
+        }
+        $DataUserOut = json_decode($DataUserOut['body'], true);
+        if ((isset($DataUserOut['msg']) && $DataUserOut['msg'] == "User not found")
+            || (isset($DataUserOut['detail']) && stripos((string)$DataUserOut['detail'], 'not found') !== false)
+        ) {
+            sendmessage($from_id, $textbotlang['users']['stateus']['UserNotFound'], null, 'html');
+            return;
+        }
+
+        // Pasarguard/Marzban compatibility:
+        // - v1-like schema: proxy_settings + group_ids
+        // - v0-like schema: proxies + inbounds
+        $proxiesPayload = null;
+        $inboundsPayload = null;
+        if (isset($DataUserOut['proxy_settings']) && is_array($DataUserOut['proxy_settings'])) {
+            $proxiesPayload = $DataUserOut['proxy_settings'];
+            $inboundsPayload = $DataUserOut['group_ids'] ?? [];
+            update("marzban_panel", "version_panel", "1", "name_panel", $user['Processing_value']);
+        } elseif (isset($DataUserOut['proxies']) && is_array($DataUserOut['proxies'])) {
+            $proxiesPayload = $DataUserOut['proxies'];
+            $inboundsPayload = $DataUserOut['inbounds'] ?? [];
+            update("marzban_panel", "version_panel", "0", "name_panel", $user['Processing_value']);
+        } else {
+            sendmessage($from_id, "❌ Unsupported user schema in panel response.", null, 'HTML');
+            return;
+        }
+
+        foreach ($proxiesPayload as $key => &$value) {
+            if ($key == "shadowsocks" || $key == "trojan") {
+                unset($proxiesPayload[$key]['password']);
+            } else {
+                unset($proxiesPayload[$key]['id']);
+            }
+            if (is_array($proxiesPayload[$key]) && count($proxiesPayload[$key]) == 0) {
+                $proxiesPayload[$key] = new stdClass();
+            }
+        }
+
+        update("marzban_panel", "inbounds", json_encode($inboundsPayload), "name_panel", $user['Processing_value']);
+        update("marzban_panel", "proxies", json_encode($proxiesPayload, true), "name_panel", $user['Processing_value']);
     } elseif ($panel['type'] == "s_ui") {
         $data = GetClientsS_UI($text, $panel['name_panel']); {
             if (count($data) == 0) {
