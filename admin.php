@@ -1,6 +1,25 @@
 <?php
 #----------------[  admin section  ]------------------#
-$textadmin = ["panel", "/panel", $textbotlang['Admin']['textpaneladmin']];
+$textadmin = [
+    "panel",
+    "/panel",
+    $textbotlang['Admin']['textpaneladmin'],
+    "👨‍💼 پنل مدیریت",
+    "👨‍💼 Admin panel",
+    "👨‍💼 Панель управления"
+];
+$adminBotReportsLabels = [
+    $textbotlang['Admin']['keyboard_labels']['bot_reports'] ?? '',
+    "📣 گزارشات ربات",
+    "📣 Bot reports (set group ID)",
+    "📣 Отчёты в группу (ID)",
+];
+$adminReportBugLabels = [
+    $textbotlang['Admin']['keyboard_labels']['report_bug'] ?? '',
+    "📬 گزارش ربات",
+    "📬 Bug report / VaultX info",
+    "📬 Баг / инфо VaultX",
+];
 $text_panel_admin_login_template = "💎 | Version Bot: $version
 📌 | Version Mini App: 0.1.1
 
@@ -3043,7 +3062,7 @@ $caption";
     sendmessage($from_id, $textbotlang['Admin']['ManageUser']['SaveText'], $textbot, 'HTML');
     update("textbot", "text", $text, "id_text", "text_roll");
     step('home', $from_id);
-} elseif ($text == $textbotlang['Admin']['keyboard_labels']['bot_reports'] && $adminrulecheck['rule'] == "administrator") {
+} elseif (in_array($text, $adminBotReportsLabels, true) && $adminrulecheck['rule'] == "administrator") {
     $textreports = "📣در این بخش میتوانید آیدی عددی گروه را برای ارسال اعلان ارسال نمایید
 آموزش تنظیم گروه :
 1 - ابتدا یک گروه  بسازید 
@@ -7618,7 +7637,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     }
     update("user", "Processing_value", $userdata['idpanel'], "id", $from_id);
     step("home", $from_id);
-} elseif ($text == $textbotlang['Admin']['keyboard_labels']['report_bug'] && $adminrulecheck['rule'] == "administrator") {
+} elseif (in_array($text, $adminReportBugLabels, true) && $adminrulecheck['rule'] == "administrator") {
     $textupdate = "💬 | گزارش ربات\n\n🔹 | اگر در عملکرد ربات با <b>باگ یا مشکلی</b> روبه‌رو شدید، لطفاً مورد را برای بررسی به ما اطلاع دهید.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | در صورتی که با <b>باگ جدی</b> یا رفتار غیرعادی مواجه شدید، سریع‌تر گزارش دهید تا رفع شود.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | اگر پیشنهادی برای <b>افزودن قابلیت جدید</b> دارید یا ایده‌ای برای بهبود عملکرد ربات در نظر دارید، خوشحال می‌شویم بشنویم.\n➖➖➖➖➖➖➖➖➖➖➖\n🔹 | همچنین اگر نیاز به <b>راهنمایی</b> یا کمک دارید، می‌توانید از طریق دایرکت با تیم پشتیبانی در ارتباط باشید.\n\n📩 | برای ارسال گزارش، پیشنهاد یا درخواست راهنمایی، در <b>گروه VaultX</b> پیام بگذارید:\n<a href=\"https://t.me/+TDJJIwuYUsozMzI0\" rel=\"nofollow\" target=\"_blank\">VaultX Group</a>";
     sendmessage($from_id, $textupdate, null, 'HTML');
     step('home', $from_id);

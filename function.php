@@ -1855,6 +1855,7 @@ function localizeTextbotLabels(array $datatextbot, array $textbotlang): array
 {
     $users = $textbotlang['users'] ?? [];
     $labelMap = [
+        'text_start' => 'start_message',
         'text_sell' => 'menu_sell',
         'text_extend' => 'menu_extend',
         'text_usertest' => 'menu_usertest',
@@ -1865,6 +1866,15 @@ function localizeTextbotLabels(array $datatextbot, array $textbotlang): array
         'text_Tariff_list' => 'menu_tariff_list',
         'text_support' => 'menu_support',
         'text_help' => 'menu_help',
+        'textrequestagent' => 'menu_request_agent',
+        'textpanelagent' => 'menu_agent_panel',
+        'text_request_agent_dec' => 'request_agent_description',
+        'text_channel' => 'channel_join_required',
+        'text_roll' => 'rules_required',
+        'text_bot_off' => 'bot_off_message',
+        'textselectlocation' => 'select_service_location',
+        'text_dec_Tariff_list' => 'tariff_list_description',
+        'text_dec_fq' => 'faq_description',
     ];
 
     foreach ($labelMap as $idText => $jsonKey) {

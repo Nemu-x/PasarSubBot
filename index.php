@@ -288,6 +288,7 @@ if (isset($datain) && is_string($datain) && preg_match('/^setlang_(fa|en|ru)$/',
         return;
     }
     update('user', 'language', $pick, 'id', $from_id);
+    $textbotlang = languagechange('text.json');
     require __DIR__ . '/keyboard.php';
     $datatextbot = $pdo->query("SELECT id_text, text FROM textbot")->fetchAll(PDO::FETCH_KEY_PAIR);
     $datatextbot = localizeTextbotLabels($datatextbot, $textbotlang);
@@ -6765,7 +6766,7 @@ $text_porsant
         }
     }
     step('home', $from_id);
-} elseif (($text == $datatextbot['textpanelagent'] || $datain == "agentpanel") && $user['agent'] != "f") {
+} elseif ((in_array($text, [$datatextbot['textpanelagent'], '👨‍💻 پنل نمایندگی', '👨‍💻 Agent panel', '👨‍💻 Агент-панель'], true) || $datain == "agentpanel") && $user['agent'] != "f") {
     if ($setting['inlinebtnmain'] == "oninline") {
         Editmessagetext($from_id, $message_id, $textbotlang['Admin']['agent']['agenttext'], $keyboardagent, 'HTML');
     } else {
@@ -6782,7 +6783,7 @@ $text_porsant
     sendmessage($from_id, $textbotlang['Admin']['agent']['submitusername'], $keyboardagent, 'html');
     update("user", "namecustom", $text, "id", $from_id);
     step("home", $from_id);
-} elseif ($text == $datatextbot['textrequestagent'] || $datain == "requestagent") {
+} elseif (in_array($text, [$datatextbot['textrequestagent'], '👨‍💻 درخواست نمایندگی', '👨‍💻 Agent request', '👨‍💻 Заявка на агентство'], true) || $datain == "requestagent") {
     if ($user['Balance'] < $setting['agentreqprice']) {
         $priceagent = number_format($setting['agentreqprice']);
         sendmessage($from_id, sprintf($textbotlang['users']['agenttext']['insufficientbalanceagent'], $priceagent), $backuser, 'HTML');
