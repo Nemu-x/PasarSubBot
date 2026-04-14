@@ -1821,6 +1821,32 @@ function publickey()
         'preshared_key' => $presharedKey
     ];
 }
+
+/** Whether a UI language is allowed for this bot (setting switches + Persian always on). */
+function botLanguageEnabled(string $lang, array $setting): bool
+{
+    if ($lang === 'fa') {
+        return true;
+    }
+    if ($lang === 'en') {
+        return intval($setting['languageen'] ?? 0) === 1;
+    }
+    if ($lang === 'ru') {
+        return intval($setting['languageru'] ?? 0) === 1;
+    }
+
+    return false;
+}
+
+function botLanguagePickerKeyboardJson(): string
+{
+    return json_encode(['inline_keyboard' => [[
+        ['text' => '🇮🇷 FA', 'callback_data' => 'setlang_fa'],
+        ['text' => '🇬🇧 EN', 'callback_data' => 'setlang_en'],
+        ['text' => '🇷🇺 RU', 'callback_data' => 'setlang_ru'],
+    ]]]);
+}
+
 function languagechange($path_dir)
 {
     $setting = select("setting", "*");

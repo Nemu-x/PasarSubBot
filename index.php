@@ -275,6 +275,30 @@ if (strpos($text, "/start ") !== false && $user['step'] != "gettextSystemMessage
         $text = $affiliatesid;
     }
 }
+#-----------language callback (explicit picker)------------#
+if (isset($datain) && is_string($datain) && preg_match('/^setlang_(fa|en|ru)$/', $datain, $m)) {
+    $pick = $m[1];
+    if (!botLanguageEnabled($pick, $setting)) {
+        telegram('answerCallbackQuery', [
+            'callback_query_id' => $callback_query_id,
+            'text' => $textbotlang['users']['language_disabled'] ?? '❌',
+            'show_alert' => true,
+        ]);
+        return;
+    }
+    update('user', 'language', $pick, 'id', $from_id);
+    require __DIR__ . '/keyboard.php';
+    $datatextbot = $pdo->query("SELECT id_text, text FROM textbot")->fetchAll(PDO::FETCH_KEY_PAIR);
+    $datatextbot['text_start'] = strtr($datatextbot['text_start'] ?? '', $varable_start);
+    telegram('answerCallbackQuery', [
+        'callback_query_id' => $callback_query_id,
+        'text' => $textbotlang['users']['language_saved'],
+        'show_alert' => false,
+    ]);
+    sendmessage($from_id, $datatextbot['text_start'], $keyboard, 'html');
+    step('home', $from_id);
+    return;
+}
 if (intval($user['verify']) == 0 && !in_array($from_id, $admin_ids) && $setting['verifystart'] == "onverify") {
     $textverify = "⚠️ حساب شما احراز هویت نشده است پیام  شما  به ادمین ارسال شده  
     در صورت پیگیری  سریع تر می توانید به آیدی زیر پیام دهید
@@ -395,12 +419,22 @@ if ($user['joinchannel'] != "active") {
     }
 }
 if ($text == "/start" || $datain == "start" || $text == "start") {
+    if (intval($setting['languageen'] ?? 0) === 1 || intval($setting['languageru'] ?? 0) === 1) {
+        sendmessage($from_id, $textbotlang['users']['choose_language'], botLanguagePickerKeyboardJson(), 'html');
+    }
     sendmessage($from_id, $datatextbot['text_start'], $keyboard, "html");
     update("user", "Processing_value", "0", "id", $from_id);
     update("user", "Processing_value_one", "0", "id", $from_id);
     update("user", "Processing_value_tow", "0", "id", $from_id);
     update("user", "Processing_value_four", "0", "id", $from_id);
     step('home', $from_id);
+    return;
+} elseif (preg_match('#^/(lang|language)\b#iu', (string) $text)) {
+    if (intval($setting['languageen'] ?? 0) === 1 || intval($setting['languageru'] ?? 0) === 1) {
+        sendmessage($from_id, $textbotlang['users']['choose_language'], botLanguagePickerKeyboardJson(), 'html');
+    } else {
+        sendmessage($from_id, $textbotlang['users']['language_only_fa'], null, 'html');
+    }
     return;
 } elseif ($text == "version") {
     sendmessage($from_id, $version, null, 'html');

@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_ACTIVE) {
     session_regenerate_id(true);
 }
 require_once __DIR__ . '/../config.php';
+panelSyncLangFromSetting();
 require_once __DIR__ . '/../function.php';
 require_once __DIR__ . '/../botapi.php';
 
@@ -12,15 +13,6 @@ $ui = panelLoginUiStrings();
 $allowed_ips = select("setting", "*", null, null, "select");
 
 $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
-if (!empty($panel_trust_x_forwarded_for)) {
-    $xff = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
-    if (is_string($xff) && $xff !== '') {
-        $first = trim(explode(',', $xff)[0]);
-        if (filter_var($first, FILTER_VALIDATE_IP)) {
-            $user_ip = $first;
-        }
-    }
-}
 $admin_ids = select("admin", "id_admin", null, null, "FETCH_COLUMN");
 $check_ip = isset($allowed_ips['iplogin']) && (string) $allowed_ips['iplogin'] === (string) $user_ip;
 $texterrr = "";

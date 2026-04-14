@@ -10,15 +10,48 @@ if (isset($_GET['lang'])) {
     }
 }
 
-if (!isset($_SESSION['panel_lang'])) {
-    $_SESSION['panel_lang'] = 'en';
+/**
+ * First visit: set panel language from setting.languageen / languageru (no session yet).
+ * Skips when ?lang= is present or session already has panel_lang.
+ */
+function panelSyncLangFromSetting(): void
+{
+    if (isset($_GET['lang'])) {
+        return;
+    }
+    global $pdo;
+    if (!isset($pdo) || !($pdo instanceof PDO)) {
+        return;
+    }
+    if (isset($_SESSION['panel_lang'])) {
+        return;
+    }
+    try {
+        $row = $pdo->query('SELECT languageen, languageru FROM setting LIMIT 1')->fetch(PDO::FETCH_ASSOC);
+    } catch (Throwable $e) {
+        $_SESSION['panel_lang'] = 'fa';
+
+        return;
+    }
+    if (!$row) {
+        $_SESSION['panel_lang'] = 'fa';
+
+        return;
+    }
+    if (intval($row['languageen'] ?? 0) === 1) {
+        $_SESSION['panel_lang'] = 'en';
+    } elseif (intval($row['languageru'] ?? 0) === 1) {
+        $_SESSION['panel_lang'] = 'ru';
+    } else {
+        $_SESSION['panel_lang'] = 'fa';
+    }
 }
 
 function panelCurrentLanguage(): string
 {
-    $lang = strtolower((string) ($_SESSION['panel_lang'] ?? 'en'));
+    $lang = strtolower((string) ($_SESSION['panel_lang'] ?? 'fa'));
     if (!in_array($lang, ['fa', 'en', 'ru'], true)) {
-        return 'en';
+        return 'fa';
     }
     return $lang;
 }
@@ -90,9 +123,9 @@ function panelShellStrings(): array
             'fa' => 'ربات',
         ],
         'logo_name' => [
-            'en' => 'Mirza',
-            'ru' => 'Мирза',
-            'fa' => 'میرزا',
+            'en' => 'VaultX',
+            'ru' => 'VaultX',
+            'fa' => 'VaultX',
         ],
         'hello' => [
             'en' => 'Hello',
@@ -150,9 +183,9 @@ function panelShellStrings(): array
             'fa' => 'چیدمان کیبورد',
         ],
         'page_title_dashboard' => [
-            'en' => 'Mirza bot admin panel',
-            'ru' => 'Панель управления ботом Мирза',
-            'fa' => 'پنل مدیریت ربات میرزا',
+            'en' => 'VaultX bot admin panel',
+            'ru' => 'Панель управления ботом VaultX',
+            'fa' => 'پنل مدیریت ربات VaultX',
         ],
         'stat_users' => [
             'en' => 'Users',

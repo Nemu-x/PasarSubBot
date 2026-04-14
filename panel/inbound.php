@@ -2,6 +2,7 @@
 require_once __DIR__ . '/i18n.php';
 session_start();
 require_once __DIR__ . '/../config.php';
+panelSyncLangFromSetting();
 require_once __DIR__ . '/../jdf.php';
 
 

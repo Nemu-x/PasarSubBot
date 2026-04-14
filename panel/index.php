@@ -2,6 +2,7 @@
 require_once __DIR__ . '/i18n.php';
 session_start();
 require_once __DIR__ . '/../config.php';
+panelSyncLangFromSetting();
 require_once __DIR__ . '/../jdf.php';
 $datefirstday = time() - 86400;
 $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");

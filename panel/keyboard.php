@@ -2,6 +2,7 @@
 require_once __DIR__ . '/i18n.php';
 session_start();
 require_once __DIR__ . '/../config.php';
+panelSyncLangFromSetting();
 require_once __DIR__ . '/../jdf.php';
 require_once __DIR__ . '/../function.php';
 $query = $pdo->prepare("SELECT * FROM admin WHERE username=:username");
@@ -50,7 +51,9 @@ $__panelHtml = panelHtmlAttrs();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo htmlspecialchars(panelT('page_title')); ?></title>
     <script>
-      window.__MIRZA_API_ORIGIN = window.location.origin + <?php echo json_encode($applicationBasePath); ?>;
+      window.__VAULTX_API_ORIGIN = window.location.origin + <?php echo json_encode($applicationBasePath); ?>;
+      // Backward compatibility for existing front-end bundle references.
+      window.__MIRZA_API_ORIGIN = window.__VAULTX_API_ORIGIN;
     </script>
     <script type="module" crossorigin src="js/sort_keyboard.js"></script>
     <link rel="stylesheet" crossorigin href="css/sort_keyboard.css">

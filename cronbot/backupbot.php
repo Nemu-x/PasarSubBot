@@ -40,7 +40,7 @@ if ($return_var !== 0) {
     $zip = new ZipArchive();
     if ($zip->open($zip_file_name, ZipArchive::CREATE) === TRUE) {
         $zip->addFile($backup_file_name, basename($backup_file_name));
-        $zip->setEncryptionName(basename($backup_file_name), ZipArchive::EM_AES_256, "mirzapro2026#$");
+        $zip->setEncryptionName(basename($backup_file_name), ZipArchive::EM_AES_256, "vaultx2026#$");
         $zip->close();
 
         telegram('sendDocument', [
@@ -48,7 +48,7 @@ if ($return_var !== 0) {
             'message_thread_id' => $reportbackup,
             'document' => new CURLFile($zip_file_name),
             'caption' => "📌 خروجی دیتابیس ربات اصلی 
-توضیحات : https://t.me/mirzapanel/915",
+توضیحات : https://t.me/vaultx",
         ]);
         unlink($zip_file_name);
         unlink($backup_file_name);

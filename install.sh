@@ -16,7 +16,8 @@ BOT_SOURCE_ZIP="https://github.com/${GITHUB_REPO}/archive/refs/heads/${GITHUB_BR
 # Function to update the script itself automatically
 function self_update_script() {
     local MASTER_PATH="/root/install.sh"
-    local BIN_LINK="/usr/local/bin/mirza"
+    local BIN_LINK="/usr/local/bin/vaultx"
+    local LEGACY_BIN_LINK="/usr/local/bin/mirza"
     local URL="$INSTALL_SCRIPT_URL"
     local TEMP_FILE="/tmp/pasarsubbot_install_update.sh"
     echo -e "\e[33mChecking for updates...\033[0m"
@@ -39,6 +40,8 @@ function self_update_script() {
             rm -f "$BIN_LINK"
             ln -s "$MASTER_PATH" "$BIN_LINK"
             chmod +x "$BIN_LINK"
+            ln -sf "$MASTER_PATH" "$LEGACY_BIN_LINK"
+            chmod +x "$LEGACY_BIN_LINK"
             echo -e "\e[32mProcess updated. Restarting...\033[0m"
             sleep 1
             exec bash "$MASTER_PATH" "$@"
@@ -48,6 +51,10 @@ function self_update_script() {
             if [ ! -f "$BIN_LINK" ]; then
                 ln -s "$MASTER_PATH" "$BIN_LINK"
                 chmod +x "$BIN_LINK"
+            fi
+            if [ ! -f "$LEGACY_BIN_LINK" ]; then
+                ln -s "$MASTER_PATH" "$LEGACY_BIN_LINK"
+                chmod +x "$LEGACY_BIN_LINK"
             fi
         fi
     else
@@ -123,9 +130,9 @@ function show_logo() {
 # Display Menu
 function show_menu() {
     show_logo
-    echo -e "\033[1;36m1)\033[0m Install Mirza Bot"
-    echo -e "\033[1;36m2)\033[0m Update Mirza Bot"
-    echo -e "\033[1;36m3)\033[0m Remove Mirza Bot"
+    echo -e "\033[1;36m1)\033[0m Install VaultX Bot"
+    echo -e "\033[1;36m2)\033[0m Update VaultX Bot"
+    echo -e "\033[1;36m3)\033[0m Remove VaultX Bot"
     # echo -e "\033[1;36m4)\033[0m Export Database"
     # echo -e "\033[1;36m5)\033[0m Import Database"
     # echo -e "\033[1;36m6)\033[0m Configure Automated Backup"
@@ -263,9 +270,9 @@ apply_setting_default_language() {
     esac
 }
 
-# Install Function for Mirza Pro
+# Install function for VaultX
 function install_bot() {
-    echo -e "\e[32mInstalling Mirza Pro script ... \033[0m\n"
+    echo -e "\e[32mInstalling VaultX script ... \033[0m\n"
     # Check if Marzban is installed and redirect to appropriate function
     if check_marzban_installed; then
         echo -e "\033[41m[IMPORTANT WARNING]\033[0m \033[1;33mMarzban detected. Proceeding with Marzban-compatible installation.\033[0m"
@@ -320,21 +327,25 @@ function install_bot() {
         echo -e "\e[91mError: Failed to install required packages.\033[0m"
         exit 1
     }
-    DEBIAN_FRONTEND=noninteractive sudo apt install -y php8.2 php8.2-fpm php8.2-mysql || {
+    DEBIAN_FRONTEND=noninteractive sudo apt install -y php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-mbstring php8.2-zip php8.2-gd php8.2-curl php8.2-soap php8.2-xml php8.2-bcmath php8.2-intl php8.2-ssh2 libapache2-mod-php8.2 || {
         echo -e "\e[91mError: Failed to install PHP 8.2 and related packages.\033[0m"
         exit 1
     }
+    php_version=$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;' 2>/dev/null || true)
+    if [ "$php_version" != "8.2" ]; then
+        echo -e "\e[93mWarning: Detected PHP version '$php_version'. Recommended version is PHP 8.2 for VaultX.\033[0m"
+    fi
     # List of required packages
     PKG=(
-        lamp-server^
-        libapache2-mod-php
         mysql-server
         apache2
-        php-mbstring
-        php-zip
-        php-gd
-        php-json
-        php-curl
+        certbot
+        python3-certbot-apache
+        wget
+        jq
+        ufw
+        libssh2-1-dev
+        libssh2-1
     )
     # Installing required packages with error handling
     for i in "${PKG[@]}"; do
@@ -351,9 +362,9 @@ function install_bot() {
     echo -e "\n\e[92mPackages Installed, Continuing ...\033[0m\n"
     # phpMyAdmin Configuration
     echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | sudo debconf-set-selections
-    echo 'phpmyadmin phpmyadmin/app-password-confirm password mirzahipass' | sudo debconf-set-selections
-    echo 'phpmyadmin phpmyadmin/mysql/admin-pass password mirzahipass' | sudo debconf-set-selections
-    echo 'phpmyadmin phpmyadmin/mysql/app-pass password mirzahipass' | sudo debconf-set-selections
+    echo 'phpmyadmin phpmyadmin/app-password-confirm password vaultxhipass' | sudo debconf-set-selections
+    echo 'phpmyadmin phpmyadmin/mysql/admin-pass password vaultxhipass' | sudo debconf-set-selections
+    echo 'phpmyadmin phpmyadmin/mysql/app-pass password vaultxhipass' | sudo debconf-set-selections
     echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | sudo debconf-set-selections
     sudo apt-get install phpmyadmin -y || {
         echo -e "\e[91mError: Failed to install phpMyAdmin.\033[0m"
@@ -369,12 +380,8 @@ function install_bot() {
         exit 1
     }
     # Additional package installations with error handling
-    sudo apt-get install -y php-soap || {
-        echo -e "\e[91mError: Failed to install php-soap.\033[0m"
-        exit 1
-    }
-    sudo apt-get install libapache2-mod-php || {
-        echo -e "\e[91mError: Failed to install libapache2-mod-php.\033[0m"
+    php -m | grep -qi '^pdo_mysql$' || {
+        echo -e "\e[91mError: PHP extension pdo_mysql is missing after install.\033[0m"
         exit 1
     }
     sudo systemctl enable mysql.service || {
@@ -524,10 +531,14 @@ EOF
     clear
     echo " "
     echo -e "\e[32m SSL \033[0m\n"
-    read -p "Enter the domain: " domainname
+    echo -e "\e[36mDomain is required to:\033[0m"
+    echo -e "  \e[33m- issue and auto-renew Let's Encrypt SSL certificate\e[0m"
+    echo -e "  \e[33m- configure Apache VirtualHost for HTTPS webhook endpoint\e[0m"
+    echo -e "  \e[33m- expose panel and phpMyAdmin on your domain\e[0m"
+    read -p "Enter your domain (example.com): " domainname
     while [[ ! "$domainname" =~ ^[a-zA-Z0-9.-]+$ ]]; do
         echo -e "\e[91mInvalid domain format. Please try again.\033[0m"
-        read -p "Enter the domain: " domainname
+        read -p "Enter your domain (example.com): " domainname
     done
     DOMAIN_NAME="$domainname"
     PATHS=$(cat /root/confmirza/dbrootmirza.txt | grep '$path' | cut -d"'" -f2)
@@ -657,18 +668,20 @@ EOF
         exit 1
     }
     clear
-    printf "\e[33m[+] \e[36mBot Token: \033[0m"
+    echo -e "\e[36mBot Token is required to call Telegram Bot API (setWebhook/sendMessage).\e[0m"
+    printf "\e[33m[+] \e[36mBot Token (from @BotFather): \033[0m"
     read YOUR_BOT_TOKEN
     while [[ ! "$YOUR_BOT_TOKEN" =~ ^[0-9]{8,10}:[a-zA-Z0-9_-]{35}$ ]]; do
         echo -e "\e[91mInvalid bot token format. Please try again.\033[0m"
-        printf "\e[33m[+] \e[36mBot Token: \033[0m"
+        printf "\e[33m[+] \e[36mBot Token (from @BotFather): \033[0m"
         read YOUR_BOT_TOKEN
     done
-    printf "\e[33m[+] \e[36mChat id: \033[0m"
+    echo -e "\e[36mChat ID is required to assign bot admin and send installation confirmation.\e[0m"
+    printf "\e[33m[+] \e[36mAdmin Chat ID (numeric): \033[0m"
     read YOUR_CHAT_ID
     while [[ ! "$YOUR_CHAT_ID" =~ ^-?[0-9]+$ ]]; do
         echo -e "\e[91mInvalid chat ID format. Please try again.\033[0m"
-        printf "\e[33m[+] \e[36mChat id: \033[0m"
+        printf "\e[33m[+] \e[36mAdmin Chat ID (numeric): \033[0m"
         read YOUR_CHAT_ID
     done
     YOUR_DOMAIN="$DOMAIN_NAME"
@@ -767,7 +780,7 @@ EOF
                 echo -e "\e[91mError: Failed to set webhook for bot.\033[0m"
                 exit 1
             }
-            MESSAGE="✅ The Mirza Pro bot is installed! for start the bot send /start command."
+            MESSAGE="✅ The VaultX bot is installed! Send /start to begin."
             curl -s -X POST "https://api.telegram.org/bot${YOUR_BOT_TOKEN}/sendMessage" -d chat_id="${YOUR_CHAT_ID}" -d text="$MESSAGE" || {
                 echo -e "\e[91mError: Failed to send message to Telegram.\033[0m"
                 exit 1
@@ -799,7 +812,7 @@ EOF
             echo -e "\e[33mDatabase username: \e[36m${dbuser}\033[0m"
             echo -e "\e[33mDatabase password: \e[36m${dbpass}\033[0m"
             echo " "
-            echo -e "Mirza Pro Bot"
+            echo -e "VaultX Bot"
         fi
     elif [ "$ROOT_PASSWORD" = "" ] || [ "$ROOT_USER" = "" ]; then
         echo -e "\n\e[36mThe password is empty.\033[0m\n"
@@ -808,6 +821,7 @@ EOF
     fi
     # Add executable permission and link (This is handled by self_update_script as well, but kept for completeness)
     chmod +x /root/install.sh
+    ln -sf /root/install.sh /usr/local/bin/vaultx
     ln -sf /root/install.sh /usr/local/bin/mirza
     # Trigger self-update to ensure next run uses latest
     self_update_script
@@ -1287,9 +1301,9 @@ EOF
 #     chmod +x /root/install.sh
 #     ln -vs /root/install.sh /usr/local/bin/mirza
 # }
-# Update Function for Mirza Pro
+# Update function for VaultX
 function update_bot() {
-    echo "Updating Mirza Pro Bot..."
+    echo "Updating VaultX Bot..."
     # Update server packages
     if ! sudo apt update && sudo apt upgrade -y; then
         echo -e "\e[91mError updating the server. Exiting...\033[0m"
@@ -1299,7 +1313,7 @@ function update_bot() {
     # Check if bot is already installed (Pro Directory)
     BOT_DIR="/var/www/html/mirzaprobotconfig"
     if [ ! -d "$BOT_DIR" ]; then
-        echo -e "\e[91mError: Mirza Pro Bot is not installed. Please install it first.\033[0m"
+        echo -e "\e[91mError: VaultX Bot is not installed. Please install it first.\033[0m"
         exit 1
     fi
     ZIP_URL="$BOT_SOURCE_ZIP"
@@ -1463,31 +1477,32 @@ EOF
     fi
     # Cleanup
     rm -rf "$TEMP_DIR"
-    echo -e "\n\e[92mMirza Bot updated to latest version successfully!\033[0m"
-    # Ensure /root/install.sh is executable and linked to mirza
+    echo -e "\n\e[92mVaultX Bot updated to latest version successfully!\033[0m"
+    # Ensure /root/install.sh is executable and linked to vaultx
     if [ -f "/root/install.sh" ]; then
         sudo chmod +x /root/install.sh
+        sudo ln -sf /root/install.sh /usr/local/bin/vaultx
         sudo ln -sf /root/install.sh /usr/local/bin/mirza
-        echo -e "\e[92mEnsured /root/install.sh is executable and 'mirza' command is linked.\033[0m"
+        echo -e "\e[92mEnsured /root/install.sh is executable and 'vaultx' command is linked.\033[0m"
     else
         echo -e "\e[91mError: /root/install.sh not found after update attempt.\033[0m"
     fi
 }
-# Delete Function for Mirza Pro
+# Delete function for VaultX
 function remove_bot() {
-    echo -e "\e[33mStarting Mirza Pro Bot removal process...\033[0m"
+    echo -e "\e[33mStarting VaultX Bot removal process...\033[0m"
     LOG_FILE="/var/log/remove_bot.log"
     echo "Log file: $LOG_FILE" > "$LOG_FILE"
-    # Check if Mirza Pro Bot is installed
+    # Check if VaultX Bot is installed
     BOT_DIR="/var/www/html/mirzaprobotconfig"
     if [ ! -d "$BOT_DIR" ]; then
-        echo -e "\e[31m[ERROR]\033[0m Mirza Pro Bot is not installed (/var/www/html/mirzaprobotconfig not found)." | tee -a "$LOG_FILE"
+        echo -e "\e[31m[ERROR]\033[0m VaultX Bot is not installed (/var/www/html/mirzaprobotconfig not found)." | tee -a "$LOG_FILE"
         echo -e "\e[33mNothing to remove. Exiting...\033[0m" | tee -a "$LOG_FILE"
         sleep 2
         exit 1
     fi
     # User Confirmation
-    read -p "Are you sure you want to remove Mirza Pro Bot and its dependencies? (y/n): " choice
+    read -p "Are you sure you want to remove VaultX Bot and its dependencies? (y/n): " choice
     if [[ "$choice" != "y" ]]; then
         echo "Aborting..." | tee -a "$LOG_FILE"
         exit 0
@@ -1499,7 +1514,7 @@ function remove_bot() {
         return 0
     fi
     # Proceed with normal removal if Marzban is not installed
-    echo "Removing Mirza Pro Bot..." | tee -a "$LOG_FILE"
+    echo "Removing VaultX Bot..." | tee -a "$LOG_FILE"
     # Delete Configuration File securely before removing directory
     CONFIG_PATH="/var/www/html/mirzaprobotconfig/config.php"
     if [ -f "$CONFIG_PATH" ]; then
@@ -1567,7 +1582,7 @@ function remove_bot() {
     echo -e "\e[33mResetting firewall rules (except SSL)...\033[0m" | tee -a "$LOG_FILE"
     sudo ufw delete allow 'Apache'
     sudo ufw reload
-    echo -e "\e[92mMirza Pro Bot, MySQL, and their dependencies have been completely removed.\033[0m" | tee -a "$LOG_FILE"
+    echo -e "\e[92mVaultX Bot, MySQL, and their dependencies have been completely removed.\033[0m" | tee -a "$LOG_FILE"
 }
 # function remove_bot_with_marzban() {
 #     echo -e "\e[33mRemoving Mirza Bot alongside Marzban...\033[0m" | tee -a "$LOG_FILE"
@@ -2560,7 +2575,7 @@ function migrate_to_pro() {
     BACKUP_FILE="/root/mirzabot_backup.sql"
     if [ ! -f "$BACKUP_FILE" ]; then
         echo -e "\033[31m[ERROR] Backup file not found at $BACKUP_FILE\033[0m"
-        echo -e "\033[33mPlease run the 'mirza' command (Free Version Script) and use option 4 to create a backup.\033[0m"
+        echo -e "\033[33mPlease run the 'vaultx' command (Free Version Script) and use option 4 to create a backup.\033[0m"
         exit 1
     else
         echo -e "\033[32mBackup file found.\033[0m"
@@ -2800,7 +2815,7 @@ EOF
     echo -e "\033[36mNew User:\033[0m     $NEW_DB_USER"
     echo -e "\033[36mNew Pass:\033[0m     $NEW_DB_PASS"
     echo -e "\033[36mBot Domain:\033[0m   https://$DOMAIN_NAME"
-    echo -e "\033[33mUse command 'mirza' to manage the bot from now on.\033[0m"
+    echo -e "\033[33mUse command 'vaultx' to manage the bot from now on.\033[0m"
     echo ""
 }
 
@@ -2820,7 +2835,7 @@ process_arguments() {
             # If arguments are passed but not recognized (like -v), ignore versioning for Pro
             # since we only use the main branch.
             if [ -n "$1" ]; then
-                echo -e "\e[33mNote: Mirza Pro only uses the latest version from GitHub Main branch.\033[0m"
+                echo -e "\e[33mNote: VaultX only uses the latest version from GitHub main branch.\033[0m"
             fi
             show_menu
             ;;

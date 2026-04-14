@@ -1,4 +1,4 @@
-# 🤖 Bot Mirza Panel
+# 🤖 VaultX Bot Panel
 
 
 A Powerful Bot for Selling VPN Services with Auto Configuration Build.
@@ -35,9 +35,9 @@ A Powerful Bot for Selling VPN Services with Auto Configuration Build.
 
 ## ✨ Overview
 
-**Mirza Bot** is a feature-rich Telegram bot designed for selling VPN services for platforms like **Marzban**,**3x-ui panels**,**alireza panels**,**pasarguard**,**ibsng**,.... This bot simplifies the process of VPN subscription sales, enabling seamless automation, configuration building, and user management.
+**VaultX Bot** is a feature-rich Telegram bot designed for selling VPN services for platforms like **Marzban**,**3x-ui panels**,**alireza panels**,**pasarguard**,**ibsng**,.... This bot simplifies the process of VPN subscription sales, enabling seamless automation, configuration building, and user management.
 
-Mirza Panel comes in two versions:  
+VaultX Panel comes in two versions:  
 1. **Free Version** 🆓: Offers basic functionalities to get started with VPN sales.  
 2. **Subscription Version** 💎: Provides advanced features for businesses looking for more customization, detailed analytics, and enhanced management options.  
 
@@ -138,7 +138,7 @@ Or run `bash install.sh` interactively and choose **option 3**.
 
 ## 💵 Financial Support
 
-If you find **Mirza Panel** helpful and would like to support its development, you can make a financial contribution via cryptocurrency.
+If you find **VaultX Panel** helpful and would like to support its development, you can make a financial contribution via cryptocurrency.
 
 <a href = "https://nowpayments.io/donation/permiumbotmirza">👉 Support the Project on NowPayments</a>
 

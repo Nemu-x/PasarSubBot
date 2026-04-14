@@ -7,9 +7,9 @@ function panelPageStringDefinitions(): array
 {
     return [
         'page_title' => [
-            'en' => 'Mirza bot admin panel',
-            'ru' => 'Панель управления ботом Мирза',
-            'fa' => 'پنل مدیریت ربات میرزا',
+            'en' => 'VaultX bot admin panel',
+            'ru' => 'Панель управления ботом VaultX',
+            'fa' => 'پنل مدیریت ربات VaultX',
         ],
         'users_list' => [
             'en' => 'User list',

@@ -1,16 +1,16 @@
-/* LTR layout when panel language is English or Russian (overrides FlatLab global RTL). */
+/* LTR layout for EN/RU: higher-specificity selectors override FlatLab RTL defaults. */
 html[dir="ltr"] body {
-    direction: ltr !important;
+    direction: ltr;
 }
 
 html[dir="ltr"] #sidebar {
-    right: auto !important;
     left: 0;
+    right: auto;
 }
 
 html[dir="ltr"] #main-content {
-    margin-right: 0 !important;
-    margin-left: 180px !important;
+    margin-right: 0;
+    margin-left: 180px;
     float: none;
     width: auto;
     max-width: none;
@@ -37,10 +37,11 @@ html[dir="ltr"] .sidebar-closed #sidebar {
 }
 
 html[dir="ltr"] .sidebar-closed #main-content {
-    margin-left: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
 }
 
-/* Bootstrap 3 modals + horizontal forms: template was RTL-oriented */
+/* Bootstrap 3 modals + horizontal forms: template RTL defaults */
 html[dir="ltr"] .modal {
     direction: ltr;
     text-align: left;
@@ -55,19 +56,19 @@ html[dir="ltr"] .modal-content {
 }
 
 html[dir="ltr"] .form-horizontal .control-label {
-    float: left !important;
-    text-align: left !important;
+    float: left;
+    text-align: left;
 }
 
 html[dir="ltr"] .form-horizontal .col-lg-10,
 html[dir="ltr"] .form-horizontal .col-lg-7 {
-    float: left !important;
+    float: left;
     text-align: left;
 }
 
 html[dir="ltr"] .form-horizontal .col-lg-offset-2 {
-    margin-left: 16.66666667% !important;
-    margin-right: 0 !important;
+    margin-left: 16.66666667%;
+    margin-right: 0;
 }
 
 html[dir="ltr"] .form-group {
