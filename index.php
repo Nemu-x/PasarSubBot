@@ -132,6 +132,7 @@ $pricepayment = select("Payment_report", "price", null, null, "FETCH_COLUMN");
 $listcard = select("card_number", "cardnumber", null, null, "FETCH_COLUMN");
 $topic_id = select("topicid", "*", null, null, "fetchAll");
 $datatextbot = $pdo->query("SELECT id_text, text FROM textbot")->fetchAll(PDO::FETCH_KEY_PAIR);
+$datatextbot = localizeTextbotLabels($datatextbot, $textbotlang);
 $statusnote = false;
 foreach ($topic_id as $topic) {
     if ($topic['report'] == "reportnight")
@@ -289,6 +290,7 @@ if (isset($datain) && is_string($datain) && preg_match('/^setlang_(fa|en|ru)$/',
     update('user', 'language', $pick, 'id', $from_id);
     require __DIR__ . '/keyboard.php';
     $datatextbot = $pdo->query("SELECT id_text, text FROM textbot")->fetchAll(PDO::FETCH_KEY_PAIR);
+    $datatextbot = localizeTextbotLabels($datatextbot, $textbotlang);
     $datatextbot['text_start'] = strtr($datatextbot['text_start'] ?? '', $varable_start);
     telegram('answerCallbackQuery', [
         'callback_query_id' => $callback_query_id,

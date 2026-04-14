@@ -63,6 +63,7 @@ if ($table_exists) {
         }
     }
 }
+$datatextbot = localizeTextbotLabels($datatextbot, $textbotlang);
 $adminrulecheck = select("admin", "*", "id_admin", $from_id,"select");
 if (!$adminrulecheck) {
     $adminrulecheck = array(

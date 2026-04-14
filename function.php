@@ -1847,6 +1847,35 @@ function botLanguagePickerKeyboardJson(): string
     ]]]);
 }
 
+/**
+ * SQL table `textbot` is single-language (`id_text`,`text`).
+ * For multilingual UI, override known keyboard labels from text.json bundle.
+ */
+function localizeTextbotLabels(array $datatextbot, array $textbotlang): array
+{
+    $users = $textbotlang['users'] ?? [];
+    $labelMap = [
+        'text_sell' => 'menu_sell',
+        'text_extend' => 'menu_extend',
+        'text_usertest' => 'menu_usertest',
+        'text_wheel_luck' => 'menu_wheel_luck',
+        'text_Purchased_services' => 'menu_services',
+        'accountwallet' => 'menu_wallet',
+        'text_affiliates' => 'menu_affiliates',
+        'text_Tariff_list' => 'menu_tariff_list',
+        'text_support' => 'menu_support',
+        'text_help' => 'menu_help',
+    ];
+
+    foreach ($labelMap as $idText => $jsonKey) {
+        if (isset($users[$jsonKey]) && is_string($users[$jsonKey]) && $users[$jsonKey] !== '') {
+            $datatextbot[$idText] = $users[$jsonKey];
+        }
+    }
+
+    return $datatextbot;
+}
+
 function languagechange($path_dir)
 {
     $setting = select("setting", "*");
