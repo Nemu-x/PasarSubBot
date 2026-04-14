@@ -4257,6 +4257,7 @@ $text_expie_agent
     step('GetLocationEdit', $from_id);
 } elseif ($user['step'] == "GetLocationEdit") {
     $marzban_list_get = select("marzban_panel", "*", "name_panel", $text, "select");
+    $panelMessages = $textbotlang['Admin']['managepanel']['messages'];
     if ($marzban_list_get['type'] == "marzban") {
         $Check_token = token_panel($marzban_list_get['code_panel'], false);
         if (isset($Check_token['access_token'])) {
@@ -4280,24 +4281,10 @@ $text_expie_agent
             $ListSellSUM = number_format(mysqli_fetch_assoc(mysqli_query($connect, "SELECT SUM(price_product) FROM invoice WHERE (status = 'active' OR status = 'end_of_time'  OR status = 'end_of_volume' OR status = 'sendedwarn' OR Status = 'send_on_hold') AND Service_location = '{$marzban_list_get['name_panel']}' AND name_product != 'سرویس تست'"))['SUM(price_product)'] ?? 0);
 
             $Condition_marzban = "";
-            $text_marzban = "
-آمار پنل شما👇:
-                             
-🖥 وضعیت اتصال پنل مرزبان: ✅ پنل متصل است
-👥  تعداد کل کاربران: $total_user
-👤 تعداد کاربران فعال: $active_users
-📡 نسخه پنل مرزبان :  {$System_Stats['version']}
-💻 رم  کل سرور  : $mem_total
-💻 مصرف رم پنل مرزبان  : $mem_used
-🌐 ترافیک کل مصرف شده  ( آپلود / دانلود) : $bandwidth
-🛍 تعداد فروش کل در این پنل : $ListSell
-🛍 جمع فروش کل در این پنل : $ListSellSUM تومان
-گروه کاربری :{$marzban_list_get['agent']}
-        
-⭕️ برای مدیریت پنل یکی از گزینه های زیر را انتخاب کنید";
+            $text_marzban = "Panel stats:\n\n🖥 Panel connection: ✅ Connected\n👥 Total users: $total_user\n👤 Active users: $active_users\n📡 Panel version: {$System_Stats['version']}\n💻 Total server RAM: $mem_total\n💻 Used panel RAM: $mem_used\n🌐 Total traffic (upload/download): $bandwidth\n🛍 Total sales on this panel: $ListSell\n🛍 Total sale amount on this panel: $ListSellSUM\nUser group: {$marzban_list_get['agent']}\n\n{$panelMessages['choose_option']}";
             sendmessage($from_id, $text_marzban, $optionMarzban, 'HTML');
         } elseif (isset($Check_token['detail']) && $Check_token['detail'] == "Incorrect username or password") {
-            $text_marzban = "❌ نام کاربری یا رمز عبور پنل اشتباه است";
+            $text_marzban = $panelMessages['invalid_credentials'];
             sendmessage($from_id, $text_marzban, $optionMarzban, 'HTML');
         } else {
             $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . json_encode($Check_token);
@@ -4308,10 +4295,10 @@ $text_expie_agent
         if ($x_ui_check_connect['success']) {
             sendmessage($from_id, $textbotlang['Admin']['managepanel']['connectx-ui'], $optionX_ui_single, 'HTML');
         } elseif ($x_ui_check_connect['msg'] == "Invalid username or password.") {
-            $text_marzban = "❌ نام کاربری یا رمز عبور پنل اشتباه است";
+            $text_marzban = $panelMessages['invalid_credentials'];
             sendmessage($from_id, $text_marzban, $optionX_ui_single, 'HTML');
         } else {
-            $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . "علت خطا: \n{$x_ui_check_connect['msg']}";
+            $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . "Error details:\n{$x_ui_check_connect['msg']}";
             sendmessage($from_id, $text_marzban, $optionX_ui_single, 'HTML');
         }
     } elseif ($marzban_list_get['type'] == "alireza_single") {
@@ -4319,19 +4306,19 @@ $text_expie_agent
         if ($x_ui_check_connect['success']) {
             sendmessage($from_id, $textbotlang['Admin']['managepanel']['connectx-ui'], $optionalireza_single, 'HTML');
         } elseif ($x_ui_check_connect['msg'] == "The username or password is incorrect") {
-            $text_marzban = "❌ نام کاربری یا رمز عبور پنل اشتباه است";
+            $text_marzban = $panelMessages['invalid_credentials'];
             sendmessage($from_id, $text_marzban, $optionalireza_single, 'HTML');
         } else {
-            $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . "علت خطا {$x_ui_check_connect['errror']}";
+            $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . "Error details: {$x_ui_check_connect['errror']}";
             sendmessage($from_id, $text_marzban, $optionalireza_single, 'HTML');
         }
     } elseif ($marzban_list_get['type'] == "hiddify") {
         $System_Stats = serverstatus($marzban_list_get['name_panel']);
         if (!empty($System_Stats['status']) && $System_Stats['status'] != 200) {
-            $text_marzban = "❌ خطایی در دریافت اطلاعات رخ داده است کد خطا : " . $System_Stats['status'];
+            $text_marzban = "❌ Error while receiving panel data. Error code: " . $System_Stats['status'];
             sendmessage($from_id, $text_marzban, $optionhiddfy, 'HTML');
         } elseif (!empty($System_Stats['error'])) {
-            $text_marzban = "❌ خطایی در دریافت اطلاعات رخ داده است  خطا : " . $System_Stats['error'];
+            $text_marzban = "❌ Error while receiving panel data. Error: " . $System_Stats['error'];
             sendmessage($from_id, $text_marzban, $optionhiddfy, 'HTML');
         } else {
             $System_Stats = json_decode($System_Stats['body'], true);
@@ -4339,34 +4326,27 @@ $text_expie_agent
                 $mem_total = round($System_Stats['stats']['system']['ram_total'], 2);
                 $mem_used = round($System_Stats['stats']['system']['ram_used'], 2);
                 $bandwidth = formatBytes($System_Stats['outgoing_bandwidth'] + $System_Stats['incoming_bandwidth']);
-                $text_marzban = "
-آمار پنل شما👇:
-                             
-🖥 وضعیت اتصال پنل : ✅ پنل متصل است
-💻 رم  کل سرور  : $mem_total
-💻 مصرف رم پنل   : $mem_used
-گروه کاربری :{$marzban_list_get['agent']}
-⭕️ برای مدیریت پنل یکی از گزینه های زیر را انتخاب کنید";
+                $text_marzban = "Panel stats:\n\n🖥 Panel connection: ✅ Connected\n💻 Total server RAM: $mem_total\n💻 Used panel RAM: $mem_used\nUser group: {$marzban_list_get['agent']}\n{$panelMessages['choose_option']}";
                 sendmessage($from_id, $text_marzban, $optionhiddfy, 'HTML');
             } elseif (isset($System_Stats['message']) && $System_Stats['message'] == "Unathorized") {
-                $text_marzban = "❌  لینک پنل اشتباه ارسال شده است";
+                $text_marzban = "❌ Invalid panel URL.";
                 sendmessage($from_id, $text_marzban, $optionhiddfy, 'HTML');
             } else {
-                sendmessage($from_id, "پنل متصل نیست", $optionhiddfy, 'HTML');
+                sendmessage($from_id, "Panel is not connected.", $optionhiddfy, 'HTML');
             }
         }
     } elseif ($marzban_list_get['type'] == "Manualsale") {
-        sendmessage($from_id, "یک گزینه را انتخاب نمایید", $optionManualsale, 'HTML');
+        sendmessage($from_id, $panelMessages['choose_option'], $optionManualsale, 'HTML');
     } elseif ($marzban_list_get['type'] == "marzneshin") {
         $Check_token = token_panelm($marzban_list_get['code_panel']);
         if (isset($Check_token['access_token'])) {
             $System_Stats = Get_System_Statsm($text);
             if (!empty($System_Stats['status']) && $System_Stats['status'] != 200) {
-                $text_marzban = "❌ خطایی در دریافت اطلاعات رخ داده است کد خطا : " . $System_Stats['status'];
+                $text_marzban = "❌ Error while receiving panel data. Error code: " . $System_Stats['status'];
                 sendmessage($from_id, $text_marzban, $optionMarzban, 'HTML');
                 return;
             } elseif (!empty($System_Stats['error'])) {
-                $text_marzban = "❌ خطایی در دریافت اطلاعات رخ داده است  خطا : " . $System_Stats['error'];
+                $text_marzban = "❌ Error while receiving panel data. Error: " . $System_Stats['error'];
                 sendmessage($from_id, $text_marzban, $optionMarzban, 'HTML');
                 return;
             }
@@ -4376,20 +4356,10 @@ $text_expie_agent
             $ListSell = number_format(mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) FROM invoice WHERE (status = 'active' OR status = 'end_of_time'  OR status = 'end_of_volume' OR status = 'sendedwarn' OR Status = 'send_on_hold') AND Service_location = '{$marzban_list_get['name_panel']}' AND name_product != 'سرویس تست'"))['COUNT(*)'] ?? 0);
             $ListSellSUM = number_format(mysqli_fetch_assoc(mysqli_query($connect, "SELECT SUM(price_product) FROM invoice WHERE (status = 'active' OR status = 'end_of_time'  OR status = 'end_of_volume' OR status = 'sendedwarn' OR Status = 'send_on_hold') AND Service_location = '{$marzban_list_get['name_panel']}' AND name_product != 'سرویس تست'"))['SUM(price_product)'] ?? 0);
             $Condition_marzban = "";
-            $text_marzban = "
-آمار پنل شما👇:
-                             
-🖥 وضعیت اتصال پنل مرزبان: ✅ پنل متصل است
-👥  تعداد کل کاربران: $total_user
-👤 تعداد کاربران فعال: $active_users
-🛍 تعداد فروش کل در این پنل : $ListSell
-🛍 جمع فروش کل در این پنل : $ListSellSUM تومان
-گروه کاربری :{$marzban_list_get['agent']}
-        
-⭕️ برای مدیریت پنل یکی از گزینه های زیر را انتخاب کنید";
+            $text_marzban = "Panel stats:\n\n🖥 Panel connection: ✅ Connected\n👥 Total users: $total_user\n👤 Active users: $active_users\n🛍 Total sales on this panel: $ListSell\n🛍 Total sale amount on this panel: $ListSellSUM\nUser group: {$marzban_list_get['agent']}\n\n{$panelMessages['choose_option']}";
             sendmessage($from_id, $text_marzban, $optionmarzneshin, 'HTML');
         } elseif (isset($Check_token['detail']) && $Check_token['detail'] == "Incorrect username or password") {
-            $text_marzban = "❌ نام کاربری یا رمز عبور پنل اشتباه است";
+            $text_marzban = $panelMessages['invalid_credentials'];
             sendmessage($from_id, $text_marzban, $optionMarzban, 'HTML');
         } else {
             $text_marzban = $textbotlang['Admin']['managepanel']['errorstateuspanel'] . json_encode($Check_token);
@@ -4451,11 +4421,11 @@ $text_expie_agent
 ", $option_mikrotik, 'HTML');
         }
     } else {
-        sendmessage($from_id, "یک گزینه را انتخاب نمایید", $optionMarzban, 'HTML');
+        sendmessage($from_id, $panelMessages['choose_option'], $optionMarzban, 'HTML');
     }
     update("user", "Processing_value", $text, "id", $from_id);
     step('home', $from_id);
-} elseif ($text == "✍️ نام پنل" && $adminrulecheck['rule'] == "administrator") {
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['panel_name'], "✍️ نام پنل"], true) && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['Admin']['managepanel']['GetNameNew'], $backadmin, 'HTML');
     step('GetNameNew', $from_id);
 } elseif ($user['step'] == "GetNameNew") {
@@ -4471,7 +4441,7 @@ $text_expie_agent
     update("product", "Location", $text, "Location", $user['Processing_value']);
     update("user", "Processing_value", $text, "id", $from_id);
     step('home', $from_id);
-} elseif ($text == "🔗 ویرایش آدرس پنل" && $adminrulecheck['rule'] == "administrator") {
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['edit_panel_url'], "🔗 ویرایش آدرس پنل"], true) && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['Admin']['managepanel']['geturlnew'], $backadmin, 'HTML');
     step('GeturlNew', $from_id);
 } elseif ($user['step'] == "GeturlNew") {
@@ -4484,18 +4454,16 @@ $text_expie_agent
     update("marzban_panel", "url_panel", $text, "name_panel", $user['Processing_value']);
     update("marzban_panel", "datelogin", null, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "📍 تغییر گروه کاربری" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌 نوع کاربری را ارسال کنید
-گروه های کاربری : f,n,n2
-❌ در صورتی که می خواهید پنل برای تمام گروه کاربری ها نمایش داده شود متن all را ارسال کنید", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['change_agent_group'], "📍 تغییر گروه کاربری"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['change_agent_prompt'], $backadmin, 'HTML');
     step('getagentpanel', $from_id);
 } elseif ($user['step'] == "getagentpanel") {
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
-    outtypepanel($typepanel['type'], "📌گروه کاربری با موفقیت تغییر کرد");
+    outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['messages']['change_agent_saved']);
     update("marzban_panel", "agent", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "🔗 دامنه لینک ساب" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌 اگر پنل ثنایی هستید یک لینک ساب کاربر را از پنل کپی کرده سپس در این بخش ارسال کنید .بقیه پنل ها باید طبق ساختارش ارسال نمایید.", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['sub_link_domain'], "🔗 دامنه لینک ساب"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['sub_link_prompt'], $backadmin, 'HTML');
     step('GeturlNewx', $from_id);
 } elseif ($user['step'] == "GeturlNewx") {
     if (!filter_var($text, FILTER_VALIDATE_URL)) {
@@ -4507,10 +4475,10 @@ $text_expie_agent
         $req = new CurlRequest($text);
         $response = $req->get();
         if ($response['status'] != 200) {
-            sendmessage($from_id, "لینک ساب فعال نمی باشد", null, 'HTML');
+            sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['sub_link_inactive'], null, 'HTML');
             return;
         } elseif (!empty($response['error'])) {
-            sendmessage($from_id, "لینک ساب فعال نمی باشد", null, 'HTML');
+            sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['sub_link_inactive'], null, 'HTML');
             return;
         }
         $response = $response['body'];
@@ -4520,7 +4488,7 @@ $text_expie_agent
         $protocol = ['vmess', 'vless', 'trojan', 'ss'];
         $sub_check = explode('://', $response)[0];
         if (!in_array($sub_check, $protocol)) {
-            sendmessage($from_id, "لینک ساب نامعتبر می باشد", null, 'HTML');
+            sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['sub_link_invalid'], null, 'HTML');
             return;
         }
         $text = dirname($text);
@@ -4528,12 +4496,12 @@ $text_expie_agent
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['ChangedurlPanel']);
     update("marzban_panel", "linksubx", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "🔗 uuid admin" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌 uuid ادمین را ارسال کنید", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['admin_uuid'], "🔗 uuid admin"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['uuid_prompt'], $backadmin, 'HTML');
     step('getuuidadmin', $from_id);
 } elseif ($user['step'] == "getuuidadmin") {
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
-    outtypepanel($typepanel['type'], "✅ uuid ادمین ذخیره گردید");
+    outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['messages']['uuid_saved']);
     update("marzban_panel", "secret_code", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
 } elseif ($text == "🚨 محدودیت ساخت اکانت" && $adminrulecheck['rule'] == "administrator") {
@@ -4544,9 +4512,8 @@ $text_expie_agent
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['changedlimit']);
     update("marzban_panel", "limit_panel", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "⏳ زمان سرویس تست" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "🕰 مدت زمان سرویس تست را ارسال کنید.
-⚠️ زمان بر حسب ساعت است.", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['test_time'], "⏳ زمان سرویس تست"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['test_time_prompt'], $backadmin, 'HTML');
     step('updatetime', $from_id);
 } elseif ($user['step'] == "updatetime") {
     if (!ctype_digit($text)) {
@@ -4557,9 +4524,8 @@ $text_expie_agent
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['saveddata']);
     update("marzban_panel", "time_usertest", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "💾 حجم اکانت تست" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "حجم سرویس تست را ارسال کنید.
-⚠️ حجم بر حسب مگابایت است.", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['test_volume'], "💾 حجم اکانت تست"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['test_volume_prompt'], $backadmin, 'HTML');
     step('val_usertest', $from_id);
 } elseif ($user['step'] == "val_usertest") {
     if (!ctype_digit($text)) {
@@ -4570,13 +4536,11 @@ $text_expie_agent
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['saveddata']);
     update("marzban_panel", "val_usertest", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "💎 تنظیم شناسه اینباند" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "📌 شناسه اینباندی که می خواهید کانفیگ ازآن ساخته شود راارسال نمایید.  شناسه اینباند یک عدد چند رقمی است که در پنل  در صفحه اینباند ها ستون id  نوشته شده است
-
-⚠️ در صورتی که پنل wgdashboard هستید باید نام کانفیگ را ارسال نمایید", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['set_inbound_id'], "💎 تنظیم شناسه اینباند"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['inbound_id_prompt'], $backadmin, 'HTML');
     step('getinboundiid', $from_id);
 } elseif ($user['step'] == "getinboundiid") {
-    sendmessage($from_id, "✅ شناسه اینباند با موفقیت ذخیره گردید", $optionX_ui_single, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['inbound_id_saved'], $optionX_ui_single, 'HTML');
     update("marzban_panel", "inboundid", $text, "name_panel", $user['Processing_value']);
     step('home', $from_id);
 } elseif ($text == "👤 ویرایش نام کاربری" && $adminrulecheck['rule'] == "administrator") {
@@ -4606,12 +4570,11 @@ $text_expie_agent
     update("marzban_panel", "password_panel", $text, "name_panel", $user['Processing_value']);
     update("marzban_panel", "datelogin", null, "name_panel", $user['Processing_value']);
     step('home', $from_id);
-} elseif ($text == "❌ حذف پنل" && $adminrulecheck['rule'] == "administrator") {
-    sendmessage($from_id, "در صورت تایید کلمه زیر را ارسال کنید.
-<code>تایید</code>", $backadmin, 'HTML');
+} elseif (in_array($text, [$textbotlang['Admin']['managepanel']['buttons']['delete_panel'], "❌ حذف پنل"], true) && $adminrulecheck['rule'] == "administrator") {
+    sendmessage($from_id, $textbotlang['Admin']['managepanel']['messages']['delete_confirm_prompt'], $backadmin, 'HTML');
     step('confirmremovepanel', $from_id);
 } elseif ($user['step'] == "confirmremovepanel") {
-    if ($text == "تایید") {
+    if ($text == "تایید" || $text == $textbotlang['Admin']['managepanel']['messages']['delete_confirm_word']) {
         sendmessage($from_id, $textbotlang['Admin']['managepanel']['RemovedPanel'], $keyboardadmin, 'HTML');
         $marzban = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
         $stmt = $pdo->prepare("DELETE FROM marzban_panel WHERE name_panel = :name_panel");
@@ -7503,7 +7466,12 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     update("setting", "volumewarn", $text);
     sendmessage($from_id, "✅ تغییرات با موفقیت ذخیره شد", $setting_panel, 'HTML');
     step("home", $from_id);
-} elseif ($text == "🔧 ساخت کانفیگ دستی") {
+} elseif (in_array($text, [
+    $textbotlang['Admin']['keyboard_labels']['manual_config_builder'] ?? '',
+    "🔧 ساخت کانفیگ دستی",
+    "🔧 Manual config builder",
+    "🔧 Ручная сборка конфига",
+], true)) {
     savedata("clear", "idpanel", $user['Processing_value']);
     sendmessage($from_id, "📌در این بخش میتوانید یک سفارش را بطور دستی ایجاد و دریافت کنید 
 ⚠️ در صورتی که می خواهید  کانفیگ به حساب کاربر اضافه شود و کاربر مدیریت کند باید از گزینه افزودن سفارش  استفاده نمایید.
@@ -7633,7 +7601,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     sendmessage($from_id, $textupdate, null, 'HTML');
     step('home', $from_id);
 } elseif ($text == $textbotlang['Admin']['keyboard_labels']['panel_features']) {
-    sendmessage($from_id, "🪚 برای استفاده از این قابلیت یکی از پنل های زیر را انتخاب نمایید", $json_list_marzban_panel, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['keyboard_labels']['panel_tools_pick_panel'], $json_list_marzban_panel, 'HTML');
     step('getlocoption', $from_id);
 } elseif ($user['step'] == "getlocoption") {
     update("user", "Processing_value", $text, "id", $from_id);
@@ -7654,9 +7622,14 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
         sendmessage($from_id, $textbotlang['users']['selectoption'], $optionathx_ui, 'HTML');
     }
     step("home", $from_id);
-} elseif ($text == "🖥 مدیریت نود ها" || $datain == "bakcnode") {
+} elseif (in_array($text, [
+    $textbotlang['Admin']['keyboard_labels']['node_management'] ?? '',
+    "🖥 مدیریت نود ها",
+    "🖥 Node management",
+    "🖥 Управление нодами",
+], true) || $datain == "bakcnode") {
     if ($adminnumber != $from_id) {
-        sendmessage($from_id, "❌ این بخش فقط در دسترس ادمین اصلی است", null, 'HTML');
+        sendmessage($from_id, $textbotlang['Admin']['node']['main_admin_only'], null, 'HTML');
         return;
     }
     $nodes = Get_Nodes($user['Processing_value']);
@@ -7665,31 +7638,31 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
         return;
     }
     if (!empty($nodes['status']) && $nodes['status'] != 200) {
-        sendmessage($from_id, "❌  خطایی رخ داده است کد خطا :  {$nodes['status']}", null, 'HTML');
+        sendmessage($from_id, sprintf($textbotlang['Admin']['node']['generic_error_code'], $nodes['status']), null, 'HTML');
         return;
     }
     $nodes = json_decode($nodes['body'], true);
     if (count($nodes) == 0) {
-        sendmessage($from_id, "❌  امکان مشاهده تنظیمات نود ها وجود ندارد", null, 'HTML');
+        sendmessage($from_id, $textbotlang['Admin']['node']['cannot_view_nodes'], null, 'HTML');
         return;
     }
     $keyboardlistsnode['inline_keyboard'][] = [
-        ['text' => "عملیات", 'callback_data' => "actionnode"],
-        ['text' => "نام", 'callback_data' => "namenode"]
+        ['text' => $textbotlang['Admin']['node']['list_header_action'], 'callback_data' => "actionnode"],
+        ['text' => $textbotlang['Admin']['node']['list_header_name'], 'callback_data' => "namenode"]
     ];
     foreach ($nodes as $result) {
         if (!isset($result['id']))
             continue;
         $keyboardlistsnode['inline_keyboard'][] = [
-            ['text' => "مدیریت", 'callback_data' => "node_{$result['id']}"],
+            ['text' => $textbotlang['Admin']['node']['list_row_manage'], 'callback_data' => "node_{$result['id']}"],
             ['text' => $result['name'], 'callback_data' => "node_{$result['id']}"],
         ];
     }
     $keyboardlistsnode = json_encode($keyboardlistsnode);
     if ($datain == "bakcnode") {
-        Editmessagetext($from_id, $message_id, "📌 در این بخش می توانید نود های پنل مرزبان مدیریت کنید.", $keyboardlistsnode);
+        Editmessagetext($from_id, $message_id, $textbotlang['Admin']['node']['list_caption'], $keyboardlistsnode);
     } else {
-        sendmessage($from_id, "📌 در این بخش می توانید نود های پنل مرزبان مدیریت کنید.", $keyboardlistsnode, 'HTML');
+        sendmessage($from_id, $textbotlang['Admin']['node']['list_caption'], $keyboardlistsnode, 'HTML');
     }
 } elseif (preg_match('/^node_(.*)/', $datain, $dataget)) {
     $nodeid = $dataget[1];
@@ -7700,7 +7673,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
         return;
     }
     if (!empty($node['status']) && $node['status'] != 200) {
-        sendmessage($from_id, "❌  خطایی رخ داده است کد خطا :  {$node['status']}", null, 'HTML');
+        sendmessage($from_id, sprintf($textbotlang['Admin']['node']['generic_error_code'], $node['status']), null, 'HTML');
         return;
     }
     $nodeusage = Get_usage_Nodes($user['Processing_value']);
@@ -7709,7 +7682,7 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
         return;
     }
     if (!empty($nodeusage['status']) && $nodeusage['status'] != 200) {
-        sendmessage($from_id, "❌  خطایی رخ داده است کد خطا :  {$nodeusage['status']}", null, 'HTML');
+        sendmessage($from_id, sprintf($textbotlang['Admin']['node']['generic_error_code'], $nodeusage['status']), null, 'HTML');
         return;
     }
     $node = json_decode($node['body'], true);
@@ -7721,32 +7694,32 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
         }
     }
     $sumvolume = formatBytes($nodeusage['downlink'] + $nodeusage['uplink']);
-    $textnode = "📌 اطلاعات نود 
-
-🖥 نام نود :  {$node['name']}
-🌍 آیپی نود : {$node['address']}
-🔻 پورت نود : {$node['port']}
-🔺 پورت api نود : {$node['api_port']}
-🔋جمع مصرف نود  : $sumvolume
-🔄 ضریب مصرف نود : {$node['usage_coefficient']}
-🔵 نسخه xray نود : {$node['xray_version']}
-🟢 وضعیت نود : {$node['status']}
-    ";
+    $textnode = sprintf(
+        $textbotlang['Admin']['node']['node_info'],
+        $node['name'],
+        $node['address'],
+        $node['port'],
+        $node['api_port'],
+        $sumvolume,
+        $node['usage_coefficient'],
+        $node['xray_version'],
+        $node['status']
+    );
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🗂 تغییر نام نود", 'callback_data' => "changenamenode"],
-                ['text' => "🔄 تغییر ضریب مصرف نود", 'callback_data' => "changecoefficient"],
+                ['text' => $textbotlang['Admin']['node']['btn_change_name'], 'callback_data' => "changenamenode"],
+                ['text' => $textbotlang['Admin']['node']['btn_change_coeff'], 'callback_data' => "changecoefficient"],
             ],
             [
-                ['text' => "🌍 تغییر آدرس ایپی نود", 'callback_data' => "changeipnode"],
-                ['text' => "♻️ اتصال مجدد نود", 'callback_data' => "reconnectnode"],
+                ['text' => $textbotlang['Admin']['node']['btn_change_ip'], 'callback_data' => "changeipnode"],
+                ['text' => $textbotlang['Admin']['node']['btn_reconnect'], 'callback_data' => "reconnectnode"],
             ],
             [
-                ['text' => "❌ حذف نود", 'callback_data' => "removenode"],
+                ['text' => $textbotlang['Admin']['node']['btn_delete'], 'callback_data' => "removenode"],
             ],
             [
-                ['text' => "🔙 بازگشت به لیست نود ها", 'callback_data' => "bakcnode"],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_list'], 'callback_data' => "bakcnode"],
             ]
         ]
     ]);
@@ -7755,11 +7728,11 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    $textnode = "📌 ضریب مصرف نودتان را ارسال نمایید.";
+    $textnode = $textbotlang['Admin']['node']['ask_coeff'];
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
     step("getusage_coefficient", $from_id);
 } elseif ($user['step'] == "getusage_coefficient") {
@@ -7770,21 +7743,21 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    sendmessage($from_id, "✅ ضریب مصرف نود با موفقیت ذخیره گردید.", $backinfoss, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['node']['saved_coeff'], $backinfoss, 'HTML');
     step('home', $from_id);
 } elseif ($datain == "changenamenode") {
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    $textnode = "📌 نام نودتان را ارسال نمانیید.";
+    $textnode = $textbotlang['Admin']['node']['ask_name'];
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
     step("getnamenode", $from_id);
 } elseif ($user['step'] == "getnamenode") {
@@ -7795,21 +7768,21 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    sendmessage($from_id, "✅  نام نود با موفقیت ذخیره گردید.", $backinfoss, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['node']['saved_name'], $backinfoss, 'HTML');
     step('home', $from_id);
 } elseif ($datain == "changeipnode") {
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    $textnode = "📌 آیپی نود را ارسال نمانیید.";
+    $textnode = $textbotlang['Admin']['node']['ask_ip'];
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
     step("getipnodeset", $from_id);
 } elseif ($user['step'] == "getipnodeset") {
@@ -7820,33 +7793,33 @@ if ($datain == "settimecornremove" && $adminrulecheck['rule'] == "administrator"
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    sendmessage($from_id, "✅  آدرس نود با موفقیت ذخیره گردید.", $backinfoss, 'HTML');
+    sendmessage($from_id, $textbotlang['Admin']['node']['saved_ip'], $backinfoss, 'HTML');
     step('home', $from_id);
 } elseif ($datain == "reconnectnode") {
     reconnect_node($user['Processing_value'], $user['Processing_value_one']);
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "node_" . $user['Processing_value_one']],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_node'], 'callback_data' => "node_" . $user['Processing_value_one']],
             ]
         ]
     ]);
-    $textnode = "✅ اتصال مجدد نود انجام گردید.";
+    $textnode = $textbotlang['Admin']['node']['reconnected'];
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
 } elseif ($datain == "removenode") {
     removenode($user['Processing_value'], $user['Processing_value_one']);
     $backinfoss = json_encode([
         'inline_keyboard' => [
             [
-                ['text' => "🔙 بازگشت به نود ", 'callback_data' => "bakcnode"],
+                ['text' => $textbotlang['Admin']['node']['btn_back_to_list'], 'callback_data' => "bakcnode"],
             ]
         ]
     ]);
-    $textnode = "✅ نود با موفقیت حذف گردید";
+    $textnode = $textbotlang['Admin']['node']['removed'];
     Editmessagetext($from_id, $message_id, $textnode, $backinfoss);
 } elseif ($text == $textbotlang['Admin']['keyboard_labels']['finance'] && $adminrulecheck['rule'] == "administrator") {
     $cartotcart = getPaySettingValue('Cartstatus', 'offcard');

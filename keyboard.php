@@ -969,15 +969,16 @@ $MethodUsername = json_encode([
     ],
     'resize_keyboard' => true
 ]);
+$mpb = $textbotlang['Admin']['managepanel']['buttons'];
 $optionMarzban = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "⚙️ تنظیم پروتکل و اینباند"]],
-        [['text' => "🔋 روش تمدید سرویس"],['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['protocol_inbound']]],
+        [['text' => $mpb['renew_method']],['text' => $mpb['username_method']]],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "⚙️ قیمت حجم سرویس دلخواه"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⏳ قیمت زمان دلخواه"]],
         [['text' => "🌍 قیمت تغییر لوکیشن"]],
@@ -992,12 +993,12 @@ $optionMarzban = json_encode([
 ]);
 $optionibsng = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => '🎛 تنظیم نام گروه']],
-        [['text' => "🔋 روش تمدید سرویس"],['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => '🎛 تنظیم نام گروه']],
+        [['text' => $mpb['renew_method']],['text' => $mpb['username_method']]],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
         [['text' => "⚙️ قیمت حجم سرویس دلخواه"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⏳ قیمت زمان دلخواه"]],
         [['text' => "📍 حداقل حجم دلخواه"],['text' => "📍 حداکثر حجم دلخواه"]],
@@ -1010,12 +1011,12 @@ $optionibsng = json_encode([
 ]);
 $option_mikrotik = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => '🎛 تنظیم نام گروه']],
-        [['text' => "🔋 روش تمدید سرویس"],['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => '🎛 تنظیم نام گروه']],
+        [['text' => $mpb['renew_method']],['text' => $mpb['username_method']]],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
         [['text' => "⚙️ قیمت حجم سرویس دلخواه"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⏳ قیمت زمان دلخواه"]],
         [['text' => "📍 حداقل حجم دلخواه"],['text' => "📍 حداکثر حجم دلخواه"]],
@@ -1028,13 +1029,13 @@ $option_mikrotik = json_encode([
 ]);
 $options_ui = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "⚙️ تنظیم پروتکل و اینباند"]],
-        [['text' => "🔋 روش تمدید سرویس"],['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['protocol_inbound']]],
+        [['text' => $mpb['renew_method']],['text' => $mpb['username_method']]],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "⚙️ قیمت حجم سرویس دلخواه"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⏳ قیمت زمان دلخواه"]],
         [['text' => "🌍 قیمت تغییر لوکیشن"]],
@@ -1049,13 +1050,13 @@ $options_ui = json_encode([
 ]);
 $optionwg = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "💎 تنظیم شناسه اینباند"]],
-        [['text' => "🔋 روش تمدید سرویس"],['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['set_inbound_id']]],
+        [['text' => $mpb['renew_method']],['text' => $mpb['username_method']]],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "⚙️ قیمت حجم سرویس دلخواه"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⏳ قیمت زمان دلخواه"]],
         [['text' => "🌍 قیمت تغییر لوکیشن"]],
@@ -1070,14 +1071,15 @@ $optionwg = json_encode([
 ]);
 $optionmarzneshin = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "🔋 روش تمدید سرویس"]],
-        [['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => "⚙️ تنظیمات سرویس"],['text' => "🚨 محدودیت ساخت اکانت"]],
-        [['text'=> "📍 تغییر گروه کاربری"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['renew_method']],
+        ],
+        [['text' =>$mpb['username_method']]],
+        [['text' => "⚙️ تنظیمات سرویس"],['text' => $mpb['account_limit']]],
+        [['text'=> $mpb['change_agent_group']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "🌍 قیمت تغییر لوکیشن"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⚙️ قیمت حجم سرویس دلخواه"]],
         [['text' => "⏳ قیمت زمان دلخواه"]],
@@ -1091,10 +1093,11 @@ $optionmarzneshin = json_encode([
 ]);
 $optionManualsale = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "💡 روش ساخت نام کاربری"]],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text'=> "📍 تغییر گروه کاربری"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['username_method']],
+        ],
+        [['text' => $mpb['account_limit']],['text'=> $mpb['change_agent_group']]],
         [['text' => "➕ اضافه کردن کانفیگ"],['text' => "❌ حذف کانفیگ "]],
         [['text' => "✏️ ویرایش کانفیگ"]],
         [['text' => "🫣 مخفی کردن پنل برای یک کاربر"]],
@@ -1105,14 +1108,14 @@ $optionManualsale = json_encode([
 ]);
 $optionX_ui_single = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "🔋 روش تمدید سرویس"]],
-        [['text' => "💎 تنظیم شناسه اینباند"]],
-        [['text' =>"💡 روش ساخت نام کاربری"],['text' => '🔗 دامنه لینک ساب']],
-        [['text' => "📍 تغییر گروه کاربری"],['text' => "🚨 محدودیت ساخت اکانت"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['renew_method']]],
+        [['text' => $mpb['set_inbound_id']]],
+        [['text' =>$mpb['username_method']],['text' => $mpb['sub_link_domain']]],
+        [['text' => $mpb['change_agent_group']],['text' => $mpb['account_limit']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "🌍 قیمت تغییر لوکیشن"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⚙️ قیمت حجم سرویس دلخواه"]],
         [['text' => "⏳ قیمت زمان دلخواه"]],
@@ -1126,15 +1129,15 @@ $optionX_ui_single = json_encode([
 ]);
 $optionalireza_single = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text' => "🔐 ویرایش رمز عبور"],['text' => "👤 ویرایش نام کاربری"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "🔋 روش تمدید سرویس"]],
-        [['text' => "💎 تنظیم شناسه اینباند"]],
-        [['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => '🔗 دامنه لینک ساب']],
-        [['text' => "📍 تغییر گروه کاربری"],['text' => "🚨 محدودیت ساخت اکانت"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text' => $mpb['edit_password']],['text' => $mpb['edit_username']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['renew_method']]],
+        [['text' => $mpb['set_inbound_id']]],
+        [['text' =>$mpb['username_method']]],
+        [['text' => $mpb['sub_link_domain']]],
+        [['text' => $mpb['change_agent_group']],['text' => $mpb['account_limit']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "🌍 قیمت تغییر لوکیشن"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⚙️ قیمت حجم سرویس دلخواه"]],
         [['text' => "⏳ قیمت زمان دلخواه"]],
@@ -1148,14 +1151,14 @@ $optionalireza_single = json_encode([
 ]);
 $optionhiddfy = json_encode([
     'keyboard' => [
-        [['text' => "⚙️ وضعیت قابلیت ها پنل"]],
-        [['text' => "✍️ نام پنل"],['text' => "❌ حذف پنل"]],
-        [['text'=>"🔗 ویرایش آدرس پنل"],['text' => "🔋 روش تمدید سرویس"]],
-        [['text' => "📍 تغییر گروه کاربری"]],
-        [['text' =>"💡 روش ساخت نام کاربری"]],
-        [['text' => '🔗 دامنه لینک ساب']],
-        [['text' => "🚨 محدودیت ساخت اکانت"],['text' => "🔗 uuid admin"]],
-        [['text' => "⏳ زمان سرویس تست"], ['text' => "💾 حجم اکانت تست"]],
+        [['text' => $mpb['features_status']]],
+        [['text' => $mpb['panel_name']],['text' => $mpb['delete_panel']]],
+        [['text'=> $mpb['edit_panel_url']],['text' => $mpb['renew_method']]],
+        [['text' => $mpb['change_agent_group']]],
+        [['text' =>$mpb['username_method']]],
+        [['text' => $mpb['sub_link_domain']]],
+        [['text' => $mpb['account_limit']],['text' => $mpb['admin_uuid']]],
+        [['text' => $mpb['test_time']], ['text' => $mpb['test_volume']]],
         [['text' => "🌍 قیمت تغییر لوکیشن"],['text' => "➕ قیمت حجم اضافه"]],
         [['text' => "⏳ قیمت زمان اضافه"],['text' => "⚙️ قیمت حجم سرویس دلخواه"]],
         [['text' => "⏳ قیمت زمان دلخواه"]],
@@ -1325,14 +1328,15 @@ $tronnowpayments = json_encode([
 ]);
 $optionathmarzban = json_encode([
     'keyboard' => [
-        [['text' => "🔧 ساخت کانفیگ دستی"],['text' => "🖥 مدیریت نود ها"]],
+        [['text' => $textbotlang['Admin']['keyboard_labels']['manual_config_builder']],['text' => $textbotlang['Admin']['keyboard_labels']['node_management']],
+        ],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
 ]);
 $optionathx_ui = json_encode([
     'keyboard' => [
-        [['text' => "🔧 ساخت کانفیگ دستی"]],
+        [['text' => $textbotlang['Admin']['keyboard_labels']['manual_config_builder']]],
         [['text' => $textbotlang['Admin']['backadmin']],['text' => $textbotlang['Admin']['backmenu']]]
     ],
     'resize_keyboard' => true
